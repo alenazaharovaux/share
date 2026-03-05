@@ -48,6 +48,13 @@ Each variant includes:
 - **Sample lead** -- 2-3 sentences in that narrative voice, on your topic
 - **When to pick this one** -- context: publication format, goal, situation
 
+
+**Phase 1 enforces two hard stops:**
+- After presenting variants → waits for your choice before continuing
+- After presenting the map → waits for explicit confirmation before writing begins
+
+No text is generated until both gates are passed.
+
 After all variants -- a comparison block: "Variant 1 if publishing in a blog, Variant 2 if pitching to stakeholders..."
 
 ### Phase 2 -- Mid-writing support
@@ -165,6 +172,13 @@ xcopy writing-guru %USERPROFILE%\.claude\skills\writing-guru\ /E /I
 | Какая тональность? | Формальная, разговорная, экспертная -- влияет на отбор |
 
 Затем алгоритм: **3 линзы, фильтрация по группам, поиск соединений, 2-5 вариантов стратегий**.
+
+
+**Фаза 1 содержит два жёстких стопа:**
+- После показа вариантов → ждёт выбора, не продолжает
+- После показа карты → ждёт явного подтверждения перед написанием
+
+Текст не генерируется до прохождения обоих стопов.
 
 Каждый вариант содержит:
 - **Почему подходит для этой аудитории** -- конкретная привязка к читателю
