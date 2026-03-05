@@ -20,6 +20,17 @@ Ready-to-use skills for [Claude Code](https://docs.anthropic.com/en/docs/claude-
 
 Writing skills (ai-writing-detox through academic-writing) are based on [jamditis/claude-skills-journalism](https://github.com/jamditis/claude-skills-journalism) by Joe Amditis — MIT license.
 
+### HTML pages & presentations
+
+Skills for building client-facing HTML pages, dashboards, and presentations. Use together: `brainstorming` → `visual-explainer` → `frontend-design` → "create the page".
+
+| Skill | What it does |
+|-------|-------------|
+| [brainstorming](skills/brainstorming/) | Turn rough ideas into approved designs through structured dialogue — before any code is written. Hard gate: no implementation without a design. From [superpowers](https://github.com/jessevondoom/superpowers-for-claude-code) by Jesse Vincent (MIT) |
+| [frontend-design](skills/frontend-design/) | Instructs Claude to commit to a bold aesthetic direction — distinctive typography, cohesive color system, meaningful motion — before writing code. Official Anthropic plugin (Apache 2.0) |
+| [frontend-slides](skills/frontend-slides/) | Zero-dependency HTML slide decks with animations and 12 aesthetic presets. Every slide fits exactly one screen. Can convert PowerPoint files. By [Alena Zakharova](https://github.com/alenazaharovaux) (MIT) |
+| [visual-explainer](skills/visual-explainer/) | Generates styled HTML pages for architecture diagrams, data tables, timelines, dashboards, and investigation maps. Never falls back to ASCII art. Adapted from [nicobailon/visual-explainer](https://github.com/nicobailon/visual-explainer) (MIT), extended for journalism and research |
+
 ## Other Resources
 
 - [How to customize using superpowers](how-to-customize-using-superpowers.md)
@@ -47,6 +58,17 @@ Writing skills (ai-writing-detox through academic-writing) are based on [jamditi
 | [writing-guru](skills/writing-guru/) | Нарративная стратегия перед написанием — 25 нарративов, 204 соединения, алгоритм 3 линз. Превращает "напиши про X" в карту с семплами лидов. На основе Периодической таблицы нарративов [Арсения Попова](https://t.me/votposmotrim) |
 
 Скиллы для текстов (от ai-writing-detox до academic-writing) основаны на [jamditis/claude-skills-journalism](https://github.com/jamditis/claude-skills-journalism) от Joe Amditis — лицензия MIT.
+
+### HTML-страницы и презентации
+
+Скиллы для создания клиентских HTML-страниц, дашбордов и презентаций. Используй в связке: `brainstorming` → `visual-explainer` → `frontend-design` → «создай страницу».
+
+| Скилл | Что делает |
+|-------|-----------|
+| [brainstorming](skills/brainstorming/) | Превращает сырые идеи в согласованные дизайны через структурированный диалог — до написания кода. Жёсткий запрет: без одобрения дизайна реализации не будет. Из [superpowers](https://github.com/jessevondoom/superpowers-for-claude-code) от Jesse Vincent (MIT) |
+| [frontend-design](skills/frontend-design/) | Заставляет Клода выбрать смелое эстетическое направление — самобытная типографика, цельная цветовая система, осмысленное движение — до написания кода. Официальный плагин Anthropic (Apache 2.0) |
+| [frontend-slides](skills/frontend-slides/) | HTML-слайды без зависимостей с анимациями и 12 эстетическими пресетами. Каждый слайд точно вписывается в экран. Умеет конвертировать PowerPoint. Автор: [Alena Zakharova](https://github.com/alenazaharovaux) (MIT) |
+| [visual-explainer](skills/visual-explainer/) | Генерирует стилизованные HTML-страницы для архитектурных схем, таблиц данных, таймлайнов, дашбордов и карт расследований. Никогда не использует ASCII-арт. Адаптирован из [nicobailon/visual-explainer](https://github.com/nicobailon/visual-explainer) (MIT), расширен для журналистики и исследований |
 
 ## Другие материалы
 
