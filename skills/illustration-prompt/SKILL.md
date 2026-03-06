@@ -1,6 +1,6 @@
 ---
 name: illustration-prompt
-description: Write detailed, production-ready prompts for AI image generation (Midjourney, DALL-E, Flux, Stable Diffusion, etc.). Use when the user needs an illustration, image, or visual asset for any context — website hero, card, social media post, presentation slide, document cover, infographic background, or any other visual. Triggers on requests like "need an image", "write a prompt for illustration", "make me a picture", "generate an illustration prompt", "need a visual", or when the user mentions needing artwork for a page/project. Also use when the user says "illustration prompt", "prompt for image", or asks you to describe what an image should look like. Works for ANY art style — voxel art, isometric, flat, watercolor, photorealistic, 3D render, line art, collage, and more.
+description: Write detailed, production-ready prompts for AI image generation (Midjourney, DALL-E, Flux, Stable Diffusion, etc.). Use when the user needs an illustration, image, or visual asset for any context — website hero, card, social media post, presentation slide, document cover, infographic background, or any other visual. Triggers on requests like "need an image", "write a prompt for illustration", "make me a picture", "generate an illustration prompt", "need a visual", or when the user mentions needing artwork for a page/project. Also use when the user says "illustration prompt", "prompt for image", or asks you to describe what an image should look like. Works for ANY art style — voxel art, isometric, flat, watercolor, photorealistic, 3D render, line art, collage, and more. Russian triggers: "нужна иллюстрация", "промпт для картинки", "сделай картинку", "нужен визуал", "напиши промпт для изображения".
 ---
 
 # Illustration Prompt Generator
@@ -131,7 +131,7 @@ EDGES: [How the scene terminates — fades to background color, hard crop, vigne
 
 FORMAT: [Width x Height in pixels, aspect ratio, background type (transparent / solid #HEX / scene-filled)]
 
-NEGATIVE: [What must NOT appear — text, watermarks, UI elements, people, specific unwanted elements]
+NEGATIVE: [What must NOT appear — watermarks, UI elements, and scene-specific unwanted elements. Text defaults and anatomy defaults are added automatically per the rules below]
 ```
 
 ### Vehicle defaults
