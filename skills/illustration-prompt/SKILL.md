@@ -60,7 +60,7 @@ If the user says skip, move on. If they add new references, incorporate them.
 
 "Reference images help me write a much more precise prompt. If you have examples of a visual style you like, share 3 or more — and for each one, describe what specifically you like (color palette, detail level, composition, mood, texture, lighting). The more specific you are about WHY you like each reference, the better the prompt.
 
-If you don't have references right now, we can skip this step — but the result may differ more from what you imagined, because the generator will fill in style details on its own."
+If you don't have references right now, we can skip this step — but without them, the generator decides style details on its own, and the result may not match what you had in mind."
 
 **If the user provides references**, analyze them and summarize back:
 - Common patterns across the references (shared color temperature, detail density, perspective, etc.)
@@ -143,6 +143,31 @@ When any vehicle (car, truck, bus, van) appears in the scene, **always** apply t
 - **Proportions: balanced front-to-back.** Explicitly describe that the hood and trunk are proportional, the car is not stretched or compressed. If the car model matters, name it or describe its silhouette (sedan, SUV, hatchback).
 
 These rules exist because AI generators consistently produce cars without doors or with cutaway interiors when not explicitly instructed. Treat this as a hard default — only override when the user's scene description requires it.
+
+### Human figure defaults
+
+When any person (full body, portrait, or partial figure) appears in the scene, **always** apply these defaults in both OBJECTS and NEGATIVE blocks unless the user explicitly states otherwise:
+
+- **Hands: five fingers each, anatomically correct.** This is the single most common AI generator failure. Always explicitly state "five fingers on each hand" in the OBJECTS block. If hands are visible, describe their exact pose: "right hand gripping a mug handle, left hand resting flat on the table." The more specific the pose, the fewer deformations.
+- **Hide hands when possible.** If hands are not essential to the scene, place them in pockets, behind an object, or out of frame. This avoids the problem entirely.
+- **Joints bend correctly.** Explicitly state that elbows and knees bend in natural directions. In the NEGATIVE block: "no backwards-bending joints, no extra limbs."
+- **NEGATIVE block must include:** "extra fingers, fused fingers, missing fingers, deformed hands, six fingers, extra limbs, extra arms, missing ears, deformed anatomy."
+
+### Text defaults
+
+AI generators (as of March 2026) cannot reliably render text. Even two-word signs come out misspelled or garbled.
+
+- **If the user did NOT request text in the image:** always add to the NEGATIVE block: "no text, no letters, no words, no numbers, no labels, no signs with writing, no watermarks." This prevents random text artifacts from appearing on surfaces, signs, or clothing.
+- **If the user DID request text:** warn them before generating. Say: "Text rendering is unreliable in current AI generators — most models misspell even short words. I recommend generating the image without text and adding the text in post-production (Figma, Canva, Photoshop). If you still want text in the prompt, I'll include it, but expect to need several attempts." If they proceed, put the exact text in quotes in the OBJECTS block and keep it to 1-2 short words maximum.
+
+### Counting defaults
+
+When the scene includes **3 or more identical objects** (chairs, trees, windows, people in a crowd), generators frequently produce the wrong number — adding extras or merging objects together.
+
+- **Describe each object individually with its position.** Instead of "four chairs around a table," write: "Chair 1: left side of the table, facing right. Chair 2: right side of the table, facing left. Chair 3: far side of the table, facing the viewer. Chair 4: near side of the table, with its back to the viewer."
+- **State the exact count in both OBJECTS and SCENE blocks.** Redundancy helps: "exactly four chairs, no more, no fewer."
+- **NEGATIVE block:** "extra [object name], duplicated [object name], merged [object name]."
+- **For large numbers (5+):** warn the user that precise counts become unreliable. Suggest using words like "several" or "a group of" if exact count is not critical, or suggest compositing multiple generations.
 
 ### Prompt quality rules
 
