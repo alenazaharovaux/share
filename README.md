@@ -30,6 +30,7 @@ Skills for building client-facing HTML pages, dashboards, and presentations. Use
 | [frontend-design](skills/frontend-design/) | Instructs Claude to commit to a bold aesthetic direction — distinctive typography, cohesive color system, meaningful motion — before writing code. Official Anthropic plugin (Apache 2.0) |
 | [frontend-slides](skills/frontend-slides/) | Zero-dependency HTML slide decks with animations and 12 aesthetic presets. Every slide fits exactly one screen. Can convert PowerPoint files. By [Alena Zakharova](https://github.com/alenazaharovaux) (MIT) |
 | [visual-explainer](skills/visual-explainer/) | Generates styled HTML pages for architecture diagrams, data tables, timelines, dashboards, and investigation maps. Never falls back to ASCII art. Adapted from [nicobailon/visual-explainer](https://github.com/nicobailon/visual-explainer) (MIT), extended for journalism and research |
+| [illustration-prompt](skills/illustration-prompt/) | 6-step interview → structured 8-block prompt for any AI image generator (Midjourney, DALL-E, Flux, Stable Diffusion). HEX colors, named perspectives, vehicle defaults, iterative refinement. By [Alena Zakharova](https://github.com/alenazaharovaux) (MIT) |
 
 ## Other Resources
 
@@ -69,6 +70,7 @@ Skills for building client-facing HTML pages, dashboards, and presentations. Use
 | [frontend-design](skills/frontend-design/) | Заставляет Клода выбрать смелое эстетическое направление — самобытная типографика, цельная цветовая система, осмысленное движение — до написания кода. Официальный плагин Anthropic (Apache 2.0) |
 | [frontend-slides](skills/frontend-slides/) | HTML-слайды без зависимостей с анимациями и 12 эстетическими пресетами. Каждый слайд точно вписывается в экран. Умеет конвертировать PowerPoint. Автор: [Alena Zakharova](https://github.com/alenazaharovaux) (MIT) |
 | [visual-explainer](skills/visual-explainer/) | Генерирует стилизованные HTML-страницы для архитектурных схем, таблиц данных, таймлайнов, дашбордов и карт расследований. Никогда не использует ASCII-арт. Адаптирован из [nicobailon/visual-explainer](https://github.com/nicobailon/visual-explainer) (MIT), расширен для журналистики и исследований |
+| [illustration-prompt](skills/illustration-prompt/) | Интервью из 6 шагов → структурированный промпт из 8 блоков для любого AI-генератора (Midjourney, DALL-E, Flux, Stable Diffusion). HEX-цвета, перспектива, дефолты для транспорта, итеративная доработка. Автор: [Алена Захарова](https://github.com/alenazaharovaux) (MIT) |
 
 ## Другие материалы
 
