@@ -67,6 +67,27 @@ for a child adapting to a new school system. Translation is supplementary, not a
 **Revisit if:** A 4th language is needed or languages must be added without migration.
 ```
 
+## Retroactive mode — for projects that didn't have an ADR from day one
+
+When you invoke the skill in a project that has no ADR file yet, it checks your `~/.claude/history.jsonl` for past sessions in this project. If it finds history, it offers to reconstruct decisions you never documented:
+
+> *"I see the project has been running since January (23 sessions). Want to run a retrospective before creating the ADR file?"*
+
+**Preview first.** Before you choose a mode, the skill scans for decision signals and tells you what it found — roughly how many potential decisions, and across what date range. So you know what you're getting into.
+
+**Two modes:**
+
+| Mode | How it works | Time cost |
+|------|-------------|-----------|
+| **Draft** *(recommended for older projects)* | Claude writes ADR entries from history, marks them `draft (needs review)`. You review and correct. | ~5–10 min of your time |
+| **Interactive** | Claude walks through each detected decision, asks clarifying questions where context is missing, writes entries as you confirm. | ~3–5 min per decision |
+
+Interactive mode warns you upfront: *"Found ~10 decisions — this will take roughly 30–60 minutes."* You can bail out mid-way with "stop, draft the rest" and Claude switches to draft mode for whatever remains.
+
+**Not now?** The skill creates an empty ADR file and moves on. Come back later with: `"run ADR retrospective"` / `"запусти ретроспективу ADR"`.
+
+> **Note on data quality:** `history.jsonl` stores only your messages, not Claude's responses. Drafts reflect what you asked for — rationale and alternatives may be incomplete. The interactive mode fills those gaps.
+
 ## Trigger phrases
 
 The skill activates when you say:
@@ -77,6 +98,7 @@ The skill activates when you say:
 | "Log this architecture decision" | "Зафиксируй решение" |
 | "ADR" | "Запиши решение" |
 | "We just made a design choice, let's document it" | "Это архитектурное решение, запиши" |
+| "Run ADR retrospective" | "Запусти ретроспективу ADR" |
 
 It also runs automatically at session end if architectural decisions were made during the session (requires a one-line addition to your CLAUDE.md — see below).
 
@@ -173,6 +195,27 @@ Copy-Item -Recurse adr $env:USERPROFILE\.claude\skills\adr
 **Пересмотреть если:** понадобится 4+ языка или динамическое добавление языков.
 ```
 
+## Ретроспективный режим — для проектов, которые жили без ADR
+
+Когда вы вызываете скилл в проекте без ADR-файла, он проверяет `~/.claude/history.jsonl` на наличие прошлых сессий по этому проекту. Если история есть — предлагает восстановить решения, которые никогда не документировались:
+
+> *«Вижу, проект ведётся с января (23 сессии). Запустить ретроспективу перед созданием ADR-файла?»*
+
+**Сначала — превью.** Прежде чем выбрать режим, скилл сканирует историю на сигналы решений и показывает, что нашёл: примерное количество потенциальных решений и диапазон дат. Вы понимаете масштаб до того, как соглашаетесь.
+
+**Два режима:**
+
+| Режим | Как работает | Затраты времени |
+|-------|-------------|-----------------|
+| **Черновики** *(рекомендую для старых проектов)* | Claude составляет ADR-заготовки из истории, помечает их `draft (needs review)`. Вы проверяете и дополняете. | ~5–10 минут вашего времени |
+| **Интерактивный** | Claude проходит по каждому найденному решению, задаёт уточняющие вопросы там, где контекста не хватает, пишет записи по мере подтверждения. | ~3–5 минут на решение |
+
+Интерактивный режим сразу предупреждает: *«Нашла ~10 решений — это займёт около 30–60 минут.»* В любой момент можно сказать «стоп, дальше черновиками» — и Claude допишет остаток в режиме черновиков.
+
+**Не сейчас?** Скилл создаёт пустой ADR-файл и продолжает. Вернитесь позже фразой: `"запусти ретроспективу ADR"` / `"run ADR retrospective"`.
+
+> **Об ограничениях данных:** `history.jsonl` хранит только ваши сообщения, не ответы Claude. Черновики отражают то, что вы запрашивали — обоснование и альтернативы могут быть неполными. Интерактивный режим закрывает эти пробелы.
+
 ## Триггеры
 
 | English | Русский |
@@ -181,6 +224,7 @@ Copy-Item -Recurse adr $env:USERPROFILE\.claude\skills\adr
 | "Log this architecture decision" | "Зафиксируй решение" |
 | "ADR" | "Запиши решение" |
 | "We just made a design choice" | "Это архитектурное решение, запиши" |
+| "Run ADR retrospective" | "Запусти ретроспективу ADR" |
 
 Также запускается автоматически при завершении сессии, если были архитектурные решения (нужна одна строка в CLAUDE.md — см. выше в английской секции).
 
