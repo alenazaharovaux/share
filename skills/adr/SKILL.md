@@ -16,8 +16,9 @@ description: >
 
 You help the user document architectural decisions in their projects. Each decision
 gets a structured entry that captures not just what was decided, but why — and what
-was rejected. The rejected alternatives are the most valuable part: they prevent
-revisiting dead ends months later.
+was rejected. The rejected alternatives are the most valuable part: they capture *why*
+something was rejected, so when conditions change, you can revisit the decision
+intentionally — not repeat the same analysis from scratch.
 
 ## Step 0 — Configuration (First Run)
 

@@ -2,7 +2,7 @@
 
 A Claude Code skill that logs architectural decisions as you work. Every time you choose a technology, design a database schema, pick a deployment strategy, or make any structural choice — this skill captures *what* you decided, *why*, and *what you rejected*.
 
-The rejected alternatives are the most valuable part. Six months later, they prevent you (or your AI assistant) from revisiting dead ends.
+The rejected alternatives are the most valuable part. Six months later, when conditions change and a previously rejected approach becomes viable, the ADR tells you *why* it was rejected — so you can make an informed decision to revisit it, not repeat the same analysis from scratch.
 
 ## Who is this for?
 
@@ -94,7 +94,7 @@ To make the skill run automatically at session end, add this to your global `~/.
 
 - **Immutability:** accepted entries are never edited. If a decision is reversed, the old entry gets `superseded by ADR-NNN` status, and a new entry explains why.
 - **The 6-month test:** "Will I remember why this choice was made in 6 months?" If not — write it down.
-- **Alternatives are mandatory:** an ADR without rejected options is just a note. The table of what you *didn't* choose is what makes it valuable.
+- **Alternatives are mandatory:** an ADR without rejected options is just a note. The table of what you *didn't* choose — and why — is what enables informed revisiting when conditions change.
 - **One file per project:** no folder of numbered files. One `architecture-decisions.md` with sequential `ADR-001`, `ADR-002`, etc.
 
 ## Credits
@@ -109,7 +109,7 @@ By [Alena Zakharova](https://github.com/alenazaharovaux) (MIT).
 
 Скилл для Claude Code, который фиксирует архитектурные решения по ходу работы. Каждый раз, когда вы выбираете технологию, проектируете схему БД, определяете стратегию деплоя или принимаете любое структурное решение — скилл записывает *что* решили, *почему* и *что отвергли*.
 
-Отвергнутые альтернативы — самая ценная часть записи. Через полгода они не дадут вам (или вашему AI-ассистенту) предлагать подходы, которые уже были отвергнуты.
+Отвергнутые альтернативы — самая ценная часть записи. Через полгода, когда условия изменятся и отвергнутый подход станет актуальным, ADR покажет *почему* его отвергли — и вы осознанно пересмотрите решение, а не повторите тот же анализ с нуля.
 
 ## Для кого
 
@@ -188,7 +188,7 @@ Copy-Item -Recurse adr $env:USERPROFILE\.claude\skills\adr
 
 - **Иммутабельность:** принятые записи не редактируются. Пересмотр = новая запись со ссылкой на старую.
 - **Тест 6 месяцев:** «Вспомню ли я через полгода, почему так решили?» Если нет — записывай.
-- **Альтернативы обязательны:** ADR без отвергнутых вариантов — просто заметка. Таблица того, что *не* выбрали, делает запись ценной.
+- **Альтернативы обязательны:** ADR без отвергнутых вариантов — просто заметка. Таблица того, что *не* выбрали и *почему*, позволяет осознанно пересмотреть решение, когда условия изменятся.
 - **Один файл на проект:** не папка пронумерованных файлов, а один `architecture-decisions.md`.
 
 ## Авторство
