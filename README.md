@@ -57,7 +57,7 @@ Skills for building client-facing HTML pages, dashboards, and presentations. Use
 |-------|-----------|
 | [triage-finding](skills/triage-finding/) | Быстро оценивает ссылки, посты, статьи и YouTube-видео — объясняет суть, сопоставляет с проектами, рекомендует действие |
 | [tool-scout](skills/tool-scout/) | Находит инструменты (сервисы, MCP, нейронки, библиотеки) прежде чем писать с нуля. Быстрый скан или глубокий разбор |
-| [skill-creator](skills/skill-creator/) | TDD-философия качества скиллов — сценарии давления, таблицы рационализаций, цикл RED-GREEN-REFACTOR для документации. Из [superpowers](https://github.com/jessevondoom/superpowers-for-claude-code) от Jesse Vincent (MIT) |
+| [skill-stress-test](skills/skill-stress-test/) | TDD-философия качества скиллов — сценарии давления, таблицы рационализаций, цикл RED-GREEN-REFACTOR для документации. Из [superpowers](https://github.com/jessevondoom/superpowers-for-claude-code) от Jesse Vincent (MIT) |
 | [skill-lab](skills/skill-lab/) | Полный конвейер создания скиллов — раннер тестов, агенты-грейдеры, вьюер ревью в браузере, агрегация бенчмарков, оптимизатор описаний. Официальный [плагин Anthropic](https://github.com/anthropics/claude-code-plugins) (Apache 2.0) |
 | [ai-writing-detox](skills/ai-writing-detox/) | Убивает паттерны, по которым читатель опознаёт ИИ-текст — запрещённые слова, рубленые фрагменты, корпоративный жаргон. Фильтр доверия |
 | [newsroom-style](skills/newsroom-style/) | Стандарты AP Style — атрибуция ("said", не "stated"), числа, даты, лиды до 35 слов, чеклист перед публикацией. Редакционный baseline |
