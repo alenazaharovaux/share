@@ -1,6 +1,6 @@
 ---
-name: skill-creator
-description: Use when creating new skills, editing existing skills, or verifying skills work before deployment
+name: skill-stress-test
+description: Use when verifying skill quality through pressure scenarios, TDD discipline, and rationalization resistance — after creating a skill with skill-lab
 ---
 
 # Writing Skills

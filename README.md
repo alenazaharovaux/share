@@ -10,7 +10,8 @@ Ready-to-use skills for [Claude Code](https://docs.anthropic.com/en/docs/claude-
 |-------|-------------|
 | [triage-finding](skills/triage-finding/) | Quickly assess links, posts, articles, and YouTube videos — explains what it is, maps to your projects, recommends action |
 | [tool-scout](skills/tool-scout/) | Find the right tools (services, MCP servers, AI models, libraries) before building from scratch. Quick scan or deep dive |
-| [skill-creator](skills/skill-creator/) | Create, test, and iterate Claude Code skills using TDD. Extracted from [superpowers](https://github.com/anthropics/claude-code-plugins) by Jesse Vincent (MIT) |
+| [skill-stress-test](skills/skill-stress-test/) | TDD philosophy for skill quality — pressure scenarios, rationalization tables, RED-GREEN-REFACTOR cycle applied to documentation. From [superpowers](https://github.com/jessevondoom/superpowers-for-claude-code) by Jesse Vincent (MIT) |
+| [skill-lab](skills/skill-lab/) | Full-cycle skill creation tooling — eval runner, grader agents, browser-based review viewer, benchmark aggregation, description optimizer. Official [Anthropic plugin](https://github.com/anthropics/claude-code-plugins) (Apache 2.0) |
 | [ai-writing-detox](skills/ai-writing-detox/) | Kill the patterns that make readers think "AI wrote this" — banned words, staccato fragments, corporate jargon, fake enthusiasm. The trust filter |
 | [newsroom-style](skills/newsroom-style/) | AP Style enforcement — attribution ("said" not "stated"), numbers, dates, ledes under 35 words, pre-publish checklist. The editorial baseline |
 | [story-pitch](skills/story-pitch/) | Five pitch templates (news, feature, investigation, op-ed, freelance query) plus the "so what" test and angle development tools |
@@ -56,7 +57,8 @@ Skills for building client-facing HTML pages, dashboards, and presentations. Use
 |-------|-----------|
 | [triage-finding](skills/triage-finding/) | Быстро оценивает ссылки, посты, статьи и YouTube-видео — объясняет суть, сопоставляет с проектами, рекомендует действие |
 | [tool-scout](skills/tool-scout/) | Находит инструменты (сервисы, MCP, нейронки, библиотеки) прежде чем писать с нуля. Быстрый скан или глубокий разбор |
-| [skill-creator](skills/skill-creator/) | Создание и тестирование скиллов Claude Code по TDD. Извлечён из [superpowers](https://github.com/anthropics/claude-code-plugins) от Jesse Vincent (MIT) |
+| [skill-creator](skills/skill-creator/) | TDD-философия качества скиллов — сценарии давления, таблицы рационализаций, цикл RED-GREEN-REFACTOR для документации. Из [superpowers](https://github.com/jessevondoom/superpowers-for-claude-code) от Jesse Vincent (MIT) |
+| [skill-lab](skills/skill-lab/) | Полный конвейер создания скиллов — раннер тестов, агенты-грейдеры, вьюер ревью в браузере, агрегация бенчмарков, оптимизатор описаний. Официальный [плагин Anthropic](https://github.com/anthropics/claude-code-plugins) (Apache 2.0) |
 | [ai-writing-detox](skills/ai-writing-detox/) | Убивает паттерны, по которым читатель опознаёт ИИ-текст — запрещённые слова, рубленые фрагменты, корпоративный жаргон. Фильтр доверия |
 | [newsroom-style](skills/newsroom-style/) | Стандарты AP Style — атрибуция ("said", не "stated"), числа, даты, лиды до 35 слов, чеклист перед публикацией. Редакционный baseline |
 | [story-pitch](skills/story-pitch/) | Пять шаблонов питчей (новость, фичер, расследование, колонка, фриланс) + тест «ну и что?» и развитие угла подачи |
