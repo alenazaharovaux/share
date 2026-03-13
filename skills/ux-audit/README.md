@@ -68,7 +68,7 @@ After the audit, you can ask:
 
 ## Credits
 
-By [Alena Zakharova](https://github.com/alenazaharovaux) (MIT).
+By [Alena Zakharova](https://human2aimain.onrender.com/ru/), [Cloud Research](https://cloud-research.onrender.com/) (MIT).
 
 ---
 
@@ -142,4 +142,4 @@ Copy-Item -Recurse ux-audit $env:USERPROFILE\.claude\skills\ux-audit
 
 ## Автор
 
-[Алена Захарова](https://github.com/alenazaharovaux) (MIT).
+[Алена Захарова](https://human2aimain.onrender.com/ru/), [Cloud Research](https://cloud-research.onrender.com/) (MIT).
