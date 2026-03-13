@@ -4,14 +4,13 @@ A skill for [Claude Code](https://docs.anthropic.com/en/docs/claude-code) that h
 
 ## What it does
 
-You share a link, post, or screenshot. The skill:
+You share a link, post, or screenshot, and the skill reads the content, explains what it is in plain language, maps it to your current projects, and recommends one of three actions: apply now, save for later, or skip. It handles articles, GitHub repos, and YouTube videos (with full transcript extraction and a multi-step fallback chain).
 
-1. **Reads and understands** the content (articles, GitHub repos, YouTube videos with transcript extraction)
-2. **Explains** what it is in plain language
-3. **Maps** the finding to your current projects
-4. **Recommends** an action: apply now, save for later, or skip
+Before recommending anything, the skill fact-checks the finding by following links in the original post and verifying claims against the actual source. Posts often contain inaccuracies — wrong language, misidentified license, outdated numbers — and the skill flags any discrepancies so your decisions are based on verified information.
 
-It also has an **Ideas Review** mode — scans your saved ideas folder and tells you what became relevant.
+If the finding describes a tool or skill that you already have installed, the skill detects this by checking your skills index and tells you directly, so you don't waste time on duplicates.
+
+The skill also has an **Ideas Review** mode that scans your saved ideas folder and tells you which ideas became relevant to your current work.
 
 ## Installation
 
@@ -35,7 +34,7 @@ cp -r skill-creator ~/.claude/skills/skill-creator
 
 ## First run
 
-On first use, the skill asks 4 setup questions. You can skip any of them:
+On first use, the skill asks 5 setup questions (you can skip any of them):
 
 | Question | What it's for | Example |
 |----------|--------------|---------|
@@ -43,8 +42,9 @@ On first use, the skill asks 4 setup questions. You can skip any of them:
 | Projects folder | To match findings to your work | `~/Projects/` |
 | Ideas folder | Where to save "for later" notes | `~/Projects/Ideas/` |
 | Memory file | Your priorities/context file | `~/.claude/memory/MEMORY.md` |
+| Skills index | Detects already-installed tools | `~/.claude/skills/skill-index.md` |
 
-Settings are saved in `~/.claude/skills/triage-finding/config.md` — edit anytime.
+Settings are saved in `~/.claude/skills/triage-finding/config.md` and can be edited anytime.
 
 ## Usage examples
 
@@ -56,13 +56,16 @@ Just share something with Claude Code:
 - Share a screenshot
 - `"Review my ideas"` — scans your ideas folder
 
-## YouTube support
+## Key features
 
-The skill extracts full transcripts from YouTube videos using the `youtube-transcript-api` Python library. If the library isn't installed, the skill will install it automatically. Large transcripts are processed by a background agent to keep the main conversation clean.
+- **Fact-checking:** The skill follows links from posts and verifies claims against the actual source before making a recommendation, so inaccuracies from the original post do not carry through.
+- **Installed skills detection:** If you configure a skills index, the skill checks whether the tool or plugin from a finding is already installed and avoids recommending duplicates.
+- **YouTube fallback chain:** YouTube content is extracted through a multi-step process — Exa search for metadata, then `youtube-transcript-api` for the full transcript, then a web search fallback if both are unavailable. Large transcripts are processed by a background agent to keep the main conversation clean.
+- **Prioritization:** When you share multiple findings at once, the skill processes project-related items first and provides a summary table for three or more findings.
 
 ## Credits
 
-This skill uses `skill-creator` from the [superpowers](https://github.com/anthropics/claude-code-plugins) plugin by Jesse Vincent (MIT License).
+By [Alena Zakharova](https://human2aimain.onrender.com/ru/), [Cloud Research](https://cloud-research.onrender.com/) (MIT).
 
 ---
 
@@ -72,14 +75,13 @@ This skill uses `skill-creator` from the [superpowers](https://github.com/anthro
 
 ## Что делает
 
-Ты скидываешь ссылку, пост или скриншот. Скилл:
+Ты скидываешь ссылку, пост или скриншот, и скилл читает содержание, объясняет простым языком, что это такое, сопоставляет с твоими текущими проектами и рекомендует одно из трёх действий: применить сейчас, сохранить на будущее или пропустить. Скилл работает со статьями, GitHub-репозиториями и YouTube-видео (с извлечением полного транскрипта и многошаговой цепочкой fallback-ов).
 
-1. **Читает и понимает** содержание (статьи, GitHub-репозитории, YouTube-видео с извлечением транскрипта)
-2. **Объясняет** простым языком, что это
-3. **Сопоставляет** находку с твоими текущими проектами
-4. **Рекомендует** действие: применить сейчас, сохранить на будущее или пропустить
+Перед тем как давать рекомендацию, скилл проверяет факты из находки — переходит по ссылкам из оригинального поста и сверяет утверждения с реальным источником. В постах часто встречаются неточности: неверный язык программирования, перепутанная лицензия, устаревшие цифры. Скилл отмечает расхождения, чтобы решения принимались на основе проверенной информации.
 
-Есть режим **Ревизия идей** — просматривает папку сохранённых идей и говорит, что стало актуальным.
+Если находка описывает инструмент или скилл, который у тебя уже установлен, скилл обнаружит это через проверку индекса скиллов и сообщит напрямую, чтобы не тратить время на дубликаты.
+
+Есть режим **Ревизия идей** — просматривает папку сохранённых идей и говорит, что из сохранённого стало актуальным для текущих проектов.
 
 ## Установка
 
@@ -103,7 +105,7 @@ cp -r skill-creator ~/.claude/skills/skill-creator
 
 ## Первый запуск
 
-При первом использовании скилл задаст 4 вопроса. Любой можно пропустить:
+При первом использовании скилл задаст 5 вопросов (любой можно пропустить):
 
 | Вопрос | Для чего | Пример |
 |--------|---------|--------|
@@ -111,8 +113,9 @@ cp -r skill-creator ~/.claude/skills/skill-creator
 | Папка проектов | Чтобы сопоставлять находки с работой | `~/Projects/` |
 | Папка идей | Куда складывать заметки «на будущее» | `~/Projects/Ideas/` |
 | Файл памяти | Файл с приоритетами и контекстом | `~/.claude/memory/MEMORY.md` |
+| Индекс скиллов | Обнаружение уже установленных инструментов | `~/.claude/skills/skill-index.md` |
 
-Настройки сохраняются в `~/.claude/skills/triage-finding/config.md` — можно отредактировать в любой момент.
+Настройки сохраняются в `~/.claude/skills/triage-finding/config.md` и доступны для редактирования в любой момент.
 
 ## Примеры использования
 
@@ -124,10 +127,13 @@ cp -r skill-creator ~/.claude/skills/skill-creator
 - Скинь скриншот
 - `"Посмотри в идеях"` — ревизия папки идей
 
-## Поддержка YouTube
+## Ключевые возможности
 
-Скилл извлекает полные транскрипты из YouTube-видео с помощью Python-библиотеки `youtube-transcript-api`. Если библиотека не установлена, скилл установит её автоматически. Большие транскрипты обрабатываются фоновым агентом, чтобы не забивать основной контекст.
+- **Проверка фактов:** скилл переходит по ссылкам из постов и сверяет утверждения с реальным источником, прежде чем давать рекомендацию, чтобы неточности из оригинального поста не влияли на решения.
+- **Обнаружение установленных скиллов:** если настроен индекс скиллов, скилл проверяет, не установлен ли уже инструмент или плагин из находки, и не рекомендует дубликаты.
+- **Цепочка fallback-ов для YouTube:** содержание YouTube-видео извлекается в несколько шагов — сначала поиск через Exa для метаданных, затем `youtube-transcript-api` для полного транскрипта, а если оба способа недоступны, поиск в вебе. Большие транскрипты обрабатываются фоновым агентом, чтобы не забивать основной контекст.
+- **Приоритизация:** когда пользователь скидывает несколько находок одновременно, скилл обрабатывает сначала те, что связаны с активными проектами, и выдаёт сводную таблицу при трёх и более находках.
 
 ## Благодарности
 
-Скилл использует `skill-creator` из плагина [superpowers](https://github.com/anthropics/claude-code-plugins) от Jesse Vincent (лицензия MIT).
+[Алена Захарова](https://human2aimain.onrender.com/ru/), [Cloud Research](https://cloud-research.onrender.com/) (MIT).
