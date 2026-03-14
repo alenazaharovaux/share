@@ -153,6 +153,15 @@ When any person (full body, portrait, or partial figure) appears in the scene, *
 - **Joints bend correctly.** Explicitly state that elbows and knees bend in natural directions. In the NEGATIVE block: "no backwards-bending joints, no extra limbs."
 - **NEGATIVE block must include:** "extra fingers, fused fingers, missing fingers, deformed hands, six fingers, extra limbs, extra arms, missing ears, deformed anatomy."
 
+### Full-body shot defaults
+
+When the prompt requires a **full-body view** of a person or character, apply these additional checks on top of the Human figure defaults:
+
+- **Feet or footwear must be visible and described.** Generators frequently crop at the ankles. Explicitly state footwear type and the surface they stand on: "brown leather boots on a cobblestone path."
+- **Hair and head fully in frame.** Describe hairstyle or headwear to anchor the top of the figure.
+- **Ground or floor surface described.** The figure needs a surface to stand on — name the material, color, and condition: "cracked concrete floor", "wet grass."
+- **Suggest vertical or tall aspect ratio.** Full-body shots need vertical space. Recommend 2:3, 3:4, or 9:16 unless the scene context requires otherwise (e.g., a figure in a wide landscape).
+
 ### Text defaults
 
 AI generators (as of March 2026) cannot reliably render text. Even two-word signs come out misspelled or garbled.
