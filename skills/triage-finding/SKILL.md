@@ -88,8 +88,16 @@ YouTube requires a special approach because WebFetch cannot return video content
 4. **Fallback** (if Exa is unavailable and the transcript API did not work): use WebSearch to search for the video title and gather information from the results. If that also fails, tell the user: "I can't extract the video content automatically. Paste the description or key points, and I'll triage from there."
 5. **Cleanup:** Delete the temporary transcript file after processing.
 
-**Step 1.5 — Fact-check the finding.**
+**Step 1.5 — Fact-check and classify the source.**
 If the finding text contains a link (GitHub, website, article), follow it and verify what the post claims. Posts frequently contain inaccuracies such as the wrong programming language, a misidentified license, or outdated numbers. Note any discrepancies in the "What is this" section. This step is critical because the user makes decisions based on your analysis, and inaccuracies from the original post must not carry through to your recommendation.
+
+**Source classification** — determine which layer the finding belongs to:
+- **Official** — official documentation, release notes, changelogs, standards, author's own repo. Highest weight for factual claims
+- **Implementation** — source code, configs, issue threads, reproducible benchmarks. Confirms that what's claimed actually works
+- **Field** — practitioners, blogs, YouTube walkthroughs, Reddit/Telegram discussions. Shows how things are used in practice (may diverge from docs)
+- **Adversarial** — criticism, failure reports, negative comparisons, security notes. Shows what can go wrong
+
+Include the layer in the output. If the finding is a Telegram post retelling a GitHub repo, that's **field**, not official. If the finding is the actual GitHub repo by the author, that's **official** or **implementation** (depending on content).
 
 **Step 2 — Explain in plain language.**
 Write a "What is this" section — 2-3 sentences without jargon.
@@ -152,6 +160,7 @@ If no ideas folder is configured, tell the user and ask them to set one up.
 ```
 ## What is this
 [2-3 sentences in plain language, no jargon]
+**Source layer:** [Official / Implementation / Field / Adversarial]
 
 ## Where it applies
 [Specific projects and tasks, or "doesn't fit current work"]
