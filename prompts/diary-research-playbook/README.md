@@ -87,21 +87,9 @@ Synthesis:
 - Each prompt includes a "Principles" section — read it once, internalize, skip later
 - Prompts build on each other: Entry Analysis feeds Pattern Detection feeds Interview Prep
 
-## Origin
+## Credits
 
-These prompts are extracted and universalized from production Claude Code skills used in a real diary study of navigation behavior (32 respondents, 7 days each, 250+ trips). The methodology was developed at [Cloud Research](https://cloud-research.onrender.com).
-
-The original skills are domain-specific (navigation on familiar routes). These prompts strip the domain binding and work for any diary-based qualitative research: product usage diaries, mobility studies, health tracking, habit formation research, etc.
-
-## Example: navigation study
-
-Throughout the prompts, you will see `[YOUR_EXAMPLE]` placeholders. Here is how they looked in the original navigation study:
-
-- **Research goal:** Increase frequency of navigation use on familiar routes
-- **Key metric:** Kilometers with navigation enabled
-- **Insight taxonomy:** 8 types (Barrier, Problem, Driver, Unawareness of value, Confirmed value, Belief, Pattern, Useful feature)
-- **Data format:** Telegram diary with 9-field template per trip + screenshots + voice comments
-- **Respondent segments:** Drivers vs. Pedestrians × Large vs. Medium city × Navigation frequency quota
+By [Alena Zakharova](https://github.com/alenazaharovaux) ([Cloud Research](https://cloud-research.onrender.com)). Extracted and universalized from production Claude Code skills used in real diary studies.
 
 ## License
 
