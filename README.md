@@ -40,6 +40,14 @@ Skills for building client-facing HTML pages, dashboards, and presentations. Use
 |-------|-------------|
 | [adr](skills/adr/) | Log architecture decisions as you work — what you chose, why, and what you rejected. One Markdown file per project, ~1 minute per entry. Designed for solo developers and small teams. By [Alena Zakharova](https://github.com/alenazaharovaux) (MIT) |
 
+## Prompts
+
+Universal prompt collections that work with any LLM — not tied to Claude Code.
+
+| Playbook | What it does |
+|----------|-------------|
+| [diary-research-playbook](prompts/diary-research-playbook/) | 13 prompts for analyzing qualitative diary studies: entry analysis, pattern detection, interview prep, monitoring cards, synthesis, narrative portraits, business case studies, and interview guide review. By [Alena Zakharova](https://github.com/alenazaharovaux) (MIT) |
+
 ## Other Resources
 
 - [How to customize using superpowers](how-to-customize-using-superpowers.md)
@@ -87,6 +95,14 @@ Skills for building client-facing HTML pages, dashboards, and presentations. Use
 | Скилл | Что делает |
 |-------|-----------|
 | [adr](skills/adr/) | Фиксирует архитектурные решения по ходу работы — что выбрали, почему и что отвергли. Один Markdown-файл на проект, ~1 минута на запись. Для соло-разработчиков и небольших команд. Автор: [Алена Захарова](https://github.com/alenazaharovaux) (MIT) |
+
+## Промпты
+
+Универсальные коллекции промптов, работающие с любым LLM — не привязаны к Claude Code.
+
+| Playbook | Что делает |
+|----------|-----------|
+| [diary-research-playbook](prompts/diary-research-playbook/) | 13 промптов для анализа качественных дневниковых исследований: анализ записей, поиск паттернов, подготовка к интервью, карточки мониторинга, синтез, нарративные портреты, бизнес-статьи, ревью гайда интервью. Автор: [Алена Захарова](https://github.com/alenazaharovaux) (MIT) |
 
 ## Другие материалы
 
