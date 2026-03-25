@@ -19,6 +19,7 @@ Ready-to-use skills for [Claude Code](https://docs.anthropic.com/en/docs/claude-
 | [academic-writing](skills/academic-writing/) | Full academic lifecycle — research design, literature review, IMRaD structure, peer review responses, NSF/NIH grant proposals, journal selection |
 | [writing-guru](skills/writing-guru/) | Narrative strategy before writing — 25 base narratives, 204 compounds, 3-lens algorithm. Turns "write about X" into a structured map with sample leads. Based on the Periodic Table of Narratives by [Arseniy Popov](https://t.me/votposmotrim) |
 | [ux-audit](skills/ux-audit/) | 50-item UX audit across 5 blocks (Nielsen heuristics, conversion, content, technical, IA). Prioritized report with safeguards against hallucinated stats and inflated severity. Stress-tested 12/12. By [Alena Zakharova](https://github.com/alenazaharovaux) (MIT) |
+| [req-docs](skills/req-docs/) | Determine which requirement documents your project needs (PRD, BRD, FRD, MRD, SRD, TRD, QRD) and write them from 13 built-in templates. Two phases: advisor (recommend) then writer (create). Stress-tested 3/3. By [Alena Zakharova](https://github.com/alenazaharovaux) (MIT) |
 
 Writing skills (ai-writing-detox through academic-writing) are based on [jamditis/claude-skills-journalism](https://github.com/jamditis/claude-skills-journalism) by Joe Amditis — MIT license.
 
