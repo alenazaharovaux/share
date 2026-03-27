@@ -107,6 +107,8 @@ Skill by **Anthropic** · [official Claude Code plugin](https://github.com/anthr
 
 Published here with attribution for reference. Primary installation: official plugin via Claude Code.
 
+[Alena Zakharova](https://thehuman2ai.com/), [Thehuman2ai](https://thehuman2ai.com/) (MIT).
+
 ---
 
 ---
@@ -218,6 +220,7 @@ Invoke-WebRequest `
 
 Опубликовано здесь с атрибуцией для справки. Основной способ установки: официальный плагин через Claude Code.
 
+[Alena Zakharova](https://thehuman2ai.com/), [Thehuman2ai](https://thehuman2ai.com/) (MIT).
 ---
 
 *Опубликовано в [alenazaharovaux/share](https://github.com/alenazaharovaux/share)*
