@@ -85,6 +85,8 @@ After:
 
 Based on [newsroom-style](https://github.com/jamditis/claude-skills-journalism) by [Joe Amditis](https://github.com/jamditis) — MIT license.
 
+[Алена Захарова](https://thehuman2ai.com/), [Thehuman2ai](https://thehuman2ai.com/) (MIT).
+
 ---
 
 # newsroom-style (RU)
@@ -132,3 +134,5 @@ cp -r newsroom-style ~/.claude/skills/newsroom-style
 ## Авторство
 
 На основе [newsroom-style](https://github.com/jamditis/claude-skills-journalism) от [Joe Amditis](https://github.com/jamditis) — лицензия MIT.
+
+[Алена Захарова](https://thehuman2ai.com/), [Thehuman2ai](https://thehuman2ai.com/) (MIT).
