@@ -128,6 +128,7 @@ These are recommendations, not dependencies. Writing Guru works standalone.
 
 - **Skill:** [Alena Zakharova](https://github.com/alenazaharovaux)
 - **Periodic Table of Narratives:** [Arseniy Popov](https://t.me/votposmotrim), channel "dolphin befriends cuckoo" -- texts on how technology changes perception, aesthetics, and ways of thinking. The 25 narratives, 7 groups, and 204 compounds are based on his framework.
+- [Alena Zakharova](https://thehuman2ai.com/), [Thehuman2ai](https://thehuman2ai.com/) (MIT).
 
 ---
 
@@ -214,3 +215,4 @@ xcopy writing-guru %USERPROFILE%\.claude\skills\writing-guru\ /E /I
 
 - **Скилл:** [Алена Захарова](https://github.com/alenazaharovaux)
 - **Периодическая таблица нарративов:** [Арсений Попов](https://t.me/votposmotrim), канал "дельфин дружит с кукушкой" -- тексты о том, как технологии меняют восприятие, эстетику и способы думать. 25 нарративов, 7 групп и 204 соединения основаны на его фреймворке.
+- [Alena Zakharova](https://thehuman2ai.com/), [Thehuman2ai](https://thehuman2ai.com/) (MIT).
