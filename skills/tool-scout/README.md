@@ -79,9 +79,8 @@ Say any of these to Claude Code:
 Want to dig deeper? Say "dig into [name]".
 Or ask about a specific source: "any MCP servers for this?", "any awesome-lists?"
 
-[Алена Захарова](https://thehuman2ai.com/), [Thehuman2ai](https://thehuman2ai.com/) (MIT).
 ```
-
+[Алена Захарова](https://thehuman2ai.com/), [Thehuman2ai](https://thehuman2ai.com/) (MIT).
 ---
 
 # Tool Scout (RU)
