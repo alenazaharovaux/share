@@ -85,6 +85,8 @@ Seven-point scan: search your text for delve, landscape, crucial, robust, levera
 
 Based on [ai-writing-detox](https://github.com/jamditis/claude-skills-journalism) by [Joe Amditis](https://github.com/jamditis) — MIT license.
 
+[Алена Захарова](https://thehuman2ai.com/), [Thehuman2ai](https://thehuman2ai.com/) (MIT).
+
 ---
 
 # ai-writing-detox (RU)
@@ -134,3 +136,5 @@ cp -r ai-writing-detox ~/.claude/skills/ai-writing-detox
 ## Авторство
 
 На основе [ai-writing-detox](https://github.com/jamditis/claude-skills-journalism) от [Joe Amditis](https://github.com/jamditis) — лицензия MIT.
+
+[Алена Захарова](https://thehuman2ai.com/), [Thehuman2ai](https://thehuman2ai.com/) (MIT).
