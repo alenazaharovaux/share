@@ -85,6 +85,8 @@ Format: 600 words + photos from hearing.
 
 Based on [story-pitch](https://github.com/jamditis/claude-skills-journalism) by [Joe Amditis](https://github.com/jamditis) — MIT license.
 
+[Алена Захарова](https://thehuman2ai.com/), [Thehuman2ai](https://thehuman2ai.com/) (MIT).
+
 ---
 
 # story-pitch (RU)
@@ -135,3 +137,5 @@ Format: 600 слов + фото со слушания.
 ## Авторство
 
 На основе [story-pitch](https://github.com/jamditis/claude-skills-journalism) от [Joe Amditis](https://github.com/jamditis) — лицензия MIT.
+
+[Алена Захарова](https://thehuman2ai.com/), [Thehuman2ai](https://thehuman2ai.com/) (MIT).
