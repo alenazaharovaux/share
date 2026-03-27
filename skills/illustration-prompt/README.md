@@ -93,6 +93,7 @@ These are recommendations, not dependencies. Illustration Prompt works standalon
 ## Credits
 
 - **Skill:** [Alena Zakharova](https://github.com/alenazaharovaux)
+- [Alena Zakharova](https://thehuman2ai.com/), [Thehuman2ai](https://thehuman2ai.com/) (MIT).
 
 ---
 
@@ -185,3 +186,4 @@ NEGATIVE:   Что НЕ должно появиться -- текст, водя�
 ## Авторство
 
 - **Скилл:** [Алена Захарова](https://github.com/alenazaharovaux)
+- [Alena Zakharova](https://thehuman2ai.com/), [Thehuman2ai](https://thehuman2ai.com/) (MIT).
