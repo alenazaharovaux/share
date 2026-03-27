@@ -154,6 +154,7 @@ This skill was designed to be portable:
 ## Credits
 
 Templates are based on the [TheHuman2AI](https://thehuman2ai.com) requirements documents knowledge base — a free, multilingual resource covering all major requirement document types with guides, templates, and AI prompts.
+[Alena Zakharova](https://thehuman2ai.com/), [Thehuman2ai](https://thehuman2ai.com/) (MIT).
 
 ## License
 
@@ -279,7 +280,7 @@ Copy-Item -Recurse req-docs $env:USERPROFILE\.claude\skills\req-docs
 ## Благодарности
 
 Шаблоны основаны на базе знаний [TheHuman2AI](https://thehuman2ai.com) — бесплатном мультиязычном ресурсе, покрывающем все основные типы документов требований с гайдами, шаблонами и AI-промптами.
-
+[Alena Zakharova](https://thehuman2ai.com/), [Thehuman2ai](https://thehuman2ai.com/) (MIT).
 ## Лицензия
 
 MIT
