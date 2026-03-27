@@ -111,6 +111,8 @@ Skill by **Jesse Vincent** · [superpowers plugin](https://github.com/jessevondo
 
 Published here with attribution. Primary installation: superpowers plugin via Claude Code.
 
+[Алена Захарова](https://thehuman2ai.com/), [Thehuman2ai](https://thehuman2ai.com/) (MIT).
+
 ---
 
 ---
@@ -225,6 +227,7 @@ skill-stress-test/
 ## Авторство
 
 Скилл создан **Jesse Vincent** · [плагин superpowers](https://github.com/jessevondoom/superpowers-for-claude-code) · MIT License
+[Алена Захарова](https://thehuman2ai.com/), [Thehuman2ai](https://thehuman2ai.com/) (MIT).
 
 Опубликовано здесь с атрибуцией. Основной способ установки: плагин superpowers через Claude Code.
 
