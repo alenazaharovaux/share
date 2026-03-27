@@ -73,6 +73,8 @@ Each iteration adds population, mechanism, direction, and measurability — with
 
 From [academic-writing](https://github.com/jamditis/claude-skills-journalism) by [Joe Amditis](https://github.com/jamditis) — MIT license.
 
+[Alena Zakharova](https://thehuman2ai.com/), [Thehuman2ai](https://thehuman2ai.com/) (MIT).
+
 ---
 
 # academic-writing (RU)
@@ -130,3 +132,5 @@ cp -r academic-writing ~/.claude/skills/academic-writing
 ## Авторство
 
 Из [academic-writing](https://github.com/jamditis/claude-skills-journalism) от [Joe Amditis](https://github.com/jamditis) — лицензия MIT.
+
+[Alena Zakharova](https://thehuman2ai.com/), [Thehuman2ai](https://thehuman2ai.com/) (MIT).
