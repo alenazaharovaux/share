@@ -71,6 +71,8 @@ Say any of these to Claude Code:
 
 From [newsletter-publishing](https://github.com/jamditis/claude-skills-journalism) by [Joe Amditis](https://github.com/jamditis) — MIT license.
 
+[Alena Zakharova](https://thehuman2ai.com/), [Thehuman2ai](https://thehuman2ai.com/) (MIT).
+
 ---
 
 # newsletter-publishing (RU)
@@ -122,3 +124,5 @@ cp -r newsletter-publishing ~/.claude/skills/newsletter-publishing
 ## Авторство
 
 Из [newsletter-publishing](https://github.com/jamditis/claude-skills-journalism) от [Joe Amditis](https://github.com/jamditis) — лицензия MIT.
+
+[Alena Zakharova](https://thehuman2ai.com/), [Thehuman2ai](https://thehuman2ai.com/) (MIT).
