@@ -96,6 +96,8 @@ Skill by **Jesse Vincent** · [superpowers plugin](https://github.com/jessevondo
 
 Published here with attribution for reference. Primary installation: superpowers plugin via Claude Code.
 
+[Alena Zakharova](https://thehuman2ai.com/), [Thehuman2ai](https://thehuman2ai.com/) (MIT).
+
 ---
 
 ---
@@ -196,6 +198,7 @@ Invoke-WebRequest `
 
 Опубликовано здесь с атрибуцией для справки. Основной способ установки: плагин superpowers через Claude Code.
 
+[Alena Zakharova](https://thehuman2ai.com/), [Thehuman2ai](https://thehuman2ai.com/) (MIT).
+
 ---
 
-*Опубликовано в [alenazaharovaux/share](https://github.com/alenazaharovaux/share)*
