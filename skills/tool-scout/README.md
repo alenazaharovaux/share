@@ -78,6 +78,8 @@ Say any of these to Claude Code:
 
 Want to dig deeper? Say "dig into [name]".
 Or ask about a specific source: "any MCP servers for this?", "any awesome-lists?"
+
+[Алена Захарова](https://thehuman2ai.com/), [Thehuman2ai](https://thehuman2ai.com/) (MIT).
 ```
 
 ---
@@ -150,3 +152,5 @@ Copy-Item -Recurse tool-scout $env:USERPROFILE\.claude\skills\tool-scout
 **Уровень 1 (по умолчанию):** Адаптивный поиск по релевантным источникам, результат в виде таблицы с сигналами.
 
 **Уровень 2 (по запросу):** Скажите «копни [название]» или спросите по конкретному источнику («а есть awesome-списки?», «а MCP-серверы?») для подробного отчёта с ценами, плюсами/минусами, альтернативами и статистикой скачиваний.
+
+[Алена Захарова](https://thehuman2ai.com/), [Thehuman2ai](https://thehuman2ai.com/) (MIT).
