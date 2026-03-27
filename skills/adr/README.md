@@ -124,6 +124,7 @@ To make the skill run automatically at session end, add this to your global `~/.
 Format inspired by [Michael Nygard's ADR template](http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions) and the [Alexandrian pattern](https://github.com/joelparkerhenderson/architecture-decision-record/tree/main/locales/en/templates/decision-record-template-for-alexandrian-pattern) (one-liner summary). Research and best practices from [joelparkerhenderson/architecture-decision-record](https://github.com/joelparkerhenderson/architecture-decision-record).
 
 By [Alena Zakharova](https://github.com/alenazaharovaux) (MIT).
+[Alena Zakharova](https://thehuman2ai.com/), [Thehuman2ai](https://thehuman2ai.com/) (MIT).
 
 ---
 
@@ -240,3 +241,4 @@ Copy-Item -Recurse adr $env:USERPROFILE\.claude\skills\adr
 Формат вдохновлён [шаблоном ADR Майкла Найгарда](http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions) и [Alexandrian pattern](https://github.com/joelparkerhenderson/architecture-decision-record/tree/main/locales/en/templates/decision-record-template-for-alexandrian-pattern) (однострочное резюме). Исследование и лучшие практики из [joelparkerhenderson/architecture-decision-record](https://github.com/joelparkerhenderson/architecture-decision-record).
 
 Автор: [Alena Zakharova](https://github.com/alenazaharovaux) (MIT).
+[Alena Zakharova](https://thehuman2ai.com/), [Thehuman2ai](https://thehuman2ai.com/) (MIT).
