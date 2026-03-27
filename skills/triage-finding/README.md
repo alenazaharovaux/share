@@ -65,7 +65,7 @@ Just share something with Claude Code:
 
 ## Credits
 
-By [Alena Zakharova](https://human2aimain.onrender.com/ru/), [Cloud Research](https://cloud-research.onrender.com/) (MIT).
+By [Алена Захарова](https://thehuman2ai.com/), [Thehuman2ai](https://thehuman2ai.com/) (MIT).
 
 ---
 
@@ -136,4 +136,4 @@ cp -r skill-creator ~/.claude/skills/skill-creator
 
 ## Благодарности
 
-[Алена Захарова](https://human2aimain.onrender.com/ru/), [Cloud Research](https://cloud-research.onrender.com/) (MIT).
+[Алена Захарова](https://thehuman2ai.com/), [Thehuman2ai](https://thehuman2ai.com/) (MIT).
