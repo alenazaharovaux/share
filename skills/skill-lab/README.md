@@ -216,6 +216,8 @@ All JSON schemas are documented in `references/schemas.md`:
 
 Published here for reference. Primary installation: `skill-creator` plugin via Claude Code.
 
+[Алена Захарова](https://thehuman2ai.com/), [Thehuman2ai](https://thehuman2ai.com/) (MIT).
+
 ---
 
 ---
@@ -435,6 +437,8 @@ Remove-Item -Recurse -Force "$env:TEMP\share"
 **Автор:** [Anthropic](https://anthropic.com) (support@anthropic.com)
 **Лицензия:** Apache 2.0 — см. [LICENSE](LICENSE)
 **Источник:** [claude-plugins-official / skill-creator](https://github.com/anthropics/claude-code-plugins)
+
+[Алена Захарова](https://thehuman2ai.com/), [Thehuman2ai](https://thehuman2ai.com/) (MIT).
 
 Опубликовано здесь для справки. Основной способ установки: плагин `skill-creator` через Claude Code.
 
