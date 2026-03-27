@@ -128,6 +128,8 @@ Original skill by **nicobailon** · [nicobailon/visual-explainer](https://github
 
 Extended with journalism, newsroom, and academic design sensibilities by **Alena Zakharova** ([alenazaharovaux](https://github.com/alenazaharovaux))
 
+[Alena Zakharova](https://thehuman2ai.com/), [Thehuman2ai](https://thehuman2ai.com/) (MIT).
+
 ---
 
 ---
@@ -259,6 +261,8 @@ visual-explainer/
 ## Авторство
 
 Оригинальный скилл: **nicobailon** · [nicobailon/visual-explainer](https://github.com/nicobailon/visual-explainer) · MIT License
+
+[Alena Zakharova](https://thehuman2ai.com/), [Thehuman2ai](https://thehuman2ai.com/) (MIT).
 
 Расширен с фокусом на журналистику, медиа и академические исследования: **Алена Захарова** ([alenazaharovaux](https://github.com/alenazaharovaux))
 
