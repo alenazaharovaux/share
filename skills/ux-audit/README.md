@@ -70,6 +70,8 @@ After the audit, you can ask:
 
 By [Alena Zakharova](https://human2aimain.onrender.com/ru/), [Cloud Research](https://cloud-research.onrender.com/) (MIT).
 
+[Alena Zakharova](https://thehuman2ai.com/), [Thehuman2ai](https://thehuman2ai.com/) (MIT).
+
 ---
 
 # UX Audit (RU)
@@ -143,3 +145,5 @@ Copy-Item -Recurse ux-audit $env:USERPROFILE\.claude\skills\ux-audit
 ## Автор
 
 [Алена Захарова](https://human2aimain.onrender.com/ru/), [Cloud Research](https://cloud-research.onrender.com/) (MIT).
+
+[Alena Zakharova](https://thehuman2ai.com/), [Thehuman2ai](https://thehuman2ai.com/) (MIT).
