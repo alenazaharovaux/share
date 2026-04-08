@@ -20,6 +20,7 @@ Ready-to-use skills for [Claude Code](https://docs.anthropic.com/en/docs/claude-
 | [writing-guru](skills/writing-guru/) | Narrative strategy before writing — 25 base narratives, 204 compounds, 3-lens algorithm. Turns "write about X" into a structured map with sample leads. Based on the Periodic Table of Narratives by [Arseniy Popov](https://t.me/votposmotrim) |
 | [ux-audit](skills/ux-audit/) | 50-item UX audit across 5 blocks (Nielsen heuristics, conversion, content, technical, IA). Prioritized report with safeguards against hallucinated stats and inflated severity. Stress-tested 12/12. By [Alena Zakharova](https://github.com/alenazaharovaux) (MIT) |
 | [req-docs](skills/req-docs/) | Determine which requirement documents your project needs (PRD, BRD, FRD, MRD, SRD, TRD, QRD) and write them from 13 built-in templates. Two phases: advisor (recommend) then writer (create). Stress-tested 3/3. By [Alena Zakharova](https://github.com/alenazaharovaux) (MIT) |
+| [pmf](skills/pmf/) | 🧪 **Beta.** Full product-market fit cycle for one product across 10 stages — setup, hypothesis (7 dimensions), market research, risk synthesis, DVF validation, interview prep, interview synthesis, metrics (Sean Ellis + retention + Levels of PMF), iterate. Resumes between sessions. Bilingual (EN + RU), pick on first run. Feedback wanted. By [Alena Zakharova](https://github.com/alenazaharovaux) (MIT) |
 
 Writing skills (ai-writing-detox through academic-writing) are based on [jamditis/claude-skills-journalism](https://github.com/jamditis/claude-skills-journalism) by Joe Amditis — MIT license.
 
@@ -76,6 +77,7 @@ Universal prompt collections that work with any LLM — not tied to Claude Code.
 | [academic-writing](skills/academic-writing/) | Весь академический цикл — дизайн исследования, литобзор, структура IMRaD, ответы рецензентам, гранты NSF/NIH, выбор журнала |
 | [writing-guru](skills/writing-guru/) | Нарративная стратегия перед написанием — 25 нарративов, 204 соединения, алгоритм 3 линз. Превращает "напиши про X" в карту с семплами лидов. На основе Периодической таблицы нарративов [Арсения Попова](https://t.me/votposmotrim) |
 | [ux-audit](skills/ux-audit/) | UX-аудит по 50 пунктам в 5 блоках (эвристики Нильсена, конверсия, контент, техника, ИА). Приоритизированный отчёт с защитой от галлюцинаций и завышения серьёзности. Стресс-тест 12/12. Автор: [Алена Захарова](https://github.com/alenazaharovaux) (MIT) |
+| [pmf](skills/pmf/) | 🧪 **Бета.** Полный цикл product-market fit для одного продукта через 10 стадий — setup, гипотеза (7 dimensions), market research, синтез рисков, DVF-валидация, подготовка к интервью, синтез интервью, метрики (Sean Ellis + retention + Levels of PMF), итерация. Возобновляется между сессиями. Двуязычный (EN + RU), выбор на первом запуске. Ждём фидбек. Автор: [Алена Захарова](https://github.com/alenazaharovaux) (MIT) |
 
 Скиллы для текстов (от ai-writing-detox до academic-writing) основаны на [jamditis/claude-skills-journalism](https://github.com/jamditis/claude-skills-journalism) от Joe Amditis — лицензия MIT.
 
