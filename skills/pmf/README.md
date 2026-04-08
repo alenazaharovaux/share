@@ -1,10 +1,10 @@
 # PMF — Product-Market Fit Engine
 
-A Claude Code skill that walks one product through a full product-market fit cycle, from a first sketch of the hypothesis all the way to post-launch metrics. Ten stages, three artifact versions, two languages, one continuous loop.
+A Claude Code skill that walks one product through a full product-market fit cycle, from the first sketch of the hypothesis to post-launch metrics. Ten stages, three narrative versions, two languages, one continuous loop.
 
-A PMF cycle takes months. It comes back to the same questions in different forms — first as guesswork, then as research findings, then as user quotes, then as launch metrics. This skill is designed for that pace. It remembers where you left off, picks up the conversation between sessions, and refuses to rush. You can spend a week on the hypothesis, three weeks on market research, six weeks running interviews, and then come back two months later with metrics. The skill will know what state your project is in by reading the folder, and will tell you the next reasonable step.
+A PMF cycle takes months. The skill returns to the same questions in different forms — first as guesses, then as research findings, then as user quotes, then as post-launch metrics. It is built for that pace: it remembers where you stopped, resumes between sessions, does not rush you. A week on the hypothesis, three weeks on market research, six weeks of interviews, a two-month pause, return with metrics — that is a normal sequence. On every run the skill reads the project folder, identifies the stage, and proposes the next reasonable step.
 
-> **🧪 Beta — feedback wanted.** This skill is still being shaken down on real products. The pipeline holds together end to end, but every product is its own beast and there are bound to be places where the skill works well, places where it's awkward, and places where it's just wrong. If you try it, please tell us what worked, what broke, and what felt off — open an issue or drop a note in the share repo. We will adjust the skill based on what you find. The first 5–10 outside users are probably the most valuable thing we can get right now.
+> **🧪 Beta — feedback wanted.** The skill is being shaken down on real products. The pipeline holds end to end, but every product is its own animal — there will be places where the skill works well, places where it is awkward, and places where it is plain wrong. If you try it, tell us what worked, what broke, and what felt off. Open an issue or drop a note in the share repo. The first 5–10 outside users are the most valuable feedback the skill can get.
 
 ---
 
@@ -31,29 +31,39 @@ A PMF cycle takes months. It comes back to the same questions in different forms
 
 ## What this skill is
 
-The PMF skill is **one orchestrator, not a bundle**. There is one entry point — you say something like "let's do PMF for my new product" — and the skill takes you through the whole cycle without you having to remember which sub-skill to call next. All ten stages live inside it. Each stage reads the artifacts of the previous stages and writes its own.
+The PMF skill is one orchestrator, not a bundle. One entry point: you say something like "let's do PMF for my new product", and the skill takes you through the whole cycle. No sub-skills to remember, no manual switching. All ten stages live inside it. Each stage reads the artifacts of the previous stages and writes its own.
 
-The project folder is the state machine. The skill checks which files exist in the folder and figures out which stage you are on. There is no separate database, no JSON state file, no hidden bookkeeping. If you delete a file, the skill thinks the corresponding stage is undone. If you copy a folder, you have a full snapshot of the project. The whole system is "files in a folder", which makes it easy to inspect, edit by hand, share with a teammate, or commit to git.
+The project folder is the state. The skill checks which files exist in the folder and derives the current stage from them. No database, no JSON state file, no hidden bookkeeping. Delete a file and the matching stage becomes undone. Copy the folder and you have a full snapshot of the project. The whole system is files in a folder: easy to inspect by hand, edit by hand, share with a teammate, commit to git.
 
-Three principles shape the skill from end to end:
+Three principles hold the skill together.
 
-**Calm tone.** No exclamation marks, no dramatization. You are not doing PMF to get cheered on — you are doing it to find out what actually works and what does not. The skill is supposed to be a quiet collaborator, not a coach.
+**Calm tone.** No exclamation marks, no drama. You are doing PMF to find out what works and what does not, not to get cheered on. The skill is a quiet collaborator, not a coach.
 
-**Confidence is allowed to drop.** This is the part most teams get wrong. If new data contradicts the hypothesis, the skill will drop the confidence score and say so explicitly instead of papering over it. A V2 narrative with lower confidence than V1 means the cycle is doing its job. The whole pipeline is built around the idea that "I know less than I thought" is a productive finding.
+**Confidence is allowed to drop.** If new data contradicts the hypothesis, the skill lowers the confidence score and says so, rather than papering over it. A V2 narrative with lower confidence than V1 is a sign the cycle is doing its job. The whole pipeline is built on the idea that "I know less than I thought" is a productive finding.
 
-**The skill does not pretend to do field work.** Two stages — Stage 6 (Field Interviews) and Stage 8 (MVP Launch) — are explicitly **outside** the skill. The skill prepares the interview guide and waits. It writes the metrics dashboard template and waits. It never simulates user data, never invents respondent quotes, never pretends to "run the MVP for you." The work that happens in the real world stays in the real world.
+**The skill does not pretend to do field work.** Two stages — Stage 6 (field interviews) and Stage 8 (MVP launch) — are explicitly outside the skill. It prepares the interview guide and waits. It writes the metrics dashboard template and waits. It never simulates user data, never invents respondent quotes, never pretends to "run the MVP for you." Real-world work stays outside the skill.
 
 ---
 
 ## Who it's for
 
-This skill exists for the person who is sitting on a product idea, or is a few months into building something, and is suddenly asking "do I actually have product-market fit, or am I just busy?" It is for solo founders, product managers, indie hackers, researchers running a discovery project, and small teams who want a structured second opinion without paying $50K for a consultant.
+The skill drives one product through a full PMF cycle under one person in charge — whoever sits in Claude Code and works with the artifacts. Company size does not enter into it. It works the same for:
 
-It is **not** for:
-- Pure pitch decks (this is a discovery tool, not a fundraising deck builder)
-- Marketing copy (the narratives produced here are honest hypotheses, not landing-page copy)
-- Auto-launching MVPs (the skill stops at the door of the real world — it does not deploy code, run ads, or message your users)
-- Replacing user research (you still have to talk to humans; the skill makes the talking more useful)
+- a solo founder with an idea;
+- a product manager in a small team;
+- a product manager in a large company, responsible for one product or one product line;
+- a researcher running a discovery project;
+- a team where one person runs the cycle and the rest read the files and discuss the results.
+
+Artifacts live in a folder as plain markdown files. Commit them to git and your colleagues read the same versions you do. Collaboration is built this way, not through built-in review workflows.
+
+The skill does **not** cover:
+- Built-in collaboration. No approval flows, no in-artifact comments, no roles, no notifications. If your company needs that, use the skill as the lead's tool and run review outside it.
+- Portfolio analysis. Five products mean five separate folders with no links between them. A cross-product view has to be assembled by hand.
+- Replacing an existing corporate PMF process. The skill is opinionated: Cagan, Bland, Helmer, Sean Ellis, First Round. If the methodology cannot bend, the skill will clash with it.
+- MVP launch and task management. The skill produces content artifacts; it does not replace Jira or Linear.
+- Investor pitch decks. The narrative inside is a working hypothesis, not sales copy for a fundraising deck.
+- Real interviews. You run them. The skill makes the conversation sharper: a better guide, a better synthesis.
 
 ---
 
@@ -93,7 +103,7 @@ pmf/
         └── ... (same set, in Russian)
 ```
 
-The skill itself is ~480 lines in `SKILL.md`. The references are loaded on demand — only when you actually reach the stage that needs them. This keeps the active context small even though the full methodology is over 250K characters of text.
+The skill itself is about 480 lines in `SKILL.md`. References are loaded on demand — only when you reach a stage that needs them. This keeps the active context small even though the full methodology is over 250K characters.
 
 The references split into three groups:
 
@@ -144,23 +154,23 @@ That's it. No environment variables, no JSON, no install scripts.
 
 ## How it works
 
-When you trigger the skill, the very first thing it does is read your config (or ask the setup questions if there is no config yet). Then it lists the projects folder and looks at what's there. Three things can happen:
+On trigger the skill reads the config first (or asks the setup questions if there is no config yet). Then it lists the projects folder and looks at what is there. Three scenarios.
 
-1. **You're starting a brand-new product.** The skill creates a new subfolder, runs Stage 0 (Setup), and walks you through the basics: name, slug, product type, organizational context, team pre-flight check. About 10–20 minutes. The output is `00_setup.md`.
+1. **Starting a brand-new product.** The skill creates a subfolder, runs Stage 0 (setup), and walks you through the basics: name, slug, product type, organizational context, team pre-flight check. 10–20 minutes. Output: `00_setup.md`.
 
-2. **You're continuing an existing product.** The skill finds your subfolder, looks at the files inside it, and figures out which stage you're on by file presence. If `narrative-v1.md` exists but no `market-research.md`, you're between Stage 1 and Stage 2. The skill tells you exactly that and asks what to do next.
+2. **Continuing an existing product.** The skill finds your subfolder, looks at the files inside, and figures out the current stage by file presence. If `narrative-v1.md` exists but `market-research.md` does not, you are between Stage 1 and Stage 2. The skill says exactly that and asks what to do next.
 
-3. **You have several products in flight.** The skill lists them with their current stage and last-updated date, and asks which one you want to work on. It does not assume.
+3. **Several products in flight.** The skill lists them with current stage and last-modified date and asks which one you want to work on. It does not guess.
 
-After that the skill proposes the next reasonable step and waits for your confirmation. You can always override — say "go back to Stage 2", "let me redo the narrative", "skip Stage 4 for this dimension" — and the skill will switch. Old artifacts are never deleted. If you redo Stage 2 you get `market-research-v2.md`, not an overwrite.
+After that the skill proposes the next reasonable step and waits for confirmation. You can always override: "go back to Stage 2", "let me redo the narrative", "skip Stage 4 for this dimension" — and the skill switches. Old artifacts are never deleted. Redo Stage 2 and you get `market-research-v2.md`, not an overwrite.
 
-The whole machine runs on file presence — no separate state, no in-memory cache. Every session is a fresh read of the folder. This sounds slow, but it is what makes the skill survive months between sessions.
+The whole machine runs on file presence. No separate state, no in-memory cache. Every session is a fresh read of the folder. It sounds slow, and that is exactly what lets the skill survive months between sessions.
 
 ---
 
 ## The 10 stages in depth
 
-The pipeline is one happy path with explicit non-linear escapes. Here is what each stage actually does.
+The pipeline is one happy path with explicit non-linear escapes. Here is what each stage does.
 
 ### Stage 0 — Setup
 
@@ -174,7 +184,7 @@ Why these three? Because they shape every later stage. A B2B product needs to be
 
 The first version of the central narrative. The skill walks you through 7 PMF dimensions, asking guided questions, applying validation rules, and recording confidence scores for each.
 
-The output is `narrative-v1.md` — a structured document with one section per dimension, a confidence table, and an explicit "riskiest dimension" mark. Confidence scores in V1 are usually 4–6 out of 10 for most dimensions; if you find yourself writing 9–10 in V1, that's a red flag for overconfidence and the skill will flag it.
+The output is `narrative-v1.md` — a structured document with one section per dimension, a confidence table, and an explicit "riskiest dimension" mark. Confidence scores in V1 are usually 4–6 out of 10 for most dimensions. If you find yourself writing 9–10 in V1, that is a sign of overconfidence and the skill will push back.
 
 For B2B and Marketplace products, the skill goes through the dimensions twice — once per role. Decision Makers and End Users have different problems and different value props. The chicken-and-egg side of marketplaces is called out explicitly in Growth Strategy.
 
@@ -184,13 +194,13 @@ You can pick between two output formats — structured (better for internal trac
 
 ### Stage 2 — Market Research
 
-Now the skill leaves the team's heads and goes looking for evidence in the world. The goal: for each of the 7 dimensions, find **analogs** (companies that successfully validated this dimension under real conditions) and **antilogs** (known failures that show what breaks on this dimension).
+The skill leaves the team's heads and searches the world for evidence. The goal: for each of the 7 dimensions, find **analogs** (companies that successfully validated this dimension under real conditions) and **antilogs** (known failures that show what breaks on this dimension).
 
-The method is sequential web search via Exa (preferred) or WebSearch (fallback). 14–21 searches total — 2–3 per dimension. **Subagents are explicitly forbidden** here. Researching analogs is content work, not file lookup, and the user has to see every search and every result so they can intervene. The skill also adapts the "what counts as an analog" threshold to the market type: $10M+ for mature markets, $1M+ ARR for emerging ones.
+The method is sequential web search via Exa (preferred) or WebSearch (fallback). 14–21 searches total, 2–3 per dimension. **Subagents are explicitly forbidden** here. Researching analogs is content work, not file lookup, and the user must see every search and every result to intervene. The skill adapts the "what counts as an analog" threshold to the market type: $10M+ for mature markets, $1M+ ARR for emerging ones.
 
-The output is written into `market-research.md` after each dimension, not held in memory until the end. If the context starts overflowing, the skill splits the work into two passes (dimensions 1–4 in one session, 5–7 in the next). This is normal for a months-long cycle.
+The output is written to `market-research.md` after each dimension, not held in memory until the end. If the context starts overflowing, the skill splits the work into two passes (dimensions 1–4 in one session, 5–7 in the next). This is normal for a months-long cycle.
 
-The end of Stage 2 includes a "preview" of which dimensions look risky after the research, and a recommendation for Stage 3.
+Stage 2 ends with a short preview of which dimensions look risky after the research, and a recommendation for Stage 3.
 
 **Output:** `market-research.md`
 
@@ -202,9 +212,9 @@ The skill takes the V1 narrative and the market research and produces three thin
 
 **Cross-fit analysis** is two mandatory consistency checks: Channel-Model Fit (does the growth channel work with the business model?) and Model-Market Fit (does the business model work for the audience?). These often hide fatal conflicts that scoring alone misses.
 
-**V2 narrative** is a separate file from V1, with a Version History changelog. If a dimension's confidence dropped, V2 says so explicitly. If a dimension was pivoted or reset, the skill marks it. Confidence is allowed to go down — that is the whole point.
+**V2 narrative** is a separate file from V1, with a Version History changelog. If a dimension's confidence dropped, V2 says so explicitly. If a dimension was pivoted or reset, the skill marks it. Confidence is allowed to go down.
 
-The end of Stage 3 includes a decision tree: high overall confidence + a clear riskiest dimension → go to Stage 4 to validate it. Mid confidence → Stage 4 is mandatory. Low confidence → return to Stage 1 or Stage 2. Cross-fit conflicts → return to Stage 1 to rethink the conflicting pieces.
+Stage 3 ends with a decision tree: high overall confidence + a clear riskiest dimension → go to Stage 4 to validate it. Mid confidence → Stage 4 is mandatory. Low confidence → return to Stage 1 or Stage 2. Cross-fit conflicts → return to Stage 1 to rethink the conflicting pieces.
 
 **Outputs:** `risk-prioritization.md`, `narrative-v2.md`
 
@@ -212,7 +222,7 @@ The end of Stage 3 includes a decision tree: high overall confidence + a clear r
 
 The riskiest dimension from Stage 3 gets unfolded into 9 testable assumptions across DVF — David Bland's Desirability × Viability × Feasibility framework. Three assumptions per category, no exceptions. Desirability is *only* about user needs (no money, no tech). Viability is *only* about money. Feasibility is operational + technical + regulatory.
 
-The skill is strict about terminology here. In stages 1–3 it uses "hypothesis." In Stage 4 it switches to "assumption." Bland's framework is built around assumptions being concrete, testable "I believe..." statements, and mixing the two terms causes real confusion.
+The skill is strict about terminology here. In stages 1–3 it uses "hypothesis." In Stage 4 it switches to "assumption." Bland's framework is built around assumptions being concrete, testable "I believe..." statements, and mixing the two terms causes confusion down the line.
 
 After the 9 assumptions are written, the skill places them on a 2×2 of importance × evidence. The Critical quadrant — high importance, weak evidence — is what gets tested first. The skill then designs an experiment for the riskiest assumption from this quadrant, using one of 6 standard experiment types: Customer Interview, Smoke Test, Concierge, Survey, Prototype, Landing Page. **Custom experiment types are forbidden** — "mini-pilot" and "discovery sprint" are vague and the skill will refuse to invent new ones. If nothing fits, the assumption gets reframed.
 
@@ -224,11 +234,11 @@ For AI / fintech / healthtech products, regulatory assumptions automatically rep
 
 ### Stage 5 — Interview Prep
 
-Now the skill prepares the field. Based on the 2–3 riskiest dimensions from Stage 3, it builds an interview guide with five thematic blocks. Each block has 5–7 open questions. The questions follow strict rules: no leading, no hypothetical futures, no opinions about what people might do — only past behavior, only concrete situations.
+Based on the 2–3 riskiest dimensions from Stage 3, the skill builds an interview guide with five thematic blocks. Each block has 5–7 open questions. The questions follow strict rules: no leading, no hypothetical futures, no opinions about what people might do — only past behavior, only concrete situations.
 
 The guide is structured: introduction script, screening questions (2–3, behavioral not demographic), thematic blocks per risk-dimension, closing with a referral request. Every question is mapped to a dimension and an assumption in a coverage matrix, so by the end of the interview cycle every Critical-quadrant assumption from Stage 4 has at least one question pointed at it.
 
-The skill recommends 15+ interviews as a minimum, with 20–30 as the sweet spot. It also creates a `note-template.md` — the structured format the user will copy for each interview during the field.
+The skill recommends 15 interviews as a minimum, 20–30 as the sweet spot. It also creates a `note-template.md` — the structured format the user copies for each interview in the field.
 
 **Outputs:** `interview-guide.md`, `interviews/note-template.md`, empty `interviews/notes/` folder
 
@@ -242,17 +252,17 @@ The user does the field work over weeks or months. Each interview becomes a note
 
 The skill reads all the interview notes — **one at a time**, not batched, to avoid averaging out the patterns — and extracts findings per dimension. For each dimension it produces: pattern (what they say), supporting evidence count (N out of M respondents), 2–3 verbatim key quotes, confidence change (V2 → V3), and an update type (Validated / Refinement / Pivot / Reset).
 
-It also pulls out **cross-dimensional insights** (patterns that span multiple dimensions) and **surprises** (findings that contradict the hypothesis). Surprises are often the most valuable thing in the whole pipeline — if you find none, the skill flags possible confirmation bias and asks you to re-read the notes.
+It also pulls out **cross-dimensional insights** (patterns that span multiple dimensions) and **surprises** (findings that contradict the hypothesis). Surprises are often the most valuable findings in the whole cycle. If you find none, the skill flags possible confirmation bias and asks you to re-read the notes.
 
-The result is `interview-synthesis.md` and a third version of the narrative — `narrative-v3.md`. V3 is rewritten in user language, with real quotes, narrower personas, and updated risks. If confidence dropped on any dimension between V2 and V3, the skill flags it and recommends what to do next: more validation, return to research, or a pivot.
+The result is `interview-synthesis.md` and a third version of the narrative — `narrative-v3.md`. V3 is rewritten in user language, with direct quotes, narrower personas, and updated risks. If confidence dropped on any dimension between V2 and V3, the skill flags it and recommends what to do next: more validation, return to research, or a pivot.
 
 **Outputs:** `interview-synthesis.md`, `narrative-v3.md`
 
 ### Stage 8 — MVP Launch (outside the skill)
 
-Another waiting state. The narrative is validated as far as words can take you. Now you have to build something and put it in front of real users. The skill stops at the door. When you resume it on this stage, it confirms the narrative is ready and reminds you to come back for Stage 9 once you have ~40 active users.
+Another waiting state. The narrative is validated as far as words allow. Next you build something and put it in front of real users. When you resume the skill on this stage, it confirms the narrative is ready and reminds you to come back for Stage 9 once you have around 40 active users.
 
-You can use the skill as a sounding board during this stage — discussing scope, MVP features, target audience for the launch — but it will not "launch the MVP for you."
+During this stage the skill can work as a sounding board — discussing scope, MVP features, target audience for the launch — but it will not launch the product for you.
 
 ### Stage 9 — Metrics
 
@@ -264,7 +274,7 @@ Post-launch measurement, set up through three instruments used together:
 
 **First Round Levels of PMF.** A 4-level ladder — Nascent / Developing / Strong / Extreme — assessed across three dimensions (Satisfaction, Demand, Efficiency). The overall level is the *minimum* of the three, not the average. A team cannot be Strong on Satisfaction and Nascent on Efficiency at the same time — that mismatch is the bottleneck.
 
-Stage 9 unfolds across two real sessions: a setup phase where the dashboard template is created, then a collection phase of 4–12 weeks where the user gathers the data on their own, then an interpretation phase where the user comes back with the filled dashboard and the skill recommends what to do in Stage 10.
+Stage 9 unfolds across three phases: a setup phase where the dashboard template is created, a collection phase of 4–12 weeks where the user gathers the data on their own, and an interpretation phase where the user returns with the filled dashboard and the skill recommends what to do in Stage 10.
 
 **Output:** `metrics-dashboard.md`
 
@@ -302,19 +312,19 @@ The 8th half-dimension, Defensibility / Power, is treated as part of Competitive
 
 ## Cross-stage rules
 
-A few rules cut across the whole pipeline. They are the boring but load-bearing parts.
+A few rules cut across the whole pipeline. Boring but load-bearing.
 
-**Narrative versioning.** V1, V2, and V3 are **separate files**, never overwrites. Each new version has a Version History section explaining what changed and why. The point is to make the evolution of understanding visible — looking at the diff between V1 and V3 is often the most useful artifact of the whole cycle.
+**Narrative versioning.** V1, V2, and V3 are **separate files**, never overwrites. Each new version has a Version History section explaining what changed and why. The diff between V1 and V3 is often the most useful artifact of the whole cycle.
 
-**Confidence can decrease.** If the data contradicts the hypothesis, the skill will lower the confidence score and say so. A V3 with lower confidence than V2 is a sign the cycle is working. Inflating numbers to feel better is the most common failure mode of self-driven PMF work, and the skill is designed to push back against it.
+**Confidence can decrease.** If the data contradicts the hypothesis, the skill lowers the confidence score and says so. A V3 with lower confidence than V2 is a sign the cycle is working. Inflating numbers to feel better is the most common failure mode in self-driven PMF work, and the skill is built to push back against it.
 
 **Loop detection.** If the same dimension's confidence keeps dropping across versions, the skill flags a possible loop and recommends one of three actions: more validation, return to research, or a pivot. It will not let you run an infinite cycle of "interviews → small refinement → more interviews" without surfacing the pattern.
 
-**Going back is a first-class operation.** The user can say "go back to Stage 2" at any time and the skill switches. Old artifacts are not deleted. If you redo Stage 2 you get `market-research-v2.md` next to the original. The folder grows over time and that is the point.
+**Going back is a first-class operation.** You can say "go back to Stage 2" at any time and the skill switches. Old artifacts are not deleted. Redo Stage 2 and you get `market-research-v2.md` next to the original. The folder grows over time.
 
-**Between sessions, the skill re-reads everything.** It does not trust memory of "what we did last time." On every resume, auto-start scans the folder fresh and figures out the state. This is what makes a months-long cycle survive across many short sessions.
+**Between sessions, the skill re-reads everything.** It does not trust memory of "what we did last time." On every resume, auto-start scans the folder fresh and derives the state. This is what lets a months-long cycle survive across many short sessions.
 
-**No subagents for content work.** Stage 2 (research) and Stage 7 (synthesis) are done in the main session, not delegated. Research is content work — the user has to see every search and every quote so they can intervene. Synthesis requires reading interview notes one at a time in isolation, and a subagent would average the patterns. This is enforced as a hard rule.
+**No subagents for content work.** Stage 2 (research) and Stage 7 (synthesis) are done in the main session, not delegated. Research is content work — the user must see every search and every quote to intervene. Synthesis requires reading interview notes one at a time in isolation, and a subagent would average the patterns. This is a hard rule.
 
 **The skill never invents data.** It will not simulate interview quotes, will not generate fake metrics, will not assume "let's say Sean Ellis is 47%." Where data is missing, the skill says "no data yet" and asks the user to collect it.
 
@@ -322,7 +332,7 @@ A few rules cut across the whole pipeline. They are the boring but load-bearing 
 
 ## Methodology sources
 
-This skill stands on the shoulders of better thinkers. If you only have time to read one thing from each, here's where to start.
+The skill builds on several established frameworks. If you have time to read one thing from each, here is where to start.
 
 - **Marty Cagan — *Empowered* and *Inspired*.** The 7-dimensions decomposition (with Timing as a 7th) draws on Cagan's product discovery work. His insistence that problem must be framed independently of the solution shows up in Stage 1's validation rules.
 
@@ -344,7 +354,7 @@ This skill stands on the shoulders of better thinkers. If you only have time to 
 
 ## Trigger phrases
 
-The skill is designed to fire on natural language in either English or Russian. Anything in this rough shape will work:
+The skill fires on natural language in either English or Russian. Anything in this rough shape will work.
 
 **English:**
 - "do PMF for [product name]"
@@ -399,7 +409,7 @@ To install Exa MCP, see the [Exa MCP server docs](https://github.com/exa-labs/ex
 
 **Q: How long does a PMF cycle take with this skill?**
 
-A full cycle (Stage 0 through Stage 10) is months, not days. Realistic ranges: Stage 0 is 10–20 minutes. Stage 1 is 1–3 sessions of an hour each. Stage 2 (research) is 1–2 days of focused work. Stage 3 (synthesis) is half a day. Stage 4 (DVF) is half a day for the assumptions + however long the experiment takes. Stage 5 (interview prep) is half a day. Stage 6 (field interviews) is **weeks** — 15–25 interviews, scheduled and conducted by the user. Stage 7 (synthesis) is half a day to a day. Stage 8 (MVP launch) is **weeks to months**. Stage 9 (metrics) needs at least 4 weeks of data collection. Stage 10 is one session. The skill is designed for that pace and resumes between sessions.
+A full cycle (Stage 0 through Stage 10) is months, not days. Realistic ranges: Stage 0 is 10–20 minutes. Stage 1 is 1–3 sessions of an hour each. Stage 2 (research) is 1–2 days of focused work. Stage 3 (synthesis) is half a day. Stage 4 (DVF) is half a day for the assumptions plus however long the experiment takes. Stage 5 (interview prep) is half a day. Stage 6 (field interviews) is **weeks** — 15–25 interviews, scheduled and conducted by the user. Stage 7 (synthesis) is half a day to a day. Stage 8 (MVP launch) is **weeks to months**. Stage 9 (metrics) needs at least 4 weeks of data collection. Stage 10 is one session. The skill fits that pace and resumes between sessions.
 
 **Q: Can I skip a stage?**
 
@@ -447,28 +457,26 @@ The honest list, from the team that built it:
 
 6. **Deep tech / R&D products don't fit DVF well.** If your product is a quantum computer, a new biotech molecule, or anything where Feasibility is the dominant risk for years, the DVF framework distorts. You probably need Technology Readiness Levels instead, and Stage 4 won't give you what you need.
 
-7. **The skill is in beta.** Edge cases are still being found. The 9 stages have been tested end-to-end on multiple real products, but every product is its own beast. If something breaks for you, please open an issue (see the next section).
+7. **The skill is in beta.** Edge cases are still being found. The nine stages have been tested end to end on several real products, but every new product exposes new corners. If something breaks for you, please open an issue (see the next section).
 
 ---
 
 ## How to give feedback
 
-This is the most important section in the README, and it's at the bottom because we want the rest to give you context first.
+The skill is in beta. It works end to end but has been tested by a small number of people on a small number of products. Outside users are needed to find the rough edges. If you try the skill — even partially, even on a fake practice product, even on a single stage — tell us what happened.
 
-**The skill is in beta.** It works end-to-end, but it has been tested by a small number of people on a small number of products. We need outside users to find the rough edges. If you try the skill — even partially, even on a fake practice product, even for one stage — please tell us what happened.
-
-**What's especially useful:**
-- **Where the skill's suggestions felt wrong or off-the-mark** — even one example is gold
-- **Where you got stuck and the skill couldn't help** — what stage, what state, what you tried
-- **Where the skill produced something useful you didn't expect** — these tell us what to lean into
-- **Whether the bilingual setup (EN/RU) actually worked for your language**
-- **Anything in the references that was inaccurate, dated, or just wrong**
+**What is especially useful:**
+- Where the skill's suggestions felt wrong or off the mark. Even one example helps.
+- Where you got stuck and the skill could not help. Stage, state, what you tried.
+- Where the skill produced something useful you did not expect.
+- Whether the bilingual setup (EN/RU) worked for your language.
+- Anything in the references that was inaccurate, dated, or plain wrong.
 
 **How to share:**
-- Open an issue on the [share repo](https://github.com/alenazaharovaux/share)
-- Or drop a note via any channel you use to reach the maintainer
+- Open an issue in the [share repo](https://github.com/alenazaharovaux/share).
+- Or message the maintainer via any channel you use.
 
-We will adjust the skill based on what you find. The first 5–10 outside users are probably the most valuable source of feedback we will ever get on this.
+The skill is adjusted based on what outside users find. The first 5–10 outside users are the most valuable feedback it can get.
 
 ---
 
@@ -480,13 +488,13 @@ MIT — same as the rest of the share repo. Use it, fork it, change it, share it
 
 # Русская версия
 
-## PMF — Engine для product-market fit
+## PMF — движок product-market fit
 
-Скилл для Claude Code, который проводит один продукт через полный цикл product-market fit — от первого наброска гипотезы до пост-launch метрик. Десять стадий, три версии нарратива, два языка, один непрерывный цикл.
+Скилл для Claude Code, который проводит один продукт через полный цикл product-market fit — от первого наброска гипотезы до метрик после запуска. Десять стадий, три версии нарратива, два языка, один непрерывный цикл.
 
-PMF-цикл занимает месяцы. Он возвращается к одним и тем же вопросам в разных формах — сначала как догадки, потом как находки рисёрча, потом как цитаты пользователей, потом как метрики после запуска. Скилл сделан под этот темп. Он помнит где вы остановились, поднимает разговор между сессиями и не торопит. Можно неделю писать гипотезу, три недели делать market research, шесть недель проводить интервью — а потом вернуться через два месяца с метриками. Скилл прочитает папку проекта, поймёт на какой вы стадии и предложит следующий разумный шаг.
+Цикл занимает месяцы. Скилл возвращается к одним и тем же вопросам в разных формах: сначала как догадки, потом как находки исследования, потом как цитаты пользователей, потом как метрики после запуска. Сделан под такой темп: помнит, где остановились, поднимает разговор между сессиями, не торопит. Неделя на гипотезу, три недели на рыночное исследование, шесть недель на интервью, пауза в два месяца, возврат с метриками — штатная последовательность. При каждом запуске скилл читает папку проекта, определяет стадию и предлагает следующий шаг.
 
-> **🧪 Бета — нужен фидбек.** Скилл ещё обкатывается на реальных продуктах. Pipeline собран от начала до конца, но каждый продукт — свой зверь, и наверняка есть места где скилл работает хорошо, места где работает неуклюже, и места где просто ошибается. Если вы попробуете — пожалуйста, расскажите что сработало, что сломалось и что показалось странным. Откройте issue или напишите в share-репо. Мы будем править скилл по вашим находкам. Первые 5–10 внешних пользователей — самое ценное что мы можем сейчас получить.
+> **🧪 Бета — нужна обратная связь.** Скилл обкатывается на реальных продуктах. Маршрут собран от начала до конца, но каждый продукт свой, и наверняка есть места, где скилл работает хорошо, где работает неуклюже и где просто ошибается. Попробуете — расскажите, что сработало, что сломалось, что показалось странным. Issue в репозитории или сообщение мейнтейнеру. Первые 5–10 внешних пользователей — самое ценное, что сейчас можно получить.
 
 ---
 
@@ -498,43 +506,53 @@ PMF-цикл занимает месяцы. Он возвращается к о�
 - [Установка](#установка)
 - [Первый запуск — настройка](#первый-запуск--настройка)
 - [Как работает](#как-работает)
-- [10 стадий подробно](#10-стадий-подробно)
-- [7 dimensions](#7-dimensions)
-- [Cross-stage правила](#cross-stage-правила)
+- [Десять стадий подробно](#десять-стадий-подробно)
+- [Семь измерений](#семь-измерений)
+- [Сквозные правила](#сквозные-правила)
 - [Источники методологии](#источники-методологии)
 - [Триггер-фразы](#триггер-фразы)
 - [Зависимости](#зависимости)
 - [FAQ](#faq-русский)
 - [Ограничения](#ограничения)
-- [Как оставить фидбек](#как-оставить-фидбек)
+- [Как оставить обратную связь](#как-оставить-обратную-связь)
 
 ---
 
 ## Что это за скилл
 
-PMF skill — это **один оркестратор, не пакет**. Один вход — вы говорите что-то вроде «давай сделаем PMF для моего продукта» — и скилл ведёт вас через весь цикл, не заставляя вспоминать какой sub-skill вызвать следующим. Все десять стадий внутри. Каждая стадия читает артефакты предыдущих и пишет свои.
+PMF-скилл — это один оркестратор, не набор. Одна точка входа: вы говорите «давай сделаем PMF для моего продукта», и скилл ведёт через весь цикл. Никаких вспомогательных скиллов, которые надо помнить и вызывать вручную. Все десять стадий внутри. Каждая стадия читает артефакты предыдущих и записывает свои.
 
-Папка проекта — это и есть state machine. Скилл проверяет какие файлы есть в папке и определяет на какой вы стадии. Нет отдельной базы данных, нет JSON state-файла, нет скрытой бухгалтерии. Удалили файл — скилл считает что соответствующая стадия не сделана. Скопировали папку — у вас полный snapshot проекта. Вся система — это «файлы в папке», что делает её удобной для инспекции, ручной правки, передачи коллеге или коммита в git.
+Папка проекта — это и есть состояние. Скилл проверяет, какие файлы лежат в папке, и по ним определяет стадию. Нет базы данных, нет JSON-файла состояния, нет скрытого учёта. Удалили файл — стадия считается несделанной. Скопировали папку — получили полный слепок проекта. Вся система — «файлы в папке»: удобно смотреть глазами, править руками, передавать коллеге, коммитить в git.
 
-Три принципа задают тон скилла от начала до конца:
+Три принципа задают тон скилла от начала до конца.
 
-**Спокойный тон.** Никаких восклицательных знаков, никакой драматизации. Вы делаете PMF не для того чтобы вас подбодрили — а чтобы понять что реально работает а что нет. Скилл должен быть тихим коллегой, не коучем.
+**Спокойный тон.** Никаких восклицательных знаков, никакой драматизации. Вы делаете PMF не для того, чтобы вас подбодрили, а для того, чтобы понять, что работает и что нет. Скилл — тихий коллега, не коуч.
 
-**Confidence можно понижать.** Это та часть, которую большинство команд делают неправильно. Если новые данные противоречат гипотезе, скилл понизит confidence-скор и явно об этом скажет вместо того чтобы замаскировать. V2 narrative с меньшим confidence чем V1 значит что цикл делает свою работу. Весь pipeline построен вокруг идеи что «я знаю меньше чем думал» — это полезная находка.
+**Уверенность можно понижать.** Если новые данные противоречат гипотезе, скилл понижает оценку уверенности и говорит об этом прямо, а не замазывает. V2 нарратива с меньшей уверенностью, чем V1, — признак, что цикл делает свою работу. Весь маршрут построен на идее: «я знаю меньше, чем думал» — это продуктивная находка.
 
-**Скилл не претендует делать полевую работу.** Две стадии — Stage 6 (Field Interviews) и Stage 8 (MVP Launch) — явно **вне** скилла. Скилл готовит гайд интервью и ждёт. Создаёт template метрик-дашборда и ждёт. Никогда не симулирует данные пользователей, не выдумывает цитаты респондентов, не делает вид что «запускает MVP за вас». Работа в реальном мире остаётся в реальном мире.
+**Скилл не претендует на полевую работу.** Две стадии — шестая (интервью в поле) и восьмая (запуск MVP) — явно вне скилла. Скилл готовит гайд интервью и ждёт. Пишет шаблон панели метрик и ждёт. Никогда не симулирует данные пользователей, не выдумывает цитаты респондентов, не делает вид, что «запускает MVP за вас». Работа в реальном мире остаётся вне скилла.
 
 ---
 
 ## Для кого
 
-Этот скилл существует для человека, который сидит над идеей продукта или несколько месяцев что-то строит и вдруг спрашивает себя: «а у меня вообще есть product-market fit, или я просто занят?». Это для соло-фаундеров, продактов, indie hackers, исследователей в discovery-проекте, и небольших команд которые хотят структурированное второе мнение без оплаты $50K консультанту.
+Скилл ведёт один продукт через полный PMF-цикл силами одного ответственного — того, кто сидит в Claude Code и работает с артефактами. Размер компании за этим не стоит. Работает одинаково для:
 
-Это **не для:**
-- Чистых pitch-deck'ов (это discovery-инструмент, не построитель fundraising-deck)
-- Маркетинговых текстов (нарративы здесь — честные гипотезы, не landing-page копи)
-- Авто-запуска MVP (скилл останавливается у двери реального мира — не деплоит код, не запускает рекламу, не пишет вашим пользователям)
-- Замены user research (с людьми всё равно надо разговаривать; скилл делает разговоры полезнее)
+- соло-фаундера с идеей;
+- продакт-менеджера в маленькой команде;
+- продакт-менеджера в крупной компании, отвечающего за один продукт или одну продуктовую линию;
+- исследователя на дискавери-проекте;
+- команды, где один человек ведёт цикл, а остальные читают файлы и обсуждают результаты.
+
+Артефакты живут в папке обычными markdown-файлами. Закоммитили в git — коллеги читают те же версии, что и вы. Совместная работа построена именно так, без встроенных инструментов согласования.
+
+Скилл **не** закрывает:
+- Встроенную совместную работу. Никаких согласований, комментариев внутри артефактов, ролей, уведомлений. Если в компании это требуется — берите скилл как инструмент ведущего, а согласование выстраивайте отдельно.
+- Портфельный анализ. Пять продуктов — пять отдельных папок без связей между ними. Сводную картину по нескольким продуктам придётся собирать руками.
+- Замену существующего корпоративного PMF-процесса. Скилл жёсткий по методологии: Каган, Бланд, Хелмер, Шон Эллис, First Round. Если менять методологию нельзя — скилл будет с ней конфликтовать.
+- Запуск MVP и управление задачами. Скилл пишет содержательные артефакты, а не ведёт доску задач в Jira или Linear.
+- Презентации для инвесторов. Нарратив внутри — рабочая гипотеза, а не продающий текст для презентации о сборе денег.
+- Живые интервью. Их проводите вы. Скилл делает разговор точнее: лучше гайд, лучше синтез.
 
 ---
 
@@ -544,45 +562,44 @@ PMF skill — это **один оркестратор, не пакет**. Од�
 pmf/
 ├── SKILL.md                                  ← сам скилл (английская точка входа)
 ├── README.md                                 ← этот файл
-├── config.md                                 ← пользовательская конфигурация (язык, путь к проектам)
+├── config.md                                 ← настройки (язык, путь к проектам)
 └── references/
-    ├── en/                                   ← 23 английских reference-файла
-    │   └── ... (см. английскую секцию выше)
-    └── ru/                                   ← 23 русских reference-файла
-        ├── pipeline-overview.md              ← state machine, переходы между стадиями
-        ├── stage-0-setup.md                  ← детальная логика Stage 0
-        ├── stage-1-hypothesis.md             ← детальная логика Stage 1
-        ├── stage-2-research.md               ← детальная логика Stage 2
-        ├── stage-3-synthesis.md              ← детальная логика Stage 3
-        ├── stage-4-validate.md               ← детальная логика Stage 4
-        ├── stage-5-interview-prep.md         ← детальная логика Stage 5
-        ├── stage-7-interview-synthesis.md    ← детальная логика Stage 7
-        ├── stage-9-metrics.md                ← детальная логика Stage 9
-        ├── 7-dimensions.md                   ← 7 PMF измерений целиком
-        ├── 7-powers.md                       ← 7 Powers Хэмильтона Хелмера
-        ├── dvf-framework.md                  ← Desirability/Viability/Feasibility (David Bland)
-        ├── sean-ellis-survey.md              ← 40% бенчмарк, правила дистрибуции
-        ├── levels-of-pmf.md                  ← First Round 4-уровневая лестница
-        ├── narrative-writing-guide.md        ← как писать центральный narrative
-        ├── template-narrative.md             ← структурный шаблон narrative
-        ├── template-narrative-prose.md       ← прозаический шаблон (для стейкхолдеров)
-        ├── template-market-research.md       ← шаблон market research
-        ├── template-risk-prioritization.md   ← шаблон risk scoring
+    ├── en/                                   ← 23 справочных файла на английском
+    └── ru/                                   ← 23 справочных файла на русском
+        ├── pipeline-overview.md              ← карта маршрута, переходы между стадиями
+        ├── stage-0-setup.md                  ← логика стадии 0
+        ├── stage-1-hypothesis.md             ← логика стадии 1
+        ├── stage-2-research.md               ← логика стадии 2
+        ├── stage-3-synthesis.md              ← логика стадии 3
+        ├── stage-4-validate.md               ← логика стадии 4
+        ├── stage-5-interview-prep.md         ← логика стадии 5
+        ├── stage-7-interview-synthesis.md    ← логика стадии 7
+        ├── stage-9-metrics.md                ← логика стадии 9
+        ├── 7-dimensions.md                   ← семь измерений PMF целиком
+        ├── 7-powers.md                       ← семь сил Хэмилтона Хелмера
+        ├── dvf-framework.md                  ← желанность / жизнеспособность / осуществимость (Дэвид Бланд)
+        ├── sean-ellis-survey.md              ← порог 40%, правила распределения опросника
+        ├── levels-of-pmf.md                  ← лестница First Round из четырёх уровней
+        ├── narrative-writing-guide.md        ← как писать центральный нарратив
+        ├── template-narrative.md             ← шаблон структурного нарратива
+        ├── template-narrative-prose.md       ← шаблон прозаического нарратива
+        ├── template-market-research.md       ← шаблон отчёта рыночного исследования
+        ├── template-risk-prioritization.md   ← шаблон оценки рисков
         ├── template-interview-guide.md       ← шаблон гайда интервью
         ├── template-interview-note.md        ← шаблон заметки одного интервью
         ├── template-interview-synthesis.md   ← шаблон синтеза интервью
-        └── template-metrics-dashboard.md     ← шаблон метрик-дашборда
+        └── template-metrics-dashboard.md     ← шаблон панели метрик
 ```
 
-Сам скилл — около 480 строк в `SKILL.md`. References грузятся on demand — только когда вы реально дошли до стадии которой они нужны. Это держит активный контекст маленьким даже при том что полная методология — больше 250K символов текста.
+Сам скилл — около 480 строк в `SKILL.md`. Справочные файлы загружаются по требованию, только когда вы дошли до стадии, которой они нужны. Это держит активный контекст маленьким, хотя вся методология — больше 250 тысяч символов.
 
-References делятся на три группы:
+Справочники делятся на три группы.
 
-**Stage logic** (9 файлов: pipeline-overview + 8 стадий). Это операционные мануалы для каждой стадии — что читает что, что пишет что, quality gates, common pitfalls. Грузятся когда вы входите в соответствующую стадию.
+**Логика стадий** (9 файлов: обзор маршрута плюс восемь стадий). Это операционные руководства: что читает, что пишет, проверки качества, частые ловушки. Загружаются при входе в соответствующую стадию.
 
-**Methodology** (6 файлов: 7-dimensions, 7-powers, dvf-framework, sean-ellis-survey, levels-of-pmf, narrative-writing-guide). Это справочники по фреймворкам которые лежат в основе. Грузятся когда нужны — например, `7-powers.md` читается внутри Stage 1 когда вы доходите до dimension Competitive Advantage.
+**Методология** (6 файлов: семь измерений, семь сил, DVF, опросник Шона Эллиса, уровни PMF, руководство по нарративу). Справочники по фреймворкам. Загружаются, когда нужны: например, `7-powers.md` читается внутри стадии 1, когда вы доходите до измерения «Конкурентное преимущество».
 
-**Templates** (8 файлов: narrative × 2, market research, risk prioritization, interview guide, interview note, interview synthesis, metrics dashboard). Это собственно fill-in-the-blanks шаблоны которые скилл копирует в папку вашего проекта. Каждый сцеплен со своей стадией.
+**Шаблоны** (8 файлов: два шаблона нарратива, рыночное исследование, оценка рисков, гайд интервью, заметка интервью, синтез интервью, панель метрик). Это собственно заполняемые шаблоны, которые скилл копирует в папку вашего проекта. Каждый привязан к своей стадии.
 
 ---
 
@@ -598,250 +615,250 @@ cp -r pmf ~/.claude/skills/pmf
 Copy-Item -Recurse pmf $env:USERPROFILE\.claude\skills\pmf
 ```
 
-После этого скилл доступен из любой Claude Code сессии — он глобальный, не per-project.
+После этого скилл доступен в любой сессии Claude Code. Он глобальный, не привязан к проекту.
 
 ---
 
 ## Первый запуск — настройка
 
-При первом триггере скилл задаёт два вопроса и сохраняет ответы в `~/.claude/skills/pmf/config.md`. Оба вопроса можно пропустить — скилл использует дефолты.
+При первом срабатывании скилл задаёт два вопроса и сохраняет ответы в `~/.claude/skills/pmf/config.md`. Оба можно пропустить — скилл подставит значения по умолчанию.
 
-| Вопрос | Зачем спрашивается | Дефолт |
+| Вопрос | Зачем | По умолчанию |
 |---|---|---|
-| **На каком языке работаем — английский или русский?** | Скилл полностью двуязычный. У каждого языка свой набор references в `references/en/` или `references/ru/`. Скилл общается с вами на выбранном языке весь цикл. | `en` (English) |
-| **Где хранить PMF-проекты?** | Каждый продукт становится подпапкой. Дефолт держит всё в домашней директории; можете указать любую папку — Documents, Obsidian vault, внешний диск, что угодно. | `~/pmf-projects/` |
+| **На каком языке работаем — английском или русском?** | Скилл двуязычный. У каждого языка свой набор справочников в `references/en/` или `references/ru/`. На выбранном языке скилл разговаривает с вами дальше. | `en` (английский) |
+| **Где хранить PMF-проекты?** | Каждый продукт становится подпапкой. По умолчанию всё лежит в домашней директории; можно указать любую папку — документы, хранилище Obsidian, внешний диск. | `~/pmf-projects/` |
 
-После обоих ответов скилл записывает config и подтверждает. Любое значение можно поменять в любой момент — просто отредактируйте `~/.claude/skills/pmf/config.md`. Если удалить файл, скилл создаст его заново при следующем запуске, спросив снова.
+После обоих ответов скилл записывает настройки и подтверждает. Значение можно поменять в любой момент — отредактируйте `~/.claude/skills/pmf/config.md` руками. Удалили файл — скилл создаст его заново при следующем запуске и спросит снова.
 
-Файл config выглядит так:
+Файл настроек выглядит так:
 ```
 language: ru
 projects_path: ~/pmf-projects
 ```
 
-Всё. Никаких environment variables, никакого JSON, никаких install-скриптов.
+Всё. Ни переменных окружения, ни JSON, ни установочных скриптов.
 
 ---
 
 ## Как работает
 
-При триггере скилл первым делом читает config (или задаёт вопросы setup'а если конфига нет). Потом листит папку проектов и смотрит что там. Возможны три сценария:
+При срабатывании скилл первым делом читает настройки (или задаёт вопросы, если их нет). Потом смотрит папку проектов и то, что в ней лежит. Три сценария.
 
-1. **Вы начинаете новый продукт.** Скилл создаёт новую подпапку, запускает Stage 0 (Setup) и проводит вас через базу: имя, slug, тип продукта, контекст организации, team pre-flight check. 10–20 минут. Результат — `00_setup.md`.
+1. **Новый продукт.** Скилл создаёт подпапку, запускает стадию 0 (настройку) и проводит через базу: имя, короткое обозначение, тип продукта, контекст организации, предполётный чек команды. 10–20 минут. На выходе — `00_setup.md`.
 
-2. **Вы продолжаете существующий продукт.** Скилл находит вашу подпапку, смотрит на файлы внутри и определяет на какой вы стадии — по присутствию файлов. Если есть `narrative-v1.md` но нет `market-research.md` — вы между Stage 1 и Stage 2. Скилл говорит вам именно это и спрашивает что делать дальше.
+2. **Продолжение существующего продукта.** Скилл находит подпапку, смотрит на файлы внутри и определяет стадию по тому, что есть. Есть `narrative-v1.md`, но нет `market-research.md` — значит, вы между стадией 1 и стадией 2. Скилл сообщает это и спрашивает, что дальше.
 
-3. **У вас несколько продуктов в работе.** Скилл показывает их с текущей стадией и last-updated датой и спрашивает с каким работаем. Не предполагает.
+3. **Несколько продуктов в работе.** Скилл перечисляет их с текущей стадией и датой последнего изменения и спрашивает, с которым работаем. Не угадывает.
 
-После этого скилл предлагает следующий разумный шаг и ждёт подтверждения. Вы всегда можете переопределить — сказать «вернись к Stage 2», «дай мне переписать narrative», «пропусти Stage 4 для этой dimension» — и скилл переключится. Старые артефакты никогда не удаляются. Если переделываете Stage 2 — получаете `market-research-v2.md`, не перезапись.
+Дальше скилл предлагает следующий разумный шаг и ждёт подтверждения. Вы всегда можете переопределить: «вернись к стадии 2», «дай переписать нарратив», «пропусти стадию 4 для этого измерения» — скилл переключится. Старые артефакты не удаляются. Переделали стадию 2 — получили `market-research-v2.md`, а не перезапись поверх.
 
-Вся машина работает на присутствии файлов — нет отдельного state, нет in-memory кэша. Каждая сессия — свежее чтение папки. Это звучит медленно, но именно так скилл переживает месяцы между сессиями.
+Вся машина работает на факте существования файлов. Нет отдельного состояния, нет кэша в памяти. Каждая сессия — свежее чтение папки. Это звучит медленно, но именно так скилл переживает месяцы между сессиями.
 
 ---
 
-## 10 стадий подробно
+## Десять стадий подробно
 
-Pipeline — это один happy path с явными нелинейными выходами. Что делает каждая стадия в реальности:
+Маршрут — это один основной путь с явными нелинейными выходами. Что делает каждая стадия.
 
-### Stage 0 — Setup
+### Стадия 0 — Настройка
 
-Короткая стадия чтобы собрать базовый контекст до того как вы тронете гипотезу. Собираются три вещи: тип продукта (B2C / B2B / Marketplace / DTC / Services / Internal / Other), контекст организации (Zero-to-one / Established / Extension), и team Pre-Flight Check (3 вопроса: founder-market fit, skill gaps, conviction-flexibility).
+Короткая стадия, чтобы собрать базовый контекст до того, как вы тронете гипотезу. Собираются три вещи: тип продукта (B2C / B2B / маркетплейс / DTC / услуги / внутренний / другое), контекст организации (с нуля / зрелая / расширение) и предполётный чек команды из трёх вопросов: соответствие основателя рынку, пробелы в навыках, баланс убеждённости и гибкости.
 
-Почему именно эти три? Потому что они формируют все следующие стадии. B2B продукт надо анализировать дважды — раз для покупателя, раз для пользователя. Zero-to-one продукт не может опереться на существующие каналы. Команда без founder-market fit нуждается в партнёрах, и это влияет на риск-карту. Пропуск Stage 0 «чтобы сэкономить время» обычно стоит часов путаницы в Stage 1.
+Почему именно эти три? Потому что они формируют все следующие стадии. B2B-продукт придётся анализировать дважды — раз для покупателя, раз для пользователя. Продукт «с нуля» не может опереться на существующие каналы. Команда без соответствия основателя рынку нуждается в партнёрах, и это меняет карту рисков. Пропуск стадии 0 «чтобы сэкономить время» обычно стоит часов путаницы в стадии 1.
 
-**Output:** `00_setup.md`
+**На выходе:** `00_setup.md`
 
-### Stage 1 — Hypothesis
+### Стадия 1 — Гипотеза
 
-Первая версия центрального narrative. Скилл проводит вас через 7 PMF dimensions, задавая guided questions, применяя validation rules и записывая confidence-скоры на каждую.
+Первая версия центрального нарратива. Скилл проводит через семь измерений PMF, задаёт направляющие вопросы, применяет правила проверки и записывает оценку уверенности по каждому измерению.
 
-Результат — `narrative-v1.md`, структурированный документ с одной секцией на dimension, таблицей confidence и явной пометкой «riskiest dimension». Confidence-скоры в V1 обычно 4–6 из 10 для большинства dimensions; если вы пишете 9–10 в V1 — это красный флаг overconfidence, и скилл его поднимет.
+Результат — `narrative-v1.md`: структурированный документ с одной секцией на измерение, таблицей уверенности и явной меткой «самое рискованное измерение». Оценки уверенности в V1 обычно 4–6 из 10. Если вы ставите 9–10 в V1 — это тревожный знак переоценки, и скилл его поднимет.
 
-Для B2B и Marketplace продуктов скилл проходит dimensions дважды — раз на роль. Decision Makers и End Users имеют разные проблемы и разные value props. Chicken-and-egg сторона маркетплейсов явно отмечается в Growth Strategy.
+Для B2B и маркетплейсов скилл проходит измерения дважды — по разу на роль. Лица, принимающие решения, и конечные пользователи имеют разные проблемы и разные ценностные предложения. Проблема курицы и яйца у маркетплейсов отдельно отмечается в разделе «Стратегия роста».
 
-Можно выбрать один из двух форматов вывода — структурный (лучше для внутреннего трекинга) или прозаический (лучше для стейкхолдеров). V1 обычно делается только в структурном.
+Формат вывода — один из двух: структурный (лучше для внутреннего отслеживания) или прозаический (лучше для руководства и инвесторов). V1 обычно бывает только в структурном формате.
 
-**Output:** `narrative-v1.md`
+**На выходе:** `narrative-v1.md`
 
-### Stage 2 — Market Research
+### Стадия 2 — Рыночное исследование
 
-Теперь скилл выходит из голов команды и идёт искать evidence в мире. Цель: для каждой из 7 dimensions найти **аналоги** (компании которые успешно валидировали эту dimension в реальных условиях) и **антилоги** (известные провалы которые показывают что ломается на этой dimension).
+Скилл выходит из голов команды и ищет свидетельства в мире. Цель: для каждого из семи измерений найти **аналоги** (компании, успешно прошедшие это измерение в реальных условиях) и **антилоги** (известные провалы, показывающие, что ломается на этом измерении).
 
-Метод — последовательный веб-поиск через Exa (приоритет) или WebSearch (fallback). Всего 14–21 поиск — 2–3 на dimension. **Subagents здесь явно запрещены.** Исследование аналогов — это содержательная работа, не file lookup, и пользователь должен видеть каждый поиск и каждый результат чтобы вмешаться. Скилл также адаптирует threshold «что считать аналогом» под тип рынка: $10M+ для зрелых рынков, $1M+ ARR для emerging.
+Метод — последовательный веб-поиск через Exa (приоритет) или WebSearch (запасной вариант). Всего 14–21 поисковый запрос, 2–3 на измерение. **Делегирование агентам здесь запрещено.** Поиск аналогов — содержательная работа, не техническая выборка, и пользователь должен видеть каждый запрос и каждый результат, чтобы вмешаться. Скилл адаптирует порог «что считать аналогом» к типу рынка: $10 млн и выше для зрелых рынков, $1 млн годового дохода и выше для развивающихся.
 
-Результат пишется в `market-research.md` после каждой dimension, не накапливается в памяти до конца. Если контекст начинает переполняться, скилл разбивает работу на 2 захода (dimensions 1–4 в одну сессию, 5–7 в следующую). Это нормально для месячного цикла.
+Результат пишется в `market-research.md` после каждого измерения, не копится в памяти до конца. Если контекст начинает переполняться, скилл разбивает работу на два захода (измерения 1–4 в одну сессию, 5–7 в другую). Это нормально для цикла в месяцы.
 
-В конце Stage 2 — preview каких dimensions выглядят рискованными после рисёрча и рекомендация для Stage 3.
+В конце стадии 2 — предварительный срез: какие измерения после исследования выглядят рискованными, и рекомендация для стадии 3.
 
-**Output:** `market-research.md`
+**На выходе:** `market-research.md`
 
-### Stage 3 — Synthesis
+### Стадия 3 — Синтез
 
-Скилл берёт V1 narrative и market research и производит три вещи: numerical risk score per dimension, cross-fit analysis, и обновлённый narrative (V2).
+Скилл берёт V1 нарратива и материалы рыночного исследования и производит три вещи: численную оценку риска по каждому измерению, проверку согласованности между измерениями и обновлённый нарратив (V2).
 
-**Risk scoring** использует формулу `Risk Score = (10 - Evidence Score) × Failure Impact`. Evidence Score — насколько сильно данные поддерживают dimension (1–10). Failure Impact — насколько катастрофично если эта dimension окажется неверной (1–4, с разумными дефолтами — Problem и Business Model = 4, Audience и Growth = 3, Value Prop и Power = 2). Дефолтный impact можно перекалибровать под конкретный продукт.
+**Оценка риска** использует формулу `Риск = (10 − Оценка свидетельств) × Катастрофичность провала`. Оценка свидетельств — насколько сильно данные поддерживают измерение (1–10). Катастрофичность провала — насколько страшно, если измерение окажется ошибочным (1–4, с разумными значениями по умолчанию: «Проблема» и «Бизнес-модель» = 4, «Аудитория» и «Рост» = 3, «Ценностное предложение» и «Сила» = 2). Значения по умолчанию можно перекалибровать под конкретный продукт.
 
-**Cross-fit analysis** — две обязательные проверки согласованности: Channel-Model Fit (работает ли growth channel с business model?) и Model-Market Fit (работает ли business model для аудитории?). Здесь часто прячутся фатальные конфликты которые scoring в одиночку пропускает.
+**Проверка согласованности** — два обязательных теста: «Канал + модель» (работает ли канал роста с бизнес-моделью?) и «Модель + рынок» (работает ли бизнес-модель для аудитории?). Здесь часто прячутся фатальные конфликты, которые оценка риска поодиночке пропускает.
 
-**V2 narrative** — отдельный файл от V1, с Version History changelog. Если confidence dimension'а упал — V2 говорит это явно. Если dimension был pivoted или reset — скилл отмечает. Confidence можно понижать — в этом весь смысл.
+**V2 нарратива** — отдельный файл от V1, с разделом «История версий». Если уверенность по измерению упала — V2 говорит это прямо. Если измерение развернули или обнулили — скилл ставит отметку. Уверенность разрешено понижать.
 
-В конце Stage 3 — decision tree: высокий overall confidence + явный riskiest → Stage 4 валидировать его. Средний confidence → Stage 4 обязателен. Низкий confidence → возврат к Stage 1 или Stage 2. Cross-fit конфликты → возврат к Stage 1 для пересмотра конфликтующих частей.
+В конце стадии 3 — дерево решений: высокая общая уверенность плюс одно явно рискованное измерение → стадия 4, валидируем его. Средняя уверенность → стадия 4 обязательна. Низкая → возврат к стадии 1 или стадии 2. Конфликт согласованности → возврат к стадии 1 и пересмотр конфликтующих частей.
 
-**Outputs:** `risk-prioritization.md`, `narrative-v2.md`
+**На выходе:** `risk-prioritization.md`, `narrative-v2.md`
 
-### Stage 4 — Validate (DVF)
+### Стадия 4 — Валидация (DVF)
 
-Самая рискованная dimension из Stage 3 разворачивается в 9 проверяемых assumptions по DVF — фреймворку David Bland: Desirability × Viability × Feasibility. Три assumption на категорию, без исключений. Desirability — *только* про user needs (никаких денег, никакой техники). Viability — *только* про деньги. Feasibility — operational + technical + regulatory.
+Самое рискованное измерение из стадии 3 разворачивается в 9 проверяемых допущений по DVF — фреймворку Дэвида Бланда: желанность × жизнеспособность × осуществимость. Три допущения на категорию, без исключений. Желанность — **только** про нужды пользователя (не про деньги, не про технику). Жизнеспособность — **только** про деньги. Осуществимость — операционная, техническая, регуляторная.
 
-Скилл строг к терминологии здесь. В стадиях 1–3 используется «hypothesis». В Stage 4 переключается на «assumption». Фреймворк Bland'а построен на том что assumptions — конкретные проверяемые «I believe...» утверждения, и смешение терминов вызывает реальную путаницу.
+Скилл строг к терминологии. На стадиях 1–3 используется слово «гипотеза». На стадии 4 — «допущение». Фреймворк Бланда построен на том, что допущения — это конкретные проверяемые утверждения вида «я верю, что...». Смешение терминов вызывает путаницу дальше по циклу.
 
-После того как 9 assumptions написаны, скилл размещает их на 2×2 importance × evidence. Critical quadrant — high importance + weak evidence — это что тестируется первым. Скилл проектирует эксперимент для самой рискованной assumption из этого квадранта, используя один из 6 стандартных типов экспериментов: Customer Interview, Smoke Test, Concierge, Survey, Prototype, Landing Page. **Кастомные типы запрещены** — «mini-pilot» и «discovery sprint» размытые, и скилл откажется выдумывать новые. Если ничего не подходит — assumption переформулируется.
+После того как 9 допущений написаны, скилл размещает их на матрице 2×2 по важности и свидетельствам. Критический квадрант — высокая важность плюс слабые свидетельства — это то, что тестируется первым. Скилл проектирует эксперимент для самого рискованного допущения из этого квадранта, используя один из шести стандартных типов экспериментов: глубинное интервью, дымовой тест, консьерж, опрос, прототип, посадочная страница. **Свои типы экспериментов запрещены** — «мини-пилот» и «дискавери-спринт» размытые, скилл откажется выдумывать новые. Если ни один стандартный тип не подходит — допущение переформулируется.
 
-Experiment brief включает конкретные success/failure thresholds (не «много sign-ups», а «≥3% landing → trial sign-up»), estimated effort, и заметку о том что эксперимент *не* покажет.
+Бриф эксперимента включает конкретные пороги успеха и провала — не «много регистраций», а «не менее 3% посетителей посадочной страницы регистрируются на пробу», — оценку усилий и отдельную заметку о том, чего эксперимент **не** покажет.
 
-Для AI / fintech / healthtech продуктов regulatory assumptions автоматически заменяют одну-две operational/technical в Feasibility.
+Для продуктов из AI, финтеха и медтеха регуляторные допущения автоматически заменяют одно-два операционных или технических в «Осуществимости».
 
-**Outputs:** `assumptions-map.md`, `experiment-brief.md`
+**На выходе:** `assumptions-map.md`, `experiment-brief.md`
 
-### Stage 5 — Interview Prep
+### Стадия 5 — Подготовка интервью
 
-Теперь скилл готовит поле. На основе 2–3 рискованных dimensions из Stage 3 строится гайд интервью с пятью тематическими блоками. Каждый блок — 5–7 открытых вопросов. Вопросы следуют строгим правилам: не leading, не hypothetical futures, не мнения о том что люди *могли бы* делать — только past behavior, только конкретные ситуации.
+На основе 2–3 самых рискованных измерений из стадии 3 скилл строит гайд интервью с пятью тематическими блоками. В каждом блоке — 5–7 открытых вопросов. Вопросы подчиняются строгим правилам: не наводящие, не про гипотетическое будущее, не про мнение пользователя о том, что он «мог бы» делать — только прошлое поведение, только конкретные ситуации.
 
-Гайд структурирован: introduction script, screening questions (2–3, поведенческие не demographic), thematic blocks per risk-dimension, closing с просьбой о референсе. Каждый вопрос мапится на dimension и assumption в coverage matrix, так что к концу серии интервью каждая Critical-quadrant assumption из Stage 4 имеет хотя бы один вопрос направленный на неё.
+Структура гайда: вводный сценарий, отсеивающие вопросы (2–3, поведенческие, не демографические), тематические блоки по рисковым измерениям, закрытие с просьбой о рекомендации. Каждый вопрос привязан к измерению и допущению через матрицу покрытия, так что к концу серии интервью на каждое допущение из критического квадранта стадии 4 приходится хотя бы один вопрос.
 
-Скилл рекомендует минимум 15 интервью, sweet spot — 20–30. Также создаётся `note-template.md` — структурированный формат который пользователь будет копировать для каждого интервью в поле.
+Скилл рекомендует минимум 15 интервью, оптимум — 20–30. Дополнительно создаётся `note-template.md` — структурированный формат, который пользователь копирует для каждого интервью в поле.
 
-**Outputs:** `interview-guide.md`, `interviews/note-template.md`, пустая папка `interviews/notes/`
+**На выходе:** `interview-guide.md`, `interviews/note-template.md`, пустая папка `interviews/notes/`
 
-### Stage 6 — Field Interviews (вне скилла)
+### Стадия 6 — Полевые интервью (вне скилла)
 
-Это **состояние ожидания**. Скилл не может проводить интервью. Может только подготовить гайд и потом обработать заметки. Когда вы возобновляете скилл на этой стадии, он говорит что гайд готов, спрашивает сколько интервью провели, и ждёт.
+Это **состояние ожидания**. Скилл не проводит интервью. Только готовит гайд и потом обрабатывает заметки. Когда вы возвращаетесь на эту стадию, скилл сообщает, что гайд готов, спрашивает, сколько интервью проведено, и ждёт.
 
-Пользователь делает полевую работу неделями или месяцами. Каждое интервью становится заметкой в `interviews/notes/`, написанной в структурированном формате из шаблона. С хотя бы одной заметкой в папке скилл позволит перейти к Stage 7, но 15+ — рекомендованный минимум для осмысленного синтеза.
+Пользователь делает полевую работу неделями или месяцами. Каждое интервью становится заметкой в `interviews/notes/` в формате из шаблона. С одной заметкой скилл уже даст перейти на стадию 7, но 15 и больше — рекомендованный минимум для осмысленного синтеза.
 
-### Stage 7 — Interview Synthesis
+### Стадия 7 — Синтез интервью
 
-Скилл читает все заметки интервью — **по одной**, не пакетно, чтобы не усреднять паттерны — и извлекает findings per dimension. На каждую dimension производит: pattern (что говорят), supporting evidence count (N из M респондентов), 2–3 verbatim key quotes, confidence change (V2 → V3), и update type (Validated / Refinement / Pivot / Reset).
+Скилл читает все заметки интервью **по одной**, не пакетом, чтобы не усреднить паттерны, и извлекает находки по каждому измерению. На каждое измерение производит: паттерн (что говорят), количество подтверждений (N из M респондентов), 2–3 ключевые цитаты дословно, изменение уверенности (V2 → V3), тип обновления (подтверждено / уточнение / разворот / сброс).
 
-Также вытаскивает **cross-dimensional insights** (паттерны спанящие несколько dimensions) и **surprises** (находки противоречащие гипотезе). Surprises часто — самое ценное во всём pipeline. Если их нет — скилл флагает возможный confirmation bias и просит перечитать заметки.
+Отдельно вытаскивает **межизмеренческие находки** — паттерны, которые проходят через несколько измерений, — и **сюрпризы**: то, что противоречит гипотезе. Сюрпризы часто самое ценное во всём цикле. Если их нет — скилл помечает возможное подтверждающее искажение и просит перечитать заметки.
 
-Результат — `interview-synthesis.md` и третья версия narrative — `narrative-v3.md`. V3 переписан на языке пользователей, с реальными цитатами, более узкими персонами и обновлёнными рисками. Если confidence упал на какой-то dimension между V2 и V3 — скилл флагает и рекомендует следующий шаг: больше валидации, возврат к рисёрчу, или pivot.
+Результат — `interview-synthesis.md` и третья версия нарратива, `narrative-v3.md`. V3 переписан на языке пользователей, с прямыми цитатами, более узкими персонами и обновлёнными рисками. Если уверенность по какому-то измерению упала между V2 и V3, скилл помечает это и рекомендует: больше валидации, возврат к рыночному исследованию или разворот.
 
-**Outputs:** `interview-synthesis.md`, `narrative-v3.md`
+**На выходе:** `interview-synthesis.md`, `narrative-v3.md`
 
-### Stage 8 — MVP Launch (вне скилла)
+### Стадия 8 — Запуск MVP (вне скилла)
 
-Ещё одно состояние ожидания. Narrative валидирован настолько насколько слова это позволяют. Теперь надо что-то построить и поставить перед реальными пользователями. Скилл останавливается у двери. Когда вы возобновляете на этой стадии — скилл подтверждает что narrative готов и напоминает прийти на Stage 9 когда соберётся ~40 active users.
+Ещё одно состояние ожидания. Нарратив валидирован настолько, насколько это позволяют слова. Дальше нужно что-то построить и поставить перед реальными пользователями. При возврате на эту стадию скилл подтверждает, что нарратив готов, и напоминает прийти на стадию 9, когда наберётся около 40 активных пользователей.
 
-Можно использовать скилл как собеседника на этой стадии — обсуждать scope, MVP-фичи, target audience для запуска — но он не «запустит MVP за вас».
+На этой стадии скилл можно использовать как собеседника: обсудить объём работ, фичи MVP, целевую аудиторию запуска. Но запускать продукт за вас он не будет.
 
-### Stage 9 — Metrics
+### Стадия 9 — Метрики
 
-Пост-launch измерение через три инструмента используемых вместе:
+Измерение после запуска через три инструмента, используемых вместе.
 
-**Sean Ellis 40% Survey.** Один вопрос — *«Как бы вы себя чувствовали, если бы больше не могли использовать [продукт]?»* — с четырьмя вариантами ответа. Threshold: ≥40% «Очень разочарован» (исключая N/A) = PMF. Минимум 40 ответов, дистрибутировать только active users (не newsletter list, не cherry-picked top customers). Скилл генерирует текст вопроса и инструкции по дистрибуции, но НЕ собирает данные сам.
+**Опросник Шона Эллиса, порог 40%.** Один вопрос — *«Как бы вы себя чувствовали, если бы больше не могли пользоваться [продуктом]?»* — с четырьмя вариантами ответа. Порог: не менее 40% «Очень разочарован» (исключая «не пользуюсь») = PMF. Минимум 40 ответов, рассылать только активным пользователям — не по общей рассылке, не по вручную отобранным топ-клиентам. Скилл генерирует текст вопроса и инструкции по рассылке, но данные не собирает.
 
-**Retention Cohorts.** Когортная таблица (неделя регистрации × процент возвратившихся в неделю 1, 2, 3, 4, 8, 12) с definition «active» откалиброванным под тип продукта. PMF signal: кривая выравнивается на здоровом уровне, а не падает к нулю. Strong PMF threshold — >40% для consumer, >60% для B2B, >25% для high-frequency. Скилл создаёт template таблицы и инструкции по сбору данных.
+**Когорты удержания.** Таблица когорт: неделя регистрации × процент пользователей, вернувшихся в неделю 1, 2, 3, 4, 8, 12. Определение «активный» калибруется под тип продукта. Сигнал PMF: кривая выравнивается на здоровом уровне, а не падает в ноль. Порог сильного PMF: больше 40% для потребительского, больше 60% для B2B, больше 25% для высокочастотного использования. Скилл создаёт шаблон таблицы и инструкции по сбору данных.
 
-**First Round Levels of PMF.** 4-уровневая лестница — Nascent / Developing / Strong / Extreme — оцениваемая по трём dimensions (Satisfaction, Demand, Efficiency). Общий уровень = *минимум* из трёх, не среднее. Команда не может быть Strong по Satisfaction и Nascent по Efficiency одновременно — этот mismatch и есть bottleneck.
+**Уровни PMF от First Round.** Лестница из четырёх уровней — зарождающийся / развивающийся / сильный / экстремальный — оценивается по трём измерениям: удовлетворённость, спрос, эффективность. Общий уровень равен **минимуму** из трёх, а не среднему. Команда не может быть «сильной» по удовлетворённости и «зарождающейся» по эффективности одновременно — это рассогласование и есть узкое место.
 
-Stage 9 разворачивается через две реальные сессии: setup phase где создаётся dashboard template, потом collection phase 4–12 недель где пользователь собирает данные сам, потом interpretation phase где пользователь возвращается с заполненным dashboard и скилл рекомендует что делать в Stage 10.
+Стадия 9 разворачивается в три фазы: фаза настройки (создаётся шаблон панели метрик), фаза сбора длиной 4–12 недель (пользователь собирает данные сам), фаза интерпретации (пользователь возвращается с заполненной панелью, скилл рекомендует, что делать в стадии 10).
 
-**Output:** `metrics-dashboard.md`
+**На выходе:** `metrics-dashboard.md`
 
-### Stage 10 — Iterate
+### Стадия 10 — Итерация
 
-На основе метрик — решение что дальше:
+По метрикам принимается решение, что дальше.
 
-- **Sean Ellis ≥40% + retention flatten + Level 3+** → PMF достигнут. Скилл выходит — scaling вне его scope.
-- **Sean Ellis 25–40% + частичный retention flatten + Level 2** → Iterate. Возврат к Stage 4 (валидировать следующую риск-assumption) или Stage 7 (новый раунд интервью на сегмент «Несколько разочарован»).
-- **Sean Ellis <25% + падающий retention + Level 1** → Pivot. Возврат к Stage 1 с явным reasoning о том какая dimension провалилась.
+- **Шон Эллис не меньше 40% + удержание выравнивается + уровень 3 или выше** → PMF достигнут. Скилл выходит — масштабирование вне его области.
+- **Шон Эллис 25–40% + частичное выравнивание удержания + уровень 2** → итерация. Возврат к стадии 4 (валидировать следующее рискованное допущение) или к стадии 7 (новый раунд интервью, сфокусированный на сегменте «немного разочарован»).
+- **Шон Эллис меньше 25% + падающее удержание + уровень 1** → разворот. Возврат к стадии 1 с явным обоснованием, какое измерение провалилось.
 
-Output — `iteration-changelog.md`. После того как он написан, auto-start скилла снова прочитает папку и предложит следующую стадию на основе нового состояния. Цикл продолжается.
+На выходе — `iteration-changelog.md`. После его записи автозапуск скилла снова читает папку и предлагает следующую стадию исходя из нового состояния. Цикл продолжается.
 
-**Output:** `iteration-changelog.md`
+**На выходе:** `iteration-changelog.md`
 
 ---
 
-## 7 dimensions
+## Семь измерений
 
-Каждая стадия pipeline возвращается к этим 7 dimensions. Они не независимы — сильные гипотезы показывают как они усиливают друг друга. Скилл загружает полное описание из `references/<lang>/7-dimensions.md` когда вы доходите до Stage 1, но вот короткая версия:
+Каждая стадия цикла возвращается к этим семи измерениям. Они не независимы — сильные гипотезы показывают, как измерения усиливают друг друга. Полное описание скилл загружает из `references/<язык>/7-dimensions.md` при входе в стадию 1. Короткая версия ниже.
 
-| # | Dimension | Вопрос | На что смотреть |
+| # | Измерение | Вопрос | Чего опасаться |
 |---|---|---|---|
-| 1 | **Problem to Solve** | Какого результата пытаются достичь пользователи и что мешает? | Solution-framed проблемы («у них нет нашего инструмента»). Абстрактные проблемы («хотят эффективности»). |
-| 2 | **Target Audience** | Кто конкретно, и почему именно они сейчас (vs кто потом)? | Demographic-only персоны. «Все малые бизнесы». Now segment = future segment. |
-| 3 | **Value Proposition** | Какой один benefit, на их языке, бьёт сильнее всего? | Features вместо benefits. Generic claims. Несколько конкурирующих taglines. |
-| 4 | **Competitive Advantage** | Какая из 7 Powers Хелмера — ваш long-term moat? | «Лучшая команда», «первые на рынке», «уникальная технология» — ни одно не Power. |
-| 5 | **Growth Strategy** | Как получаете первых 1K, и как доходите до 100K? | Один и тот же канал на оба горизонта. «Будем вирусными» без механизма. |
-| 6 | **Business Model** | Какая equation, и согласована ли она с аудиторией и каналом? | «Будет реклама / freemium / премиум» без чисел. Pricing скопирован у конкурента. |
-| 7 | **Timing / Why Now** | Какой конкретный shift сделал это возможным/нужным в последние 1–3 года? | «Нам кажется что время пришло». «AI hype». Размытое «рынок созрел». |
+| 1 | **Проблема** | Какого результата пытаются добиться пользователи и что им мешает? | Проблемы в терминах решения («у них нет нашего инструмента»). Абстрактные проблемы («хотят эффективности»). |
+| 2 | **Аудитория** | Кто конкретно и почему именно они сейчас (а не те, кто потом)? | Только демографические персоны. «Все малые бизнесы». Текущий сегмент = будущий сегмент. |
+| 3 | **Ценностное предложение** | Какая одна выгода на их языке бьёт сильнее всего? | Функции вместо выгод. Общие заявления. Несколько конкурирующих слоганов. |
+| 4 | **Конкурентное преимущество** | Какая из семи сил Хелмера — ваш долгосрочный защитный ров? | «Лучшая команда», «первые на рынке», «уникальная технология» — ни одно не сила. |
+| 5 | **Стратегия роста** | Как получаете первую тысячу пользователей и как доходите до ста тысяч? | Один и тот же канал для обоих горизонтов. «Станем вирусными» без механизма. |
+| 6 | **Бизнес-модель** | Какое у вас уравнение и согласовано ли оно с аудиторией и каналом? | «Будет реклама / фримиум / премиум» без чисел. Цены, скопированные у конкурента. |
+| 7 | **Время / почему сейчас** | Какой конкретный сдвиг сделал это возможным или нужным за последние 1–3 года? | «Нам кажется, время пришло». «Хайп вокруг AI». Размытое «рынок созрел». |
 
-Восьмая половинка-dimension, Defensibility / Power, рассматривается как часть Competitive Advantage, но проверяется отдельно во время Stage 1 и снова в Stage 9 когда есть метрики.
+Восьмое половинное измерение — «защищённость» — часть конкурентного преимущества. Проверяется отдельно на стадии 1 и снова на стадии 9, когда есть метрики.
 
 ---
 
-## Cross-stage правила
+## Сквозные правила
 
-Через весь pipeline проходит несколько правил — скучных, но несущих.
+Через весь цикл проходит несколько скучных, но несущих правил.
 
-**Versioning narrative.** V1, V2 и V3 — **отдельные файлы**, никогда не перезаписи. Каждая новая версия имеет секцию Version History объясняющую что изменилось и почему. Цель — сделать эволюцию понимания видимой. Diff между V1 и V3 часто — самый полезный артефакт всего цикла.
+**Версионирование нарратива.** V1, V2 и V3 — **отдельные файлы**, никогда не перезапись. В каждой новой версии есть раздел «История версий», объясняющий, что изменилось и почему. Смысл — сделать эволюцию понимания видимой. Разница между V1 и V3 часто самый полезный артефакт всего цикла.
 
-**Confidence можно понижать.** Если данные противоречат гипотезе, скилл понизит confidence-скор и скажет это. V3 с меньшим confidence чем V2 — знак что цикл работает. Накручивать числа чтобы было приятно — самый частый failure mode self-driven PMF работы, и скилл сделан чтобы этому сопротивляться.
+**Уверенность можно понижать.** Если данные противоречат гипотезе, скилл снижает оценку уверенности и говорит это прямо. V3 с меньшей уверенностью, чем V2, — признак, что цикл работает. Накручивание чисел ради приятного ощущения — самый частый тип провала в самостоятельной PMF-работе, и скилл построен так, чтобы этому сопротивляться.
 
-**Loop detection.** Если confidence одной и той же dimension продолжает падать через версии, скилл флагает возможный loop и рекомендует одно из трёх действий: больше валидации, возврат к research, или pivot. Не даст вам бесконечно крутить «interviews → small refinement → more interviews» не подняв паттерн.
+**Обнаружение циклов.** Если уверенность по одному и тому же измерению падает версия за версией, скилл помечает возможный цикл и рекомендует одно из трёх: больше валидации, возврат к исследованию, разворот. Не даст бесконечно крутить «интервью → небольшая правка → ещё интервью» без явного поднятия паттерна.
 
-**Возврат назад — first-class операция.** Пользователь может в любой момент сказать «вернись к Stage 2» — скилл переключится. Старые артефакты не удаляются. Если переделать Stage 2 — получите `market-research-v2.md` рядом с оригиналом. Папка растёт со временем — это и есть смысл.
+**Возврат назад — полноценная операция.** Пользователь в любой момент может сказать «вернись к стадии 2» — скилл переключится. Старые артефакты не удаляются. Переделали стадию 2 — появится `market-research-v2.md` рядом с оригиналом. Папка растёт со временем.
 
-**Между сессиями скилл всё перечитывает.** Не доверяет «памяти» о том что мы делали в прошлый раз. На каждом возобновлении auto-start свежо сканирует папку и определяет состояние. Это то что позволяет месячному циклу пережить много коротких сессий.
+**Между сессиями скилл всё перечитывает.** Памяти о том, «что мы делали в прошлый раз», он не доверяет. На каждом возобновлении автозапуск заново сканирует папку и определяет состояние. Это позволяет циклу длиной в месяцы пережить много коротких сессий.
 
-**Никаких subagents для контентной работы.** Stage 2 (research) и Stage 7 (synthesis) делаются в основной сессии, не делегируются. Research — содержательная работа, пользователь должен видеть каждый поиск и каждую цитату чтобы вмешаться. Synthesis требует чтения заметок интервью по одной в изоляции, и subagent усреднит паттерны. Это enforced как жёсткое правило.
+**Никакого делегирования агентам для содержательной работы.** Стадия 2 (рыночное исследование) и стадия 7 (синтез интервью) делаются в основной сессии, не через агентов. Исследование — содержательная работа: пользователь должен видеть каждый поисковый запрос и каждую цитату, чтобы вмешаться. Синтез требует чтения заметок по одной в изоляции, а агент усреднит паттерны. Это жёсткое правило.
 
-**Скилл никогда не выдумывает данные.** Не симулирует цитаты интервью, не генерирует фейковые метрики, не предполагает «допустим Sean Ellis 47%». Где данных нет, скилл говорит «no data yet» и просит пользователя собрать.
+**Скилл никогда не выдумывает данные.** Не симулирует цитаты интервью, не генерирует фальшивые метрики, не допускает «а давайте представим, что Шон Эллис равен 47%». Где данных нет, скилл говорит «данных ещё нет» и просит собрать.
 
 ---
 
 ## Источники методологии
 
-Этот скилл стоит на плечах людей которые думали лучше нас. Если есть время прочитать одну вещь от каждого — вот с чего начать.
+Скилл построен на нескольких устоявшихся фреймворках. Если есть время прочитать по одной вещи у каждого — вот с чего начать.
 
-- **Marty Cagan — *Empowered* и *Inspired*.** Декомпозиция на 7 dimensions (с Timing как 7-й) опирается на product discovery работу Cagan'а. Его настойчивость что problem должна быть formulated независимо от solution отражена в validation rules Stage 1.
+- **Марти Каган — «Empowered» и «Inspired».** Разбиение на семь измерений (с временем как седьмым) опирается на работу Кагана по продуктовому дискавери. Его настойчивое требование формулировать проблему независимо от решения лежит в основе правил проверки в стадии 1.
 
-- **David Bland & Alex Osterwalder — *Testing Business Ideas* (2019, Strategyzer).** DVF фреймворк, 9 assumptions, 2×2 importance × evidence, и 6 стандартных типов экспериментов в Stage 4 — всё из этой книги. Bland'овская строгость к «assumption» vs «hypothesis» сохранена.
+- **Дэвид Бланд и Алекс Остервальдер — «Testing Business Ideas» (2019, Strategyzer).** Фреймворк DVF, 9 допущений, матрица 2×2 «важность × свидетельства» и шесть стандартных типов экспериментов в стадии 4 — всё из этой книги. Строгое разделение «допущение» и «гипотеза» у Бланда сохранено.
 
-- **Hamilton Helmer — *7 Powers: The Foundations of Business Strategy*.** Competitive advantage dimension использует семь powers Helmer'а (Scale Economies, Network Economies, Counter-Positioning, Switching Costs, Branding, Cornered Resource, Process Power) как единственно приемлемые ответы. «У нас отличная команда» нет в списке, и скилл это скажет.
+- **Хэмилтон Хелмер — «7 Powers: The Foundations of Business Strategy».** Измерение конкурентного преимущества использует семь сил Хелмера (эффект масштаба, сетевые эффекты, контр-позиционирование, издержки переключения, бренд, уникальный ресурс, операционная сила) как единственно приемлемые ответы. «У нас отличная команда» в списке нет, и скилл это скажет.
 
-- **Sean Ellis — 40% survey.** Опубликовано в 2009 как ответ на «как мы поймём что у нас PMF?». Threshold 40% эмпирический, не теоретический — Ellis собрал данные от ~100 стартапов которые консультировал и обнаружил что те у кого ≥40% «Очень разочарован» могли scale через paid marketing с положительной экономикой.
+- **Шон Эллис — опросник 40%.** Опубликован в 2009 как ответ на вопрос «как понять, что у нас есть PMF?». Порог 40% эмпирический, не теоретический. Эллис собрал данные примерно со 100 стартапов, которые консультировал, и увидел, что у тех, где не меньше 40% «очень разочарованы», платный маркетинг работает с положительной экономикой.
 
-- **First Round Capital — *The Levels of Product/Market Fit (& What to Focus on at Each)*.** Todd Jackson, Brian Rothenberg, Carolyn Stein. 4-уровневая лестница — Nascent / Developing / Strong / Extreme — и 3-dimensional grid оценки (Satisfaction × Demand × Efficiency) — из этой статьи в First Round Review.
+- **First Round Capital — «The Levels of Product/Market Fit (& What to Focus on at Each)».** Тодд Джексон, Брайан Ротенберг, Кэролайн Стайн. Лестница из четырёх уровней — зарождающийся / развивающийся / сильный / экстремальный — и сетка оценки по трём измерениям (удовлетворённость × спрос × эффективность) взяты из этой статьи в First Round Review.
 
-- **Bill Gross — TED talk про #1 фактор успеха стартапов.** После анализа 200+ компаний Gross нашёл что timing — самый сильный предиктор успеха стартапа, важнее команды, идеи, бизнес-модели или финансирования. Поэтому Timing / Why Now входит в семёрку на тех же правах что Problem и Audience.
+- **Билл Гросс — TED-доклад про главный фактор успеха стартапов.** После анализа более 200 компаний Гросс нашёл, что время — самый сильный предиктор успеха: важнее команды, идеи, бизнес-модели и финансирования. Поэтому «время / почему сейчас» включено в семёрку наравне с «проблемой» и «аудиторией».
 
-- **Rahul Vohra — *How Superhuman Built an Engine to Find Product/Market Fit*.** Опубликовано в First Round Review. Расширяет подход Sean Ellis в полноценный процесс — сегментировать «Очень разочарован» группу, выявить что они ценят, перестроить вокруг них, повторить. Эта loop-форма — то что Stage 9 ↔ Stage 10 реализует.
+- **Рахул Вора — «How Superhuman Built an Engine to Find Product/Market Fit».** Опубликовано в First Round Review. Расширяет подход Эллиса в полноценный процесс: выделить сегмент «очень разочарованных», понять, что они ценят, перестроить продукт вокруг них, повторить. Эта петля и реализована в стадиях 9 ↔ 10.
 
-- **gnurio/pmf-plugin.** Структурный паттерн разбиения цикла на ~10 последовательных стадий с auto-detection из folder state заимствован у этого плагина. Dimensions, методологии и quality gates внутри другие, но форма оркестрации — должное этому плагину.
+- **gnurio/pmf-plugin.** Идея разбиения цикла на примерно десять последовательных стадий с автоопределением состояния из папки заимствована у этого плагина. Измерения, методологии и проверки качества внутри другие, но сама форма оркестрации — его заслуга.
 
 ---
 
 ## Триггер-фразы
 
-Скилл задизайнен срабатывать на естественный язык на английском или русском. Что-то в этой грубой форме сработает:
+Скилл срабатывает на естественный язык, на русском или английском. Что-то в этой грубой форме сработает.
 
 **Русский:**
 - «сделай PMF для [продукта]»
 - «нужен product market fit для X»
 - «PMF [имя]»
-- «запусти PMF цикл»
+- «запусти PMF-цикл»
 - «хочу пройти PMF»
 - «помоги валидировать [идею]»
 - «продолжаем PMF»
 - «продолжай PMF [имя]»
 - «проверь PMF»
-- «на каком этапе у меня PMF»
-- «покажи мои PMF проекты»
+- «на какой стадии у меня PMF»
+- «покажи мои PMF-проекты»
 - «готов ли мой продукт к запуску»
 
-**English:**
+**Английский:**
 - «do PMF for [product name]»
 - «I need product market fit for X»
 - «PMF [name]»
@@ -849,106 +866,104 @@ Output — `iteration-changelog.md`. После того как он напис�
 - «continue PMF»
 - «what stage is my PMF at»
 
-Скилл также пытается поймать любое сообщение где вы упомянули продукт и хотите его систематически валидировать — даже если не сказали «PMF» по имени.
+Скилл также старается поймать любое сообщение, где вы упомянули продукт и хотите его систематически валидировать, даже если слова «PMF» там нет.
 
 ---
 
 ## Зависимости
 
 **Обязательно:**
-- Claude Code (это Claude Code скилл)
+- Claude Code (это скилл под Claude Code)
 - WebSearch (встроен в Claude Code)
 
-**Опционально но рекомендовано:**
-- **Exa MCP** для Stage 2 market research. Скилл предпочитает `mcp__exa__web_search_exa` потому что Exa семантический поиск значительно лучше для нахождения аналогов и антилогов по описанию проблемы, не только по ключевым словам. Если Exa не установлен — скилл автоматически fallback на WebSearch. Stage 2 всё равно работает, поиски просто более keyword-driven.
+**Необязательно, но рекомендуется:**
+- **Exa MCP** для рыночного исследования в стадии 2. Скилл предпочитает `mcp__exa__web_search_exa`, потому что смысловой поиск Exa заметно лучше находит аналоги и антилоги по описанию проблемы, а не только по ключевым словам. Если Exa не установлен, скилл автоматически переходит на WebSearch. Стадия 2 продолжит работать, просто поиск станет более буквальным.
 
-Установка Exa MCP — см. [документацию Exa MCP](https://github.com/exa-labs/exa-mcp-server). Если не хотите настраивать — игнорируйте, скилл просто использует WebSearch.
+Установка Exa MCP — см. [документацию Exa MCP](https://github.com/exa-labs/exa-mcp-server). Не хотите настраивать — пропустите, скилл обойдётся WebSearch.
 
 **Не нужно:**
-- Никаких Python-библиотек
-- Никаких внешних API кроме поисковых выше
+- Никаких библиотек Python
+- Никаких внешних API, кроме поисковых выше
 - Никакой базы данных
-- Никаких login или API-ключей куда-либо
+- Никаких учётных записей или ключей
 
 ---
 
 ## FAQ (русский)
 
-**В: Сколько занимает PMF цикл с этим скиллом?**
+**В: Сколько занимает PMF-цикл с этим скиллом?**
 
-Полный цикл (Stage 0 — Stage 10) — месяцы, не дни. Реалистичные диапазоны: Stage 0 — 10–20 минут. Stage 1 — 1–3 сессии по часу. Stage 2 (research) — 1–2 дня сосредоточенной работы. Stage 3 (synthesis) — полдня. Stage 4 (DVF) — полдня на assumptions + сколько займёт эксперимент. Stage 5 (interview prep) — полдня. Stage 6 (field interviews) — **недели**: 15–25 интервью, спланированных и проведённых пользователем. Stage 7 (synthesis) — полдня-день. Stage 8 (MVP launch) — **недели или месяцы**. Stage 9 (metrics) нужно минимум 4 недели сбора данных. Stage 10 — одна сессия. Скилл задизайнен под этот темп и возобновляется между сессиями.
+Полный цикл (стадии 0–10) — месяцы, не дни. Реалистичные оценки: стадия 0 — 10–20 минут; стадия 1 — 1–3 сессии по часу; стадия 2 — 1–2 дня сосредоточенной работы; стадия 3 — полдня; стадия 4 — полдня на допущения плюс время на сам эксперимент; стадия 5 — полдня; стадия 6 (полевые интервью) — **недели**, 15–25 интервью, которые пользователь планирует и проводит сам; стадия 7 — полдня-день; стадия 8 (запуск MVP) — **недели или месяцы**; стадия 9 требует минимум 4 недели сбора данных; стадия 10 — одна сессия. Скилл работает под такой темп и возобновляется между сессиями.
 
 **В: Можно ли пропустить стадию?**
 
-Можно, но скилл предупредит. Некоторые пропуски разумны — например, пропустить Stage 4 если confidence в Stage 3 высокий и риск-dimension лучше валидируется через интервью напрямую. Другие пропуски — warning sign. Желание прыгнуть сразу к Stage 9 (метрики) обычно значит что вы надеетесь что числа скажут вам то что гипотеза не говорит. Sean Ellis на случайной аудитории даёт случайный результат; ранние стадии существуют чтобы сделать метрику осмысленной.
+Можно, но скилл предупредит. Некоторые пропуски разумны — например, пропустить стадию 4, если уверенность в стадии 3 высокая и самое рискованное измерение лучше валидируется через интервью напрямую. Другие пропуски — тревожный знак. Желание прыгнуть сразу на стадию 9 обычно значит: вы надеетесь, что метрики скажут то, чего не сказала гипотеза. Шон Эллис на случайной аудитории даст случайный результат. Ранние стадии существуют, чтобы метрика стала осмысленной.
 
-**В: Что если мой продукт многосторонний (marketplace) или имеет несколько персон (B2B)?**
+**В: Что если продукт многосторонний (маркетплейс) или с несколькими персонами (B2B)?**
 
-Скилл это handle'ит в Stage 1 через multi-role processing. Для B2B вы проходите 7 dimensions дважды — раз для Decision Makers (кто платит), раз для End Users (кто пользуется). Для marketplaces — дважды, по одному разу на каждую сторону, с chicken-and-egg проблемой явно отмеченной в Growth Strategy. Обе роли оказываются в одном `narrative-v1.md` отдельными секциями.
+Скилл обрабатывает это в стадии 1 через прохождение ролей по очереди. Для B2B вы проходите семь измерений дважды — по разу для лиц, принимающих решения (кто платит), и конечных пользователей (кто пользуется). Для маркетплейсов — дважды, по разу на каждую сторону, с явной пометкой проблемы курицы и яйца в «Стратегии роста». Обе роли лежат в одном `narrative-v1.md` отдельными секциями.
 
-**В: У меня уже есть продукт в продакшене. Можно начать с середины?**
+**В: Мой продукт уже запущен. Можно начать с середины?**
 
-Да. Можно создать папку проекта, бросить существующие данные в соответствующие artifact-файлы (например, существующий pitch deck → `narrative-v1.md`), и скилл определит стадию и предложит куда дальше. Нет ничего магического в начале с Stage 0; auto-start считает текущим состоянием то какие артефакты существуют.
+Да. Создаёте папку проекта, кладёте существующие данные в соответствующие файлы артефактов (например, готовую презентацию для инвесторов → `narrative-v1.md`), и скилл определит стадию и предложит, куда дальше. В начале со стадии 0 нет ничего магического. Автозапуск принимает за текущее состояние те артефакты, которые лежат в папке.
 
 **В: Моя команда использует другую терминологию — можно переименовать?**
 
-Скилл opinionated к нескольким терминам потому что у них методологический вес: «assumption» vs «hypothesis» в Stage 4 (Bland'овское разделение важно), и 4 варианта ответа Sean Ellis должны быть в оригинальной формулировке. Кроме этого, можно переименовывать что угодно в своём narrative — шаблоны просто предложение.
+Скилл жёсток к нескольким терминам, у которых есть методологический вес: «допущение» и «гипотеза» в стадии 4 (разделение Бланда важно) и четыре варианта ответа Шона Эллиса, которые должны быть в оригинальной формулировке. Всё остальное можно переименовать в своём нарративе как угодно — шаблоны просто предлагают удобную отправную точку.
 
 **В: Это замена разговорам с пользователями?**
 
-Нет. Stage 6 явно не может быть сделан скиллом. Весь pipeline построен на предположении что вы говорите с реальными людьми, и работа скилла — сделать разговоры полезнее (лучший гайд, лучший синтез) и окружающую структуру (гипотеза, рисёрч, риск scoring, метрики) честнее.
+Нет. Стадия 6 явно не может быть сделана скиллом. Весь цикл построен на том, что вы разговариваете с реальными людьми. Задача скилла — сделать разговоры полезнее (лучший гайд, лучший синтез) и окружающую структуру честнее (гипотеза, исследование, оценка рисков, метрики).
 
-**В: Что если я не знаю B2C мой продукт или B2B?**
+**В: Что если я не знаю, мой продукт B2C или B2B?**
 
-Stage 0 имеет tiebreaker вопрос: кто реально платит — конечный пользователь или его компания? Это и есть тип. Если ни одно не очевидно — продукт скорее всего ещё не готов к PMF анализу, надо сначала выбрать target.
+В стадии 0 есть разрешающий вопрос: кто реально платит — конечный пользователь или его компания? Это и есть тип. Если ни одно не очевидно, продукт, скорее всего, ещё не готов к PMF-анализу: сначала выберите целевой рынок.
 
 **В: Скилл коммитит файлы проекта в git?**
 
-Нет. Скилл создаёт файлы в вашей папке проектов и всё. Коммитить, шарить, бэкапить — ваш выбор. Многие пользователи держат PMF проекты в Obsidian vault который sync'ается отдельно, другие — в приватном git репо, третьи — локально.
+Нет. Скилл создаёт файлы в вашей папке проектов, и всё. Коммитить, шарить, делать резервные копии — ваш выбор. Кто-то держит PMF-проекты в хранилище Obsidian со своей синхронизацией, кто-то в приватном git-репозитории, кто-то локально.
 
 ---
 
 ## Ограничения
 
-Честный список от команды которая это построила:
+Честный список от команды, которая это построила.
 
-1. **Скилл opinionated.** Он enforce'ит конкретные фреймворки (7 dimensions Cagan'а, DVF Bland'а, 7 Powers Helmer'а, Sean Ellis 40%, First Round Levels). Если вы предпочитаете другую методологию — Lean Startup canvas, Jobs-to-be-Done, и т.д. — скилл не тот инструмент. Мы выбрали эти потому что они композитятся в работающий pipeline; замена одного развалит остальные.
+1. **Скилл с мнением.** Он требует конкретные фреймворки: семь измерений Кагана, DVF Бланда, семь сил Хелмера, порог 40% Шона Эллиса, уровни First Round. Если вам ближе другая методология — канвас Lean Startup, Jobs-to-be-Done и так далее — это не тот инструмент. Мы выбрали эти фреймворки, потому что они собираются в работающий цикл; замена одного развалит остальные.
 
-2. **Не может проводить эксперименты за вас.** Stages 6 и 8 явно вне scope. Скилл пишет гайд интервью; вы проводите интервью. Скилл пишет dashboard метрик; вы инструментируете и shipping продукт. Если нужна автоматизированная experimentation платформа — смотрите в другом месте.
+2. **Не умеет проводить эксперименты за вас.** Стадии 6 и 8 явно вне области. Скилл пишет гайд — интервью проводите вы. Скилл пишет панель метрик — ставите её и выкатываете продукт вы. Если нужна автоматизированная платформа для экспериментов — ищите в другом месте.
 
-3. **Предполагает один продукт на папку.** Портфолио из 5 продуктов = 5 подпапок. Скилл не координирует cross-product анализ, общие сегменты клиентов между продуктами, или платформенные решения.
+3. **Один продукт на папку.** Портфель из пяти продуктов — это пять подпапок. Скилл не координирует межпродуктовый анализ, общие сегменты клиентов между продуктами или решения на уровне платформы.
 
-4. **Stage 2 search-driven, и search имеет смещения.** Веб-поиск возвращает то что возвращает — успешные компании over-represented, недавние компании over-represented, английские источники over-represented. Скилл это смягчает требованием антилогов и адаптацией thresholds под тип рынка, но базовое смещение реально.
+4. **Стадия 2 работает на поиске, а у поиска есть искажения.** Веб-поиск возвращает то, что возвращает: успешные компании представлены чаще, свежие чаще, англоязычные источники чаще. Скилл смягчает это требованием искать антилоги и адаптацией порогов под тип рынка, но базовое искажение реально.
 
-5. **Sean Ellis — Western-trained бенчмарк.** Threshold 40% эмпирически выведен из выборки в основном US tech стартапов. Некоторые культуры систематически дают другие распределения. Скилл это отмечает но не переопределяет threshold.
+5. **Шон Эллис — западный эталон.** Порог 40% эмпирически выведен из выборки в основном американских технологических стартапов. Некоторые культуры системно дают другие распределения. Скилл это отмечает, но порог не переопределяет.
 
-6. **Deep tech / R&D продукты плохо вписываются в DVF.** Если ваш продукт — квантовый компьютер, новая biotech-молекула, или что-то где Feasibility — доминирующий риск на годы — DVF фреймворк искажает. Вам скорее нужны Technology Readiness Levels, и Stage 4 не даст что нужно.
+6. **Глубокотехнические и R&D-продукты плохо вписываются в DVF.** Если ваш продукт — квантовый компьютер, новая биотехнологическая молекула или что-то ещё, где осуществимость остаётся доминирующим риском годами, фреймворк DVF искажает картину. Вам скорее нужны уровни готовности технологии, и стадия 4 не даст того, что нужно.
 
-7. **Скилл в бете.** Edge cases ещё находятся. 9 стадий тестировались end-to-end на нескольких реальных продуктах, но каждый продукт — свой зверь. Если что-то ломается — пожалуйста откройте issue (см. следующую секцию).
+7. **Скилл в бете.** Крайние случаи ещё находятся. Девять стадий протестированы от начала до конца на нескольких реальных продуктах, но каждый новый продукт вскрывает новые углы. Если что-то сломалось — откройте issue (см. следующий раздел).
 
 ---
 
-## Как оставить фидбек
+## Как оставить обратную связь
 
-Это самая важная секция в README, и она внизу потому что мы хотим чтобы остальное дало вам контекст сначала.
-
-**Скилл в бете.** Он работает end-to-end, но был протестирован небольшим числом людей на небольшом числе продуктов. Нам нужны внешние пользователи чтобы найти острые края. Если попробуете скилл — даже частично, даже на фейковом тренировочном продукте, даже на одной стадии — пожалуйста расскажите что произошло.
+Скилл в бете. Он работает от начала до конца, но его пробовало немного людей на небольшом числе продуктов. Нужны внешние пользователи, чтобы найти острые углы. Попробовали скилл — даже частично, даже на выдуманном тренировочном продукте, даже на одной стадии — расскажите, что получилось.
 
 **Что особенно полезно:**
-- **Где предложения скилла показались неправильными или мимо** — даже один пример золото
-- **Где вы застряли и скилл не помог** — какая стадия, какое состояние, что пробовали
-- **Где скилл произвёл что-то полезное чего вы не ожидали** — это говорит нам куда давить
-- **Сработала ли двуязычная (EN/RU) настройка для вашего языка**
-- **Что в references было неточным, устаревшим или просто неправильным**
+- Где предложения скилла показались неправильными или мимо. Даже один пример помогает.
+- Где вы застряли и скилл не помог. Стадия, состояние, что пробовали.
+- Где скилл выдал что-то полезное, чего вы не ждали.
+- Сработала ли двуязычная пара EN/RU для вашего языка.
+- Что в справочниках было неточным, устаревшим или просто ошибочным.
 
 **Как поделиться:**
-- Откройте issue в [share репо](https://github.com/alenazaharovaux/share)
-- Или напишите через любой канал которым вы достигаете maintainer'а
+- Открыть issue в [репозитории share](https://github.com/alenazaharovaux/share).
+- Написать мейнтейнеру любым удобным каналом.
 
-Мы будем править скилл по тому что вы найдёте. Первые 5–10 внешних пользователей — самый ценный фидбек который мы когда-либо получим.
+Скилл правится по тому, что находят внешние пользователи. Первые 5–10 из них — самая ценная обратная связь, которую он может получить.
 
 ---
 
 ## Лицензия
 
-MIT — как и остальной share-репо. Используйте, форкайте, меняйте, шарьте.
+MIT — как и весь репозиторий share. Используйте, форкайте, меняйте, делитесь.
