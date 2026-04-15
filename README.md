@@ -42,6 +42,14 @@ Skills for building client-facing HTML pages, dashboards, and presentations. Use
 |-------|-------------|
 | [adr](skills/adr/) | Log architecture decisions as you work — what you chose, why, and what you rejected. One Markdown file per project, ~1 minute per entry. Designed for solo developers and small teams. By [Alena Zakharova](https://github.com/alenazaharovaux) (MIT) |
 
+## Plugins
+
+Full Claude Code plugins (hooks + slash commands + config). Install via `/plugin marketplace add` and `/plugin install`.
+
+| Plugin | What it does |
+|--------|-------------|
+| [claude-doctor](plugins/claude-doctor/) | Three structural reminders for Claude Code: production-keyword self-check, architectural-question grounding, completion-claim detection without evidence. Log-only by default with selective per-phrase blocking via interactive `/triage`. Bilingual EN+RU defaults. Cross-platform. Source: [github.com/alenazaharovaux/claude-doctor](https://github.com/alenazaharovaux/claude-doctor) (MIT) |
+
 ## Prompts
 
 Universal prompt collections that work with any LLM — not tied to Claude Code.
@@ -98,6 +106,14 @@ Universal prompt collections that work with any LLM — not tied to Claude Code.
 | Скилл | Что делает |
 |-------|-----------|
 | [adr](skills/adr/) | Фиксирует архитектурные решения по ходу работы — что выбрали, почему и что отвергли. Один Markdown-файл на проект, ~1 минута на запись. Для соло-разработчиков и небольших команд. Автор: [Алена Захарова](https://github.com/alenazaharovaux) (MIT) |
+
+## Плагины
+
+Полноценные плагины Claude Code (хуки + slash-команды + конфиг). Устанавливаются через `/plugin marketplace add` и `/plugin install`.
+
+| Плагин | Что делает |
+|--------|-----------|
+| [claude-doctor](plugins/claude-doctor/) | Три структурных напоминания для Claude Code: чек-блок самопроверки на прод-ключевые слова, заземление на реальные файлы перед архитектурным ответом, детекция заявлений о завершённости без evidence. По умолчанию только-лог, с точечной блокировкой per-phrase через интерактивный `/triage`. Двуязычные EN+RU дефолты. Кроссплатформенный. Источник: [github.com/alenazaharovaux/claude-doctor](https://github.com/alenazaharovaux/claude-doctor) (MIT) |
 
 ## Промпты
 
