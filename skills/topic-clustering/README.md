@@ -45,6 +45,10 @@ Claude installs this on first use, so there is nothing to set up in advance:
 
 The first run downloads a multilingual embedding model of several hundred megabytes. That happens once and is then cached by Hugging Face.
 
+## Reproducibility
+
+BERTopic's dimensionality-reduction step (UMAP) is stochastic, so the same input yields slightly different topics across runs. The skill fixes this by default (`--seed 42`): the same input gives the same result. That matters when you need to repeat an analysis and get exactly the same output. Pass `--no-seed` to turn the fix off and let the model search for groups afresh each time. On different input data the seed makes no difference — new data gives new topics either way.
+
 ## Speed and volume
 
 Embeddings are computed on the CPU. A large corpus — tens of thousands of documents — takes hours rather than minutes. With a lot of data, run it in the background, or first run on a meaningful subsample (substantial documents, not every one-word reply) to see the picture quickly. Under roughly 50 documents, topics come out fragmented and the skill warns you the result is raw.

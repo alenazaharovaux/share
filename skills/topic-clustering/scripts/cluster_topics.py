@@ -1,11 +1,18 @@
 """
-BERTopic branch of the bert-family skill: grouping texts by topic.
+Скилл topic-clustering: группировка текстов по темам через BERTopic.
 
-Input  : docs.json — an array of [{"text": "...", "label": "..."}]
-Output : topics.json (full result) + a human-readable summary on stdout.
+Вход  : docs.json — массив [{"text": "...", "label": "..."}]
+Выход : topics.json (полный результат) + человекочитаемая сводка в stdout.
 
-The embedding model is multilingual. min_topic_size is scaled to the size of the corpus so that
-small samples do not end up entirely in the outlier bucket.
+Модель эмбеддингов многоязычная (русский/сербский/английский). min_topic_size
+подбирается под объём данных, чтобы на малых выборках не уносить всё в «мусор».
+
+Воспроизводимость: шаг снижения размерности (UMAP) по своей природе случайный,
+поэтому один и тот же вход даёт немного разные темы при каждом прогоне. Чтобы
+результат был стабильным (тот же вход -> тот же результат), UMAP фиксируется
+через random_state=--seed (по умолчанию 42). Это нужно, когда разбор надо
+повторить и получить точь-в-точь то же самое. Если фиксация не нужна и хочется,
+чтобы модель каждый раз искала группы заново, передай --no-seed.
 """
 
 import argparse
@@ -13,14 +20,13 @@ import json
 import sys
 from pathlib import Path
 
-# Windows: stdout defaults to cp1252 and dies on non-Latin text — force utf-8.
+# Windows: stdout по умолчанию cp1252 и падает на кириллице — принудительно utf-8.
 try:
     sys.stdout.reconfigure(encoding="utf-8")
 except Exception:
     pass
 
-# Stopwords are bundled so that topic labels come out meaningful. Russian + English + a Serbian
-# minimum. Add your own language here if topic keywords come back full of function words.
+# Стоп-слова вшиты, чтобы названия тем были осмысленными. RU + EN + сербский минимум.
 _RU_STOP = (
     "и в во не что он на я с со как а то все она так его но да ты к у же вы за бы по "
     "только ее мне было вот от меня еще нет о из ему теперь когда даже ну вдруг ли если "
@@ -44,10 +50,14 @@ STOPWORDS = sorted(set(_RU_STOP) | set(_EN_STOP) | set(_SR_STOP))
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--docs", required=True, help="JSON: array of {text, label?}")
+    ap.add_argument("--docs", required=True, help="JSON: массив {text, label?}")
     ap.add_argument("--out", default="topics.json")
     ap.add_argument("--model", default="paraphrase-multilingual-MiniLM-L12-v2")
     ap.add_argument("--min-topic-size", type=int, default=None)
+    ap.add_argument("--seed", type=int, default=42,
+                    help="фиксирует UMAP -> один вход даёт один и тот же результат")
+    ap.add_argument("--no-seed", action="store_true",
+                    help="выключить фиксацию: каждый прогон ищет группы заново")
     args = ap.parse_args()
 
     docs_raw = json.loads(Path(args.docs).read_text(encoding="utf-8"))
@@ -60,27 +70,39 @@ def main() -> None:
         labels.append(d.get("label", ""))
 
     n = len(texts)
-    print(f"Documents in scope: {n}")
+    print(f"Документов в работе: {n}")
     if n < 5:
-        print("Too few documents to cluster (about 5 is the minimum).")
+        print("Слишком мало документов для кластеризации (нужно хотя бы ~5).")
         sys.exit(2)
 
     from bertopic import BERTopic
     from sentence_transformers import SentenceTransformer
     from sklearn.feature_extraction.text import CountVectorizer
+    from umap import UMAP
 
-    # min_topic_size scaled to corpus size: with little data, lower the threshold, otherwise
-    # everything drifts into topic -1.
+    # min_topic_size под объём: мало данных -> меньше порог, иначе всё уедет в тему -1.
     mts = args.min_topic_size or (2 if n < 60 else 3 if n < 300 else 10)
 
     embed = SentenceTransformer(args.model)
 
-    # Stopwords come from the list above rather than nltk, which is unreliable to fetch at
-    # runtime. This keeps topic labels readable instead of "the/of/and/to".
+    # Стоп-слова вшиты в скрипт (не тянем nltk на рантайме — это ненадёжно), чтобы
+    # названия тем были читаемыми, а не «не/то/что/на». Русский + английский + сербский минимум.
     vectorizer = CountVectorizer(stop_words=STOPWORDS)
+
+    # UMAP явно, чтобы зафиксировать random_state. Параметры — дефолты BERTopic
+    # (n_neighbors=15, n_components=5, min_dist=0.0, cosine). random_state=seed делает
+    # результат воспроизводимым; --no-seed убирает фиксацию (random_state=None).
+    seed = None if args.no_seed else args.seed
+    umap_model = UMAP(n_neighbors=15, n_components=5, min_dist=0.0,
+                      metric="cosine", random_state=seed)
+    if seed is not None:
+        print(f"Фиксация включена (seed={seed}): один и тот же вход даст один результат.")
+    else:
+        print("Фиксация выключена (--no-seed): темы могут отличаться между прогонами.")
 
     topic_model = BERTopic(
         embedding_model=embed,
+        umap_model=umap_model,
         vectorizer_model=vectorizer,
         min_topic_size=mts,
         language="multilingual",
@@ -88,7 +110,7 @@ def main() -> None:
     )
     topics, _ = topic_model.fit_transform(texts)
 
-    # Orphan documents (topic -1) get reassigned to their nearest topic.
+    # «Ничьи» посты (тема -1) раскидываем по ближайшим темам.
     try:
         topics = topic_model.reduce_outliers(texts, topics)
     except Exception:
@@ -114,14 +136,14 @@ def main() -> None:
         json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8"
     )
 
-    print(f"\nTopics found: {len(result)} -> {args.out}\n")
+    print(f"\nНайдено тем: {len(result)} -> {args.out}\n")
     for r in result:
-        print(f"=== TOPIC {r['topic_id']} ({r['size']} docs): {', '.join(r['keywords'])} ===")
+        print(f"=== ТЕМА {r['topic_id']} ({r['size']} шт): {', '.join(r['keywords'])} ===")
         for m in r["messages"][:3]:
             lab = f"[{m['label']}] " if m["label"] else ""
             print(f"  - {lab}{m['text'][:90]}")
         if r["size"] > 3:
-            print(f"  ... and {r['size'] - 3} more")
+            print(f"  ... ещё {r['size'] - 3}")
         print()
 
 

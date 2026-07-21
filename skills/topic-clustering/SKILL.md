@@ -74,6 +74,14 @@ The default embedding model is multilingual (`paraphrase-multilingual-MiniLM-L12
 script picks `min_topic_size` from the corpus size on its own; override it with
 `--min-topic-size N`.
 
+**Reproducibility.** The dimensionality-reduction step (UMAP) inside BERTopic is stochastic
+by nature: the same input produces slightly different topics on different runs (~15% drift).
+The script fixes this by default via `--seed 42` — the same input gives the same result,
+which matters when you need to repeat a run and get exactly the same output (e.g. show a
+client, then re-run; compare "before/after" on the same data). If you do not want the fix and
+prefer the model to search for groups afresh each time, add `--no-seed`. On DIFFERENT input
+data the seed changes nothing — new data gives new topics regardless.
+
 On volume and speed, honestly: embeddings are computed on the CPU, and a large corpus (tens
 of thousands of documents) takes real time — hours rather than minutes. With a lot of data,
 either warn the user and run it in the background, or first run on a meaningful subsample
