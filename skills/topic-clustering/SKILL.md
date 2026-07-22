@@ -87,13 +87,50 @@ of thousands of documents) takes real time — hours rather than minutes. With a
 either warn the user and run it in the background, or first run on a meaningful subsample
 (substantial documents, not everything) to see the picture quickly.
 
-## Step 4 — Show the result in chat
+## Layers: where BERT ends and synthesis begins
 
-The script prints a human-readable summary AND saves the full result to `topics.json`. Put
-the summary in chat — topics with keywords and example documents (with their source labels) —
-and leave the full JSON in the file for reference. Do not retell raw JSON line by line.
+Hold this boundary in mind — it drives the flow below:
 
-Summary format: "topic (keywords) → how many documents → 2-3 examples with labels".
+- **Layer A — BERT (machine).** Clustering → `topics.json`: texts sorted into topics, each with
+  keywords, a count, and the full list of its member texts. This is tagging, no interpretation.
+  Reproducible.
+- **Layer B — readable display.** The same raw result, but human-readable (HTML). Still no
+  interpretation — you just see what the algorithm clustered.
+- **Layer C — synthesis (LLM, you).** Group the topics into clear threads, name them, write the
+  takeaways. Subjective, reviewable, editable.
+- **Layer D — polished report.** Optional, and only at the very end.
+
+The BERT part of the skill (A + B) does not bake synthesis or a polished picture into itself —
+those interpret, and they need a human eye.
+
+## Step 4 — Hand over the raw result and ask (layers A + B)
+
+After the script, do NOT retell the JSON line by line and do NOT invent names and takeaways
+right away. Do exactly three things:
+
+1. Say briefly in chat: "Found N topics, full result in `topics.json`."
+2. Build layer B and open it in the browser:
+   ```
+   python scripts/render_clusters.py --topics topics.json --out clusters.html --title "..."
+   ```
+   Open `clusters.html` (Windows — `Start-Process`, macOS — `open`, Linux — `xdg-open`). This is
+   a readable view of what the algorithm actually clustered.
+3. Ask the gate question and STOP, wait for the answer: "Group the topics into clear threads and
+   write takeaways?" Do not start synthesis until the user answers.
+
+## Step 5 — Synthesis on consent (layer C — LLM work, not BERT)
+
+Runs only if the user says yes. This is your layer and it is subjective — treat it that way:
+
+- Group the machine topics into a few clear threads: merge the ones that are the same thing in
+  real life; set aside procedural noise (greetings, "thanks", talk about the interview format).
+- The number of threads is NOT derived by the skill — it is your editorial call. Name it and say
+  what you based it on.
+- **Write takeaways by actually reading a sample of each topic's texts** (they are all in
+  `topics.json`), not from four keywords. Do not invent or put words in people's mouths.
+- Show the proposed threads ("I see these threads, here are the takeaways") and let the user
+  disagree, change the set, or ask why — revise across iterations. This is ordinary work.
+- Build the polished "picture" report (layer D) last, and only if asked.
 
 ## Notes
 
@@ -106,5 +143,9 @@ Summary format: "topic (keywords) → how many documents → 2-3 examples with l
   labels stay readable instead of "the/of/and/to". Add your own language to `STOPWORDS` in
   `cluster_topics.py`.
 - Orphan documents (topic -1) are reassigned to their nearest topic via `reduce_outliers`.
-- The script is the stable core. Input parsing (Step 1) is written fresh for each dataset and
-  is deliberately not baked into it.
+- Two stable scripts form the core: `cluster_topics.py` (layer A) and `render_clusters.py`
+  (layer B), both deterministic and free of interpretation. Input parsing (Step 1) and synthesis
+  (Step 5) are written fresh each time and deliberately not baked into the scripts.
+- Do not blur the layers: raw `topics.json` and `clusters.html` are what the machine found;
+  threads and takeaways are what you synthesized. Show that line honestly in any report — never
+  pass synthesis off as the algorithm's own output.

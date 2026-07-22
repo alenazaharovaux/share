@@ -34,8 +34,11 @@ BERTopic turns each text into a meaning vector, groups the semantically close on
 |------|--------------|
 | Input | Any format — Telegram export, chat history, transcripts, spreadsheet, pasted text |
 | Flatten | Reduced to `docs.json`: an array of `{text, label}`, parsed for the actual data |
-| Cluster | `scripts/cluster_topics.py` runs BERTopic with a multilingual embedding model |
-| Output | Topics with keywords, sizes, and member documents (tagged by source), saved to `topics.json` |
+| Cluster (layer A) | `scripts/cluster_topics.py` runs BERTopic and tags each text into a topic → `topics.json` |
+| Read (layer B) | `scripts/render_clusters.py` renders a readable HTML of what the algorithm clustered — keywords, counts, sample quotes |
+| Synthesize (layer C) | Only if you say yes: Claude groups the topics into clear threads and writes takeaways, reviewable and editable |
+
+The line matters: BERTopic only tags texts into topics and gives keywords and counts (layers A and B, the machine). Naming the threads and writing takeaways is a separate step done by Claude reading the actual texts (layer C) — the skill keeps them apart and never passes synthesis off as the algorithm's own output.
 
 ## Dependencies
 
@@ -101,8 +104,11 @@ BERTopic превращает каждый текст в вектор смысл
 |-----|----------------|
 | Вход | Любой формат — экспорт Telegram, переписка, транскрипты, таблица, вставленный текст |
 | Сплющивание | Сводится к `docs.json`: массив `{text, label}`, разбор под конкретные данные |
-| Кластеризация | `scripts/cluster_topics.py` запускает BERTopic с многоязычной моделью эмбеддингов |
-| Выход | Темы с ключевыми словами, размерами и составом документов (с меткой источника), в `topics.json` |
+| Кластеризация (слой A) | `scripts/cluster_topics.py` запускает BERTopic и тегирует каждый текст в тему → `topics.json` |
+| Чтение (слой B) | `scripts/render_clusters.py` рисует читаемый HTML того, что накластеризовал алгоритм — ключевые слова, числа, примеры цитат |
+| Синтез (слой C) | Только по твоему согласию: Claude группирует темы в понятные сюжеты и пишет выводы, всё ревьюится и правится |
+
+Граница важна: BERTopic только тегирует тексты по темам и даёт ключевые слова и числа (слои A и B, машина). Назвать сюжеты и написать выводы — отдельный шаг, который делает Claude, читая сами тексты (слой C); скилл держит их порознь и никогда не выдаёт синтез за результат самого алгоритма.
 
 ## Зависимости
 
