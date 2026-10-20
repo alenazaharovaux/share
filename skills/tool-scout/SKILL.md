@@ -1,21 +1,23 @@
 ---
 name: tool-scout
 description: >
-  Search for tools (services, MCP servers, AI models, no-code platforms, libraries, APIs, GitHub repos,
-  awesome-lists) to solve project tasks. Searches 5 sources: web, GitHub, MCP catalogs,
-  awesome-lists, package registries. Freshness is critical — finds current tools.
+  Search for tools (services, MCP servers, Claude Code skills and plugins, AI models, no-code platforms,
+  libraries, APIs, GitHub repos, awesome-lists) to solve project tasks. First checks what is already
+  installed, then searches 5 sources: web, GitHub, MCP catalogs, awesome-lists, skill and plugin catalogs.
+  Freshness is critical — finds current tools.
   Triggers: "find tools for...", "what tools can solve...", "tool scout",
   "best way to do...", "search for services...", "how to build...",
-  "is there a skill for...", "is there an MCP server for...", "find a library for...".
+  "is there a skill for...", "find a skill for...", "is there a plugin for...",
+  "is there an MCP server for...", "find a library for...".
 ---
 
 # Tool Scout — find the right tools for your tasks
 
 This skill helps discover tools for project tasks. Not everything needs to be built from scratch —
-a service, MCP server, AI model, library, or no-code platform might already solve your problem.
+a service, MCP server, skill, plugin, AI model, library, or no-code platform might already solve your problem.
 
-Searches 5 sources: web search, GitHub, MCP server catalogs, awesome-lists,
-and package registries. Sources are selected adaptively based on the task type.
+It first checks what you already have installed. Then it searches 5 sources: web search, GitHub,
+MCP server catalogs, awesome-lists, and skill and plugin catalogs. Sources are selected adaptively based on the task type.
 
 ## Step 0. Configuration (First Run)
 
@@ -28,7 +30,7 @@ If the config file does not exist, run the setup:
 Ask the user: "Which web search tool do you have available in Claude Code?"
 
 Options:
-- **Exa MCP** (recommended) — best results, supports both web search and code context search
+- **Exa MCP** (recommended) — best results; `agent_run` works well for deep dives
 - **WebSearch** — built-in Claude Code web search (no setup needed, but less precise)
 - **Other MCP search** — if you have a different search MCP server, specify its tool name
 
@@ -48,10 +50,12 @@ Write answers to `~/.claude/skills/tool-scout/config.md`:
 ```
 search_engine: exa | websearch | other
 search_tool_name: mcp__exa__web_search_exa
-code_search_tool_name: mcp__exa__get_code_context_exa
+research_tool_name: mcp__exa__agent_run
 github_cli: true | false
 language: english
 ```
+
+If a tool from the config is missing in the current session — fall back to built-in WebSearch and mention it in the output.
 
 ## Input
 
@@ -69,7 +73,17 @@ If a plan file is referenced — read it and extract tasks.
 Identify specific tasks/subtasks from the prompt. If input is a plan file, read it.
 Formulate each task as a short search phrase.
 
-### Step 2. Classify by domain
+### Step 2. Check what is already installed
+
+Before searching outside, check whether the user already has a solution:
+
+- Skills: `~/.claude/skills/skill-index.md` (if it exists), otherwise the folder list in `~/.claude/skills/`. Match task keywords against names and descriptions.
+- Plugins: `claude plugin list`.
+- MCP servers: `claude mcp list`.
+
+Show any match as the first line of the output: "You already have X — it does Y". Still run the external search: something noticeably better may exist.
+
+### Step 3. Classify by domain
 
 Group tasks by domain:
 - UI/design
@@ -80,20 +94,21 @@ Group tasks by domain:
 - Infrastructure/deployment
 - Other
 
-### Step 3. Search (adaptive source selection)
+### Step 4. Search (adaptive source selection)
 
 Determine task type and select sources:
 
-| Task type | Web | GitHub | MCP catalogs | Awesome |
-|---|---|---|---|---|
-| SaaS/service | + | | | |
-| Library/package | + | + | | + |
-| MCP server | + | + | + | |
-| AI tool | + | + | | + |
-| Skill/plugin | + | + | | + |
-| Unclear | + | + | + | + |
+| Task type | Web | GitHub | MCP catalogs | Awesome | Skills & plugins |
+|---|---|---|---|---|---|
+| SaaS/service | + | | | | |
+| Library/package | + | + | | + | |
+| MCP server | + | + | + | | + |
+| AI tool | + | + | | + | |
+| Skill/plugin | + | + | | + | + |
+| Task inside Claude Code (writing, analysis, file work) | + | + | + | | + |
+| Unclear | + | + | + | + | + |
 
-Rule: **web + GitHub = always. MCP catalogs and awesome = when relevant. If unsure — include all.**
+Rule: **web + GitHub = always. Other sources = when relevant. If unsure — include all.**
 
 #### Source 1: Web search (always)
 
@@ -141,11 +156,35 @@ Additionally (always):
 
 If a relevant awesome-list is found — **read the README** (first 200 lines) and extract relevant tools.
 
+#### Source 5: Claude Code skills and plugins
+
+A skill is a folder with a `SKILL.md` file. A plugin is a package of skills, commands, hooks, and MCP servers installed from a marketplace.
+
+**Official marketplace (local, offline):**
+- If `~/.claude/plugins/marketplaces/claude-plugins-official/.claude-plugin/marketplace.json` exists — search its plugins by task keywords (`name`, `description` fields).
+
+**If `github_cli: true`:**
+- `gh search code "[task]" --filename=SKILL.md --limit=10` — finds skills by content. Use 2–3 English words ("pdf redact"). Long phrases return nothing; if empty, shorten and retry.
+- `gh search repos "claude skill [task]" --sort=stars --limit=5`
+
+**If `github_cli: false`:**
+- Web search `"SKILL.md" [task] site:github.com`
+
+**Catalogs (web search or fetch):**
+- `anthropics/skills` — official Anthropic skills.
+- `ComposioHQ/awesome-claude-skills`, `travisvn/awesome-claude-skills`, `hesreallyhim/awesome-claude-code` — curated lists.
+- skillsmp.com — search across skills from public GitHub repos.
+- claudemarketplaces.com — directory of plugins, skills, and MCP servers ranked by installs.
+- aitmpl.com — Claude Code templates: agents, commands, skills, hooks.
+- smithery.ai/skills — skills in the Smithery catalog.
+
+Catalogs verified on 2026-10-20. If a catalog does not open — skip it and mention that in the output.
+
 #### Parallelism
 
 If there are multiple tasks or domains — run queries across different sources in parallel.
 
-### Step 4. Deduplication and table
+### Step 5. Deduplication and table
 
 Compile a single table from results across all sources.
 
@@ -155,6 +194,9 @@ Compile a single table from results across all sources.
 |------|------|------|----------|---------|-------------|------|
 
 **Tool types:**
+- Already installed — found in step 2
+- Skill — folder with `SKILL.md`, copied into `~/.claude/skills/`
+- Plugin — installed with `claude plugin install`
 - MCP server — can be connected to Claude Code
 - SaaS/service — external web service
 - AI model — specialized neural network
@@ -170,14 +212,20 @@ Compile a single table from results across all sources.
 **Signals column:**
 - ★ GitHub stars (visible in `gh search` results, no extra API calls)
 - 🔴 Archived — if repo is archived
+- ⚠ Code — the skill or MCP server ships scripts that will run on the user's machine
 
 Last commit date is NOT a signal of abandonment — small tools and skills are often stable and don't need updates.
 
 npm/PyPI download counts — only in Deep Dive (requires extra API calls).
 
-### Step 5. Output and offer deep dive
+### Step 6. Output and offer deep dive
 
-Display the table in chat. After the table, ask:
+Display the table in chat.
+
+After the table — a 2–3 sentence verdict: what to take, why this one, first action.
+Example: "Take X: it already does Y and was updated this month. First step — read its SKILL.md and copy it into `~/.claude/skills/`."
+
+Then ask:
 
 > Want to dig deeper? Say "dig into [name]".
 > Or ask about a specific source: "any MCP servers for this?", "what about skills?", "any awesome-lists?"
@@ -186,12 +234,13 @@ Display the table in chat. After the table, ask:
 
 If the user asks to dig deeper into a specific tool, domain, or source:
 
-1. Launch an Agent tool (subagent) with a detailed prompt:
+1. If `research_tool_name` from the config (Exa `agent_run`) is available in the session — run it. Otherwise launch an Agent tool (subagent). Prompt:
    - Make 5-8 search queries about the tool
    - Find: detailed description, usage examples, pricing, limitations, alternatives
-   - If request targets a specific source ("any skills?") — targeted search via GitHub + awesome
+   - If request targets a specific source ("any skills?") — targeted search via Source 5
    - Get npm/PyPI download counts (if applicable)
-   - Return a structured report
+   - For a skill, plugin, or MCP server — read `SKILL.md` / README and list scripts, network calls, and required keys
+   - Return a structured report with a source link for every fact
 
 2. Show result in chat:
 
@@ -203,15 +252,18 @@ If the user asks to dig deeper into a specific tool, domain, or source:
 **Signals:** ★ stars, downloads, found in [sources]
 **Pros:** list
 **Cons/limitations:** list
+**Security:** what runs locally, what access it needs (for skills, plugins, MCP)
 **Alternatives:** list
-**How to integrate:** MCP / API / web interface
+**How to integrate:** skill / plugin / MCP / API / web interface
 **Link:** URL
 
 ## Important
 
 - Communicate in the language specified in config (default: English)
 - Freshness is critical — always search for tools from the current and previous year
+- Every link and every number (stars, prices) must come from search results in this session. Never write links from memory.
 - Do not recommend dead or abandoned tools (archived, no activity for years)
-- If a tool is an MCP server, say so explicitly (can be connected to Claude Code)
+- If a tool is an MCP server, skill, or plugin, say so explicitly (can be connected to Claude Code)
+- Read a third-party skill, plugin, or MCP server in full before installing. Tell the user what code they are about to run.
 - If the task is trivial and better solved with code — say so directly
 - Search engine and GitHub CLI are abstracted — check config.md

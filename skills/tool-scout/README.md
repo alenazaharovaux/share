@@ -1,6 +1,17 @@
 # Tool Scout
 
-Find the right tools for your project tasks — services, MCP servers, AI models, no-code platforms, libraries, and APIs. The skill searches across five sources (web, GitHub, MCP catalogs, awesome-lists, and package registries) so you don't have to figure out where to look. It covers both established and recently launched tools.
+Find the right tools for your project tasks — services, MCP servers, Claude Code skills and plugins, AI models, no-code platforms, libraries, and APIs. The skill first checks what you already have installed, then searches five sources (web, GitHub, MCP catalogs, awesome-lists, and skill and plugin catalogs) so you don't have to figure out where to look. It covers both established and recently launched tools.
+
+## What's new in v3
+
+- **Already-installed check** — before searching, looks through your skills, plugins (`claude plugin list`) and MCP servers (`claude mcp list`) and tells you if you already have a fit
+- **Skill and plugin search** — finds skills by `SKILL.md` content on GitHub, searches the official plugin marketplace locally, and checks seven curated catalogs (anthropics/skills, awesome-claude-skills lists, skillsmp.com, claudemarketplaces.com, aitmpl.com, smithery.ai/skills)
+- **New tool types** — Skill, Plugin, Already installed
+- **Verdict after the table** — 2–3 sentences: what to take, why, first step
+- **Safety** — flags skills and MCP servers that ship scripts (⚠ Code) and reads third-party code before recommending installation
+- **No links from memory** — every link and number must come from search results in the session
+- **Deep dive via Exa `agent_run`** when available, subagent otherwise
+- Package registries are no longer listed as a separate source: download counts stay in the deep dive
 
 ## What's new in v2
 
@@ -41,7 +52,7 @@ Settings are saved to `~/.claude/skills/tool-scout/config.md`.
 
 | Engine | Setup needed? | Quality | Notes |
 |--------|--------------|---------|-------|
-| **Exa MCP** (recommended) | Yes — [setup guide](https://docs.exa.ai/reference/mcp) | Best | Web search + code context search |
+| **Exa MCP** (recommended) | Yes — [setup guide](https://docs.exa.ai/reference/mcp) | Best | Web search + `agent_run` for deep dives |
 | **WebSearch** | No — built into Claude Code | Good | Works out of the box |
 | **Other MCP** | Depends | Varies | Any MCP server that provides web search |
 
@@ -57,6 +68,7 @@ Say any of these to Claude Code:
 
 - "find tools for building a dashboard UI"
 - "is there an MCP server for Google Sheets?"
+- "is there a skill for redacting PDFs?"
 - "tool scout — I need to process images in bulk"
 - "find a library for PDF generation in Python"
 - "what tools exist for email automation?"
@@ -76,6 +88,9 @@ Say any of these to Claude Code:
 | Email API    | SendGrid      | API/SaaS   | Established | ★1625          | Most popular, templates  | sendgrid.com    |
 | Slack bot    | slack-mcp     | MCP server | New         | ★340           | Connect to Claude Code   | github.com/...  |
 
+Take Resend: modern API, free tier covers 3K emails a month, found in four sources.
+First step — create an API key and send a test email.
+
 Want to dig deeper? Say "dig into [name]".
 Or ask about a specific source: "any MCP servers for this?", "any awesome-lists?"
 
@@ -85,7 +100,18 @@ Or ask about a specific source: "any MCP servers for this?", "any awesome-lists?
 
 # Tool Scout (RU)
 
-Находит подходящие инструменты для задач проекта — сервисы, MCP-серверы, нейронки, no-code платформы, библиотеки и API. Скилл ищет по пяти источникам (веб, GitHub, каталоги MCP, awesome-списки и пакетные реестры), чтобы вам не приходилось гадать, где искать. Покрывает как устоявшиеся, так и недавно запущенные инструменты.
+Находит подходящие инструменты для задач проекта — сервисы, MCP-серверы, скиллы и плагины Claude Code, нейронки, no-code платформы, библиотеки и API. Сначала скилл проверяет, что у вас уже установлено. Потом ищет по пяти источникам: веб, GitHub, каталоги MCP, awesome-списки, каталоги скиллов и плагинов. Покрывает как устоявшиеся, так и недавно запущенные инструменты.
+
+## Что нового в v3
+
+- **Проверка установленного** — до поиска смотрит ваши скиллы, плагины (`claude plugin list`) и MCP-серверы (`claude mcp list`) и говорит, если подходящее уже есть
+- **Поиск скиллов и плагинов** — ищет скиллы по содержимому `SKILL.md` на GitHub, локально ищет по официальному маркетплейсу плагинов, проверяет семь каталогов (anthropics/skills, списки awesome-claude-skills, skillsmp.com, claudemarketplaces.com, aitmpl.com, smithery.ai/skills)
+- **Новые типы** — скилл, плагин, уже установлен
+- **Вывод после таблицы** — 2–3 предложения: что брать, почему, первый шаг
+- **Безопасность** — помечает скиллы и MCP-серверы со скриптами (⚠ Код), читает чужой код перед рекомендацией установить
+- **Ссылки только из выдачи** — каждая ссылка и цифра берутся из поиска в этой сессии
+- **Deep dive через Exa `agent_run`**, если он есть; иначе через субагента
+- Пакетные реестры больше не отдельный источник: скачивания остаются в deep dive
 
 ## Что нового в v2
 
@@ -126,7 +152,7 @@ Copy-Item -Recurse tool-scout $env:USERPROFILE\.claude\skills\tool-scout
 
 | Движок | Нужна настройка? | Качество | Заметки |
 |--------|-----------------|----------|---------|
-| **Exa MCP** (рекомендуется) | Да — [инструкция](https://docs.exa.ai/reference/mcp) | Лучшее | Веб-поиск + поиск по коду |
+| **Exa MCP** (рекомендуется) | Да — [инструкция](https://docs.exa.ai/reference/mcp) | Лучшее | Веб-поиск + `agent_run` для deep dive |
 | **WebSearch** | Нет — встроен в Claude Code | Хорошее | Работает из коробки |
 | **Другой MCP** | Зависит от сервера | Разное | Любой MCP-сервер с веб-поиском |
 
@@ -142,6 +168,7 @@ Copy-Item -Recurse tool-scout $env:USERPROFILE\.claude\skills\tool-scout
 
 - «посмотри инструменты для UI дашборда»
 - «есть MCP-сервер для Google Sheets?»
+- «есть скилл для закрашивания данных в PDF?»
 - «tool scout — нужно обрабатывать изображения пачками»
 - «найди библиотеку для генерации PDF на Python»
 - «какие тулы есть для email-автоматизации?»
