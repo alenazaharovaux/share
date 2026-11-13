@@ -344,11 +344,29 @@ document.getElementById("cm-list").addEventListener("click",ev=>{const it=ev.tar
   if(ev.target.dataset.act==="edit"){document.getElementById("cm-panel").classList.remove("on");el.scrollIntoView({block:"center"});openPop(el,n.quote,n);return;}
   el.scrollIntoView({block:"center",behavior:"smooth"});el.classList.add("cm-flash");setTimeout(()=>el.classList.remove("cm-flash"),1300);});
 function payload(){const order=targets.map(t=>t.dataset.cmId);const s=[...notes].sort((a,b)=>order.indexOf(a.block)-order.indexOf(b.block)||a.time.localeCompare(b.time));return JSON.stringify({source:SOURCE,saved:new Date().toISOString(),count:s.length,comments:s},null,2);}
-document.getElementById("cm-save").onclick=()=>{const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([payload()],{type:"application/json"}));a.download=JSONNAME;document.body.appendChild(a);a.click();a.remove();toast("Файл "+JSONNAME+" скачан");};
+document.getElementById("cm-save").onclick=()=>{saveFile();if(document.getElementById("cm-old"))showOld();};
 addEventListener("resize",render);
 render();
+/* Старые вкладки: последняя открытая вкладка сообщает о себе, остальные затемняются. */
+const TABKEY="vkladka:"+SOURCE, ME=Date.now()+"-"+Math.random().toString(36).slice(2);
+function showOld(){let o=document.getElementById("cm-old");
+  if(!o){o=document.createElement("div");o.id="cm-old";document.body.appendChild(o);}
+  const d=dirty();
+  o.innerHTML=`<div class="cm-old-card"><h3>Это старая вкладка</h3><p>Свежая страница открыта в другой вкладке. Эту можно закрыть.</p>${d?`<p class="cm-old-warn">Здесь есть несохранённые комментарии: ${notes.length}. Сначала сохрани их, потом закрывай.</p><button class="cm-main" data-act="save">Сохранить комментарии</button>`:""}<button data-act="stay">Всё равно посмотреть</button></div>`;
+  o.onclick=ev=>{const a=ev.target.dataset.act;if(a==="save"){saveFile();showOld();}if(a==="stay")o.remove();};}
+try{localStorage.setItem(TABKEY,ME);}catch(e){}
+addEventListener("storage",ev=>{if(ev.key===TABKEY&&ev.newValue&&ev.newValue!==ME)showOld();});
 })();
 </script>
+<style>
+#cm-old{position:fixed;inset:0;z-index:9500;background:rgba(40,40,40,.72);display:flex;align-items:center;justify-content:center;padding:16px;font:16px/1.45 -apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+#cm-old .cm-old-card{background:#fff;color:#1f2328;border-radius:14px;padding:22px 24px;max-width:420px;box-shadow:0 12px 32px rgba(0,0,0,.3)}
+#cm-old h3{margin:0 0 8px;font-size:20px}
+#cm-old p{margin:0 0 12px}
+#cm-old .cm-old-warn{color:#b42318;font-weight:600}
+#cm-old button{font:15px -apple-system,"Segoe UI",Roboto,Arial,sans-serif;border:1px solid #d8d3c8;background:#fff;color:#1f2328;border-radius:8px;padding:8px 14px;cursor:pointer;margin:4px 8px 0 0}
+#cm-old button.cm-main{background:#c2410c;border-color:#c2410c;color:#fff}
+</style>
 """
 
 
