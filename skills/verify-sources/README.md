@@ -10,21 +10,31 @@ In the author's [KINEMETRIC experiment](https://kinemetric.vercel.app/) six mode
 
 ## Installation
 
+Open Claude Code or Codex in any folder and send the agent this message:
+
+> Install the verify-sources skill from https://github.com/alenazaharovaux/share following skills/verify-sources/INSTALL-AGENT.md
+
+The agent asks whether to add desk-research as well, downloads the folders, puts them into your personal skills folder, checks Python and, in Codex, turns on internet access for scripts. You do not need to look for any folders yourself.
+
+<details>
+<summary>Manual install</summary>
+
 Run the commands from the `skills` folder of this repository.
 
 **macOS / Linux:**
 ```bash
+cp -r desk-research ~/.claude/skills/desk-research
 cp -r verify-sources ~/.claude/skills/verify-sources
-cp -r desk-research ~/.claude/skills/desk-research   # for desk research
 ```
 
 **Windows (PowerShell):**
 ```powershell
+Copy-Item -Recurse desk-research $env:USERPROFILE\.claude\skills\desk-research
 Copy-Item -Recurse verify-sources $env:USERPROFILE\.claude\skills\verify-sources
-Copy-Item -Recurse desk-research $env:USERPROFILE\.claude\skills\desk-research   # for desk research
 ```
 
-For Codex, copy the folders to `~/.agents/skills/`.
+For Codex, copy both folders to `~/.agents/skills/`.
+</details>
 
 ## First run
 
@@ -59,21 +69,31 @@ By [Alena Zakharova](https://github.com/alenazaharovaux) · MIT
 
 ## Установка
 
+Откройте Claude Code или Codex в любой папке и напишите агенту:
+
+> Установи навык verify-sources из https://github.com/alenazaharovaux/share по файлу skills/verify-sources/INSTALL-AGENT.md
+
+Агент спросит, ставить ли заодно desk-research, сам скачает папки, положит их в вашу папку навыков, проверит Python, а в Codex включит интернет для программ. Искать папки самим не нужно.
+
+<details>
+<summary>Установка вручную</summary>
+
 Команды запускаются из папки `skills` этого репозитория.
 
 **macOS / Linux:**
 ```bash
+cp -r desk-research ~/.claude/skills/desk-research
 cp -r verify-sources ~/.claude/skills/verify-sources
-cp -r desk-research ~/.claude/skills/desk-research   # для кабинетного исследования
 ```
 
 **Windows (PowerShell):**
 ```powershell
+Copy-Item -Recurse desk-research $env:USERPROFILE\.claude\skills\desk-research
 Copy-Item -Recurse verify-sources $env:USERPROFILE\.claude\skills\verify-sources
-Copy-Item -Recurse desk-research $env:USERPROFILE\.claude\skills\desk-research   # для кабинетного исследования
 ```
 
-Для Codex скопируйте папки в `~/.agents/skills/`.
+Для Codex скопируйте обе папки в `~/.agents/skills/`.
+</details>
 
 ## Первый запуск
 
