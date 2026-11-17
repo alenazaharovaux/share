@@ -28,6 +28,22 @@ PARTIAL_OK = 0.8     # доля кусков цитаты, найденных в
 
 # ---------- сеть ----------
 
+def safe_charset(charset):
+    """Кодировка из заголовка, которую Python знает. Сервер может прислать несколько через запятую
+    («iso-8859-1,utf-8») или неизвестную — тогда берём первую известную, иначе utf-8."""
+    import codecs
+    for part in (charset or "").split(","):
+        part = part.strip().strip('"\'')
+        if not part:
+            continue
+        try:
+            codecs.lookup(part)
+            return part
+        except LookupError:
+            pass
+    return "utf-8"
+
+
 def fetch_raw(url, accept=None):
     """Вернуть (код ответа, байты, тип содержимого, конечный адрес, кодировка). Код 0 — сеть недоступна."""
     headers = {"User-Agent": UA, "Accept-Language": "ru,en;q=0.8"}
@@ -37,7 +53,7 @@ def fetch_raw(url, accept=None):
     try:
         with urllib.request.urlopen(req, timeout=TIMEOUT) as r:
             return (r.status, r.read(20_000_000), r.headers.get("Content-Type", ""), r.geturl(),
-                    r.headers.get_content_charset() or "utf-8")
+                    safe_charset(r.headers.get_content_charset()))
     except urllib.error.HTTPError as e:
         return e.code, b"", e.headers.get("Content-Type", "") if e.headers else "", url, "utf-8"
     except Exception as e:  # noqa: BLE001 — любая сетевая ошибка значит «не открылся»
