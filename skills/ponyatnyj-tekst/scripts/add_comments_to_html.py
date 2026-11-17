@@ -40,6 +40,13 @@ body{padding-bottom:80px}
 .cm-toast.on{opacity:1}
 .cm-flash{animation:cmflash 1.2s}
 @keyframes cmflash{0%{background:rgba(194,65,12,.25)}100%{background:transparent}}
+#cm-old{position:fixed;inset:0;z-index:9500;background:rgba(40,40,40,.72);display:flex;align-items:center;justify-content:center;padding:16px;font:16px/1.45 -apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+#cm-old .cm-old-card{background:#fff;color:#1f2328;border-radius:14px;padding:22px 24px;max-width:420px;box-shadow:0 12px 32px rgba(0,0,0,.3)}
+#cm-old h3{margin:0 0 8px;font-size:20px}
+#cm-old p{margin:0 0 12px}
+#cm-old .cm-old-warn{color:#b42318;font-weight:600}
+#cm-old button{font:15px -apple-system,"Segoe UI",Roboto,Arial,sans-serif;border:1px solid #d8d3c8;background:#fff;color:#1f2328;border-radius:8px;padding:8px 14px;cursor:pointer;margin:4px 8px 0 0}
+#cm-old button.cm-main{background:#c2410c;border-color:#c2410c;color:#fff}
 </style>
 <div class="cm-bar"><button id="cm-open">Комментарии: 0</button><button class="cm-main" id="cm-save">Сохранить комментарии</button></div>
 <button class="cm-add" id="cm-add">+ комментарий</button>
@@ -98,9 +105,24 @@ document.getElementById("cm-list").addEventListener("click",ev=>{const it=ev.tar
   if(ev.target.dataset.act==="edit"){document.getElementById("cm-panel").classList.remove("on");el.scrollIntoView({block:"center"});openPop(el,n.quote,n);return;}
   el.scrollIntoView({block:"center",behavior:"smooth"});el.classList.add("cm-flash");setTimeout(()=>el.classList.remove("cm-flash"),1300);});
 function payload(){const order=targets.map(t=>t.dataset.cmId);const s=[...notes].sort((a,b)=>order.indexOf(a.block)-order.indexOf(b.block)||a.time.localeCompare(b.time));return JSON.stringify({source:SOURCE,saved:new Date().toISOString(),count:s.length,comments:s},null,2);}
-document.getElementById("cm-save").onclick=()=>{const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([payload()],{type:"application/json"}));a.download=JSONNAME;document.body.appendChild(a);a.click();a.remove();toast("Файл "+JSONNAME+" скачан в Загрузки");};
+const SAVEDKEY=KEY+":saved";
+const dirty=()=>{let s="[]";try{s=localStorage.getItem(SAVEDKEY)||"[]";}catch(e){}return notes.length>0&&JSON.stringify(notes)!==s;};
+function saveFile(){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([payload()],{type:"application/json"}));a.download=JSONNAME;document.body.appendChild(a);a.click();a.remove();try{localStorage.setItem(SAVEDKEY,JSON.stringify(notes));}catch(e){}toast("Файл "+JSONNAME+" скачан в Загрузки");}
+document.getElementById("cm-save").onclick=()=>{saveFile();if(document.getElementById("cm-old"))showOld();};
 addEventListener("resize",render);
 render();
+/* Устаревшие версии: свежей считается страница, собранная позже, в каком бы порядке их ни открывали. */
+const FRESHKEY="svezhaya:"+SOURCE, BUILT=__BUILT__;let newer="";
+const when=v=>v.replace("T"," ").slice(0,16);
+function showOld(){let o=document.getElementById("cm-old");
+  if(!o){o=document.createElement("div");o.id="cm-old";document.body.appendChild(o);}
+  const d=dirty();
+  o.innerHTML=`<div class="cm-old-card"><h3>Эта страница устарела</h3><p>Эта версия собрана ${when(BUILT)}. Есть версия новее, собрана ${when(newer)}. Откройте её, эту можно закрыть.</p>${d?`<p class="cm-old-warn">Здесь есть несохранённые комментарии: ${notes.length}. Сначала сохраните их, потом закрывайте.</p><button class="cm-main" data-act="save">Сохранить комментарии</button>`:""}<button data-act="stay">Всё равно посмотреть</button></div>`;
+  o.onclick=ev=>{const a=ev.target.dataset.act;if(a==="save"){saveFile();showOld();}if(a==="stay")o.remove();};}
+function checkFresh(v){if(v&&v>BUILT){newer=v;showOld();return true;}return false;}
+let seen="";try{seen=localStorage.getItem(FRESHKEY)||"";}catch(e){}
+if(!checkFresh(seen)){try{localStorage.setItem(FRESHKEY,BUILT);}catch(e){}}
+addEventListener("storage",ev=>{if(ev.key===FRESHKEY)checkFresh(ev.newValue);});
 })();
 </script>
 """
@@ -114,6 +136,7 @@ def build(src: Path, out_dir: Path) -> Path:
     version = hashlib.sha1(page.encode("utf-8")).hexdigest()[:10]
     layer = (LAYER.replace("__SOURCE__", json.dumps(str(src).replace("\\", "/"), ensure_ascii=False))
              .replace("__VERSION__", json.dumps(version))
+             .replace("__BUILT__", json.dumps(datetime.now().isoformat(timespec="seconds")))
              .replace("__JSONNAME__", json.dumps(jsonname)))
     idx = page.lower().rfind("</body>")
     page = page[:idx] + layer + page[idx:] if idx != -1 else page + layer

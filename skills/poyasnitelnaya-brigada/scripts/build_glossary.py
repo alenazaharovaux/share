@@ -344,18 +344,24 @@ document.getElementById("cm-list").addEventListener("click",ev=>{const it=ev.tar
   if(ev.target.dataset.act==="edit"){document.getElementById("cm-panel").classList.remove("on");el.scrollIntoView({block:"center"});openPop(el,n.quote,n);return;}
   el.scrollIntoView({block:"center",behavior:"smooth"});el.classList.add("cm-flash");setTimeout(()=>el.classList.remove("cm-flash"),1300);});
 function payload(){const order=targets.map(t=>t.dataset.cmId);const s=[...notes].sort((a,b)=>order.indexOf(a.block)-order.indexOf(b.block)||a.time.localeCompare(b.time));return JSON.stringify({source:SOURCE,saved:new Date().toISOString(),count:s.length,comments:s},null,2);}
+const SAVEDKEY=KEY+":saved";
+const dirty=()=>{let s="[]";try{s=localStorage.getItem(SAVEDKEY)||"[]";}catch(e){}return notes.length>0&&JSON.stringify(notes)!==s;};
+function saveFile(){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([payload()],{type:"application/json"}));a.download=JSONNAME;document.body.appendChild(a);a.click();a.remove();try{localStorage.setItem(SAVEDKEY,JSON.stringify(notes));}catch(e){}toast("Файл "+JSONNAME+" скачан");}
 document.getElementById("cm-save").onclick=()=>{saveFile();if(document.getElementById("cm-old"))showOld();};
 addEventListener("resize",render);
 render();
-/* Старые вкладки: последняя открытая вкладка сообщает о себе, остальные затемняются. */
-const TABKEY="vkladka:"+SOURCE, ME=Date.now()+"-"+Math.random().toString(36).slice(2);
+/* Устаревшие версии: свежей считается страница, собранная позже, в каком бы порядке их ни открывали. */
+const FRESHKEY="svezhaya:"+SOURCE, BUILT=__BUILT__;let newer="";
+const when=v=>v.replace("T"," ").slice(0,16);
 function showOld(){let o=document.getElementById("cm-old");
   if(!o){o=document.createElement("div");o.id="cm-old";document.body.appendChild(o);}
   const d=dirty();
-  o.innerHTML=`<div class="cm-old-card"><h3>Это старая вкладка</h3><p>Свежая страница открыта в другой вкладке. Эту можно закрыть.</p>${d?`<p class="cm-old-warn">Здесь есть несохранённые комментарии: ${notes.length}. Сначала сохрани их, потом закрывай.</p><button class="cm-main" data-act="save">Сохранить комментарии</button>`:""}<button data-act="stay">Всё равно посмотреть</button></div>`;
+  o.innerHTML=`<div class="cm-old-card"><h3>Эта страница устарела</h3><p>Эта версия собрана ${when(BUILT)}. Есть версия новее, собрана ${when(newer)}. Откройте её, эту можно закрыть.</p>${d?`<p class="cm-old-warn">Здесь есть несохранённые комментарии: ${notes.length}. Сначала сохраните их, потом закрывайте.</p><button class="cm-main" data-act="save">Сохранить комментарии</button>`:""}<button data-act="stay">Всё равно посмотреть</button></div>`;
   o.onclick=ev=>{const a=ev.target.dataset.act;if(a==="save"){saveFile();showOld();}if(a==="stay")o.remove();};}
-try{localStorage.setItem(TABKEY,ME);}catch(e){}
-addEventListener("storage",ev=>{if(ev.key===TABKEY&&ev.newValue&&ev.newValue!==ME)showOld();});
+function checkFresh(v){if(v&&v>BUILT){newer=v;showOld();return true;}return false;}
+let seen="";try{seen=localStorage.getItem(FRESHKEY)||"";}catch(e){}
+if(!checkFresh(seen)){try{localStorage.setItem(FRESHKEY,BUILT);}catch(e){}}
+addEventListener("storage",ev=>{if(ev.key===FRESHKEY)checkFresh(ev.newValue);});
 })();
 </script>
 <style>
@@ -376,6 +382,7 @@ def add_layer(page: str) -> str:
     version = hashlib.sha1(page.encode("utf-8")).hexdigest()[:10]
     layer = (LAYER.replace("__SOURCE__", json.dumps(PAGE_NAME))
              .replace("__VERSION__", json.dumps(version))
+             .replace("__BUILT__", json.dumps(datetime.now().isoformat(timespec="seconds")))
              .replace("__JSONNAME__", json.dumps(jsonname)))
     idx = page.lower().rfind("</body>")
     return page[:idx] + layer + page[idx:]
